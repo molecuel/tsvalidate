@@ -1,0 +1,50 @@
+{
+  "name": "tsvalidate",
+  "version": "0.0.1",
+  "description": "Typescript validator",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/molecuel/mlcl_elements.git"
+  },
+  "keywords": [],
+  "author": "Dominic Böttger <Dominic.Boettger@inspirationlabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/molecuel/mlcl_elements/issues"
+  },
+  "typings": "dist/index.d.ts",
+  "homepage": "https://github.com/molecuel/mlcl_elements#readme",
+  "devDependencies": {
+    "assert": ">=0.0.1",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tsconfig-files": "^0.2.5",
+    "gulp-tslint": "^4.3.2",
+    "gulp-typescript": "^2.12.0",
+    "gulp-util": "^3.0.7",
+    "gulpclass": "0.0.8",
+    "merge2": "^1.0.1",
+    "mocha": "*",
+    "should": ">= 0.0.1",
+    "tslint": "^3.5.0",
+    "tslint-stylish": "^2.1.0-beta",
+    "typescript": "^1.8.2"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "reflect-metadata": "^0.1.3"
+  },
+  "devconfig": {
+    "paths": {
+      "testsource": "test/**/*.ts",
+      "source": "src/**/*.ts",
+      "dist": "dist/"
+    }
+  }
+}
