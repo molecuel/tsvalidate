@@ -2,13 +2,18 @@
 import 'reflect-metadata';
 import should = require('should');
 import assert = require('assert');
-import {Validator} from '../dist';
+import { TestClass, Validator, MinLen, MaxLen } from '../dist';
 
 describe('validator', function() {
-  let validate: tsvalidate;
-
   describe('module', function() {
-    it('should connect the databases', function() {
+    let testValidator: Validator;
+    let localTestClass: TestClass;
+
+    it('should validate lengths', function() {
+
+      localTestClass = new TestClass('desoxyribonucleic acid');
+      testValidator = new Validator();
+      testValidator.validate(localTestClass);
     })
   });
 })
