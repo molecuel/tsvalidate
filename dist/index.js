@@ -1,39 +1,16 @@
 'use strict';
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
-    });
-};
 require('reflect-metadata');
-let validatejs = require('validate.js');
-class TestClass {
-    constructor(name) {
-        this.testString = name;
-    }
+const validatorjs = require('validator');
+class validatorTypes {
 }
-__decorate([
-    MinLen(2),
-    MaxLen(10), 
-    __metadata('design:type', String)
-], TestClass.prototype, "testString", void 0);
-exports.TestClass = TestClass;
+validatorTypes.MAX_LEN = 'max_len';
+validatorTypes.MIN_LEN = 'min_len';
+validatorTypes.CONTAINS = 'contains';
+validatorTypes.IS_EMPTY = 'is_empty';
+validatorTypes.NOT_EMPTY = 'not_empty';
+validatorTypes.ALPHA_NUM = 'alpha_num';
+exports.validatorTypes = validatorTypes;
 class Validator {
-    getCustMetadata(target, callback, validatorOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-        });
-    }
     validate(target, validatorOptions) {
         for (let propertyName in target) {
             if (!target.hasOwnProperty(propertyName)) {
@@ -42,6 +19,32 @@ class Validator {
             let keys = Reflect.getMetadataKeys(target, propertyName);
             let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
             let types = Reflect.getMetadata('design:type', target, propertyName);
+            let errors = [];
+            for (let validator of validators) {
+                switch (validator.type) {
+                    case validatorTypes.MAX_LEN:
+                        if (target[propertyName].length > validator.value) {
+                            errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' too long.');
+                        }
+                        ;
+                    case validatorTypes.MIN_LEN:
+                        if (target[propertyName].length < validator.value) {
+                            errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' too short.');
+                        }
+                        ;
+                    case validatorTypes.CONTAINS:
+                        if (!target[propertyName].toString.contains(validator.value)) {
+                            errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' too short.');
+                        }
+                        ;
+                    case validatorTypes.ALPHA_NUM:
+                        console.log(target[propertyName]);
+                        if (validatorjs.isAlpha(target[propertyName])) {
+                            errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is alphanumeric');
+                        }
+                        ;
+                }
+            }
         }
     }
 }
@@ -52,7 +55,7 @@ function MaxLen(value, validatorOptions) {
         if (!validators) {
             validators = [];
         }
-        validators.push({ type: 'MaxLen', value: value, validatorOptions: validatorOptions });
+        validators.push({ type: 'max_len', value: value, validatorOptions: validatorOptions });
         Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
     };
 }
@@ -63,7 +66,7 @@ function MinLen(value, validatorOptions) {
         if (!validators) {
             validators = [];
         }
-        validators.push({ type: 'MinLen', value: value, validatorOptions: validatorOptions });
+        validators.push({ type: 'min_len', value: value, validatorOptions: validatorOptions });
         Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
     };
 }
@@ -74,7 +77,7 @@ function Contains(value, validatorOptions) {
         if (!validators) {
             validators = [];
         }
-        validators.push({ type: 'Contains', value: value, validatorOptions: validatorOptions });
+        validators.push({ type: validatorTypes.CONTAINS, value: value, validatorOptions: validatorOptions });
         Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
     };
 }
@@ -85,7 +88,7 @@ function IsEmpty(value, validatorOptions) {
         if (!validators) {
             validators = [];
         }
-        validators.push({ type: 'IsEmpty', value: value, validatorOptions: validatorOptions });
+        validators.push({ type: validatorTypes.IS_EMPTY, value: value, validatorOptions: validatorOptions });
         Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
     };
 }
@@ -96,10 +99,22 @@ function IsNotEmpty(value, validatorOptions) {
         if (!validators) {
             validators = [];
         }
-        validators.push({ type: 'IsNotEmpty', value: value, validatorOptions: validatorOptions });
+        validators.push({ type: validatorTypes.NOT_EMPTY, value: value, validatorOptions: validatorOptions });
         Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
     };
 }
 exports.IsNotEmpty = IsNotEmpty;
+function AlphaNum(validatorOptions) {
+    return function (target, propertyName) {
+        let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
+        if (!validators) {
+            validators = [];
+        }
+        console.log(validatorTypes);
+        validators.push({ type: 'alpha_num', validatorOptions: validatorOptions });
+        Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
+    };
+}
+exports.AlphaNum = AlphaNum;
 
 //# sourceMappingURL=index.js.map

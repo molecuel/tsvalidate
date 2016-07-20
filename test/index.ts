@@ -2,7 +2,9 @@
 import 'reflect-metadata';
 import should = require('should');
 import assert = require('assert');
-import { TestClass, Validator, MinLen, MaxLen } from '../dist';
+import { TestClass } from './classes/TestClass';
+import { Validator } from '../dist';
+
 
 describe('validator', function() {
   describe('module', function() {

@@ -13,9 +13,9 @@
   "files": [
     "typings/index.d.ts",
     "test/index.ts",
+    "test/classes/TestClass.ts",
     "src/index.ts",
     "src/config.ts",
-    "dist/index.ts",
     "dist/index.d.ts"
   ],
   "exclude": [],
