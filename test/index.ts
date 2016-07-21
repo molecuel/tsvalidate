@@ -8,15 +8,20 @@ import { Validator } from '../dist';
 
 describe('validator', function() {
   describe('module', function() {
-    let testValidator: Validator;
-    let localTestClass: TestClass;
 
-    it('should validate lengths', function() {
-
-      localTestClass = new TestClass('desoxyribonucleic acid');
-      testValidator = new Validator();
+    it('should create validation errors - validating lengths', function() {
+      let localTestClass = new TestClass('desoxyribonucleic acid');
+      let testValidator = new Validator();
       let errors = testValidator.validate(localTestClass);
-      console.log(errors);
-    })
+      should.exist(errors);
+    });
+
+    it('should be valid - validating lengths', function() {
+      let localTestClass = new TestClass('deleic');
+      let testValidator = new Validator();
+      let errors = testValidator.validate(localTestClass);
+      should.not.exist(errors);
+    });
+
   });
 })

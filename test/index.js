@@ -1,16 +1,21 @@
 'use strict';
 require('reflect-metadata');
+const should = require('should');
 const TestClass_1 = require('./classes/TestClass');
 const dist_1 = require('../dist');
 describe('validator', function () {
     describe('module', function () {
-        let testValidator;
-        let localTestClass;
-        it('should validate lengths', function () {
-            localTestClass = new TestClass_1.TestClass('desoxyribonucleic acid');
-            testValidator = new dist_1.Validator();
+        it('should create validation errors - validating lengths', function () {
+            let localTestClass = new TestClass_1.TestClass('desoxyribonucleic acid');
+            let testValidator = new dist_1.Validator();
             let errors = testValidator.validate(localTestClass);
-            console.log(errors);
+            should.exist(errors);
+        });
+        it('should be valid - validating lengths', function () {
+            let localTestClass = new TestClass_1.TestClass('deleic');
+            let testValidator = new dist_1.Validator();
+            let errors = testValidator.validate(localTestClass);
+            should.not.exist(errors);
         });
     });
 });
