@@ -8,16 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const dist_1 = require('../../dist');
+const decorators_1 = require('../../dist/decorators');
 class TestClass {
     constructor(name) {
         this.testString = name;
     }
 }
 __decorate([
-    dist_1.MinLen(2),
-    dist_1.MaxLen(10),
-    dist_1.AlphaNum(), 
+    decorators_1.MinLen(2),
+    decorators_1.MaxLen(10),
+    decorators_1.AlphaNumeric(),
+    decorators_1.IsBoolean(), 
     __metadata('design:type', String)
 ], TestClass.prototype, "testString", void 0);
 exports.TestClass = TestClass;
+class TestContainer {
+}

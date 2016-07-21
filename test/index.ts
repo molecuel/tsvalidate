@@ -11,11 +11,11 @@ describe('validator', function() {
     let testValidator: Validator;
     let localTestClass: TestClass;
 
-    it('should validate lengths', function() {
+    it('should validate stuff', function() {
 
       localTestClass = new TestClass('desoxyribonucleic acid');
       testValidator = new Validator();
-      testValidator.validate(localTestClass);
+      console.log(testValidator.validate(localTestClass));
     })
   });
 })

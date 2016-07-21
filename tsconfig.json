@@ -16,6 +16,9 @@
     "test/classes/TestClass.ts",
     "src/index.ts",
     "src/config.ts",
+    "src/decorators.ts",
+    "src/interfaces/IValidatorError.ts",
+    "src/interfaces/IValidatorOptions.ts",
     "dist/index.d.ts"
   ],
   "exclude": [],

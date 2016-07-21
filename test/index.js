@@ -6,10 +6,10 @@ describe('validator', function () {
     describe('module', function () {
         let testValidator;
         let localTestClass;
-        it('should validate lengths', function () {
+        it('should validate stuff', function () {
             localTestClass = new TestClass_1.TestClass('desoxyribonucleic acid');
             testValidator = new dist_1.Validator();
-            testValidator.validate(localTestClass);
+            console.log(testValidator.validate(localTestClass));
         });
     });
 });

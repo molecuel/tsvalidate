@@ -1,168 +1,197 @@
 'use strict';
 import 'reflect-metadata';
-import validatorjs = require('validator');
-
-export class validatorTypes {
-  static MAX_LEN = 'max_len';
-  static MIN_LEN = 'min_len';
-  static CONTAINS = 'contains';
-  static IS_EMPTY = 'is_empty';
-  static NOT_EMPTY = 'not_empty';
-  static ALPHA_NUM = 'alpha_num';
-}
-
-export interface ValidatorError {
-  /**
-   * Name of the target class that was validated.
-   */
-  target: string;
-  /**
-   * Target's property on which validation is applied.
-   */
-  property: string;
-  /**
-   * Error's type.
-   */
-  type: string;
-  /**
-   * Error's message.
-   */
-  message: string;
-  /**
-   * Value of that target's property, that didn't pass a validation.
-   */
-  value: any;
-}
-
-/**
- * Options used to pass to validation decorators.
- */
-export interface ValidatorOptions {
-  /**
-   * Specifies if validated value is an array and each of its item must be validated.
-   */
-  each?: boolean;
-  /**
-   * Error message used to be used on validation fail.
-   * You can use '$value' to use value that was failed by validation.
-   * You can use '$constraint1' and '$constraint2' keys in the message string,
-   * and they will be replaced with constraint values if they exist.
-   * Message can be either string, either a function that returns a string.
-   * Second option allows to use values and custom messages depend of them.
-   */
-  message?: string | ((value?: any, constraint1?: any, constraint2?: any) => string);
-  /**
-   * Validation groups used for this validation.
-   */
-  groups?: string[];
-  /**
-   * Indicates if validation must be performed always, no matter of validation groups used.
-   */
-  always?: boolean;
-}
+import { IValidatorOptions } from './interfaces/IValidatorOptions';
+import * as decorators from './decorators';
+import validator = require('validator');
 
 export class Validator {
 
-  validate(target: Object, validatorOptions?: ValidatorOptions) {
+  private errors: string[] = [];
+
+  public validate(target: Object, validatorOptions?: IValidatorOptions) {
+
     for (let propertyName in target) {
+      // Check object for property.
       if (!target.hasOwnProperty(propertyName)) {
         continue;
       }
-      let keys = Reflect.getMetadataKeys(target, propertyName);
-      let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
+      // Get system- and validator-predefined Metadata, then check for sufficient results.
       let types = Reflect.getMetadata('design:type', target, propertyName);
-      let errors: string[] = [];
-      // console.log(validators + '\n' + types);
-
-      for (let validator of validators) {
-        switch (validator.type) {
-          case validatorTypes.MAX_LEN:
-            if (target[propertyName].length > validator.value) {
-              errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' too long.');
-            };
-          case validatorTypes.MIN_LEN:
-            if (target[propertyName].length < validator.value) {
-              errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' too short.');
-            };
-          case validatorTypes.CONTAINS:
-            if (!target[propertyName].toString.contains(validator.value)) {
-              errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' too short.');
-            };
-          case validatorTypes.ALPHA_NUM:
-            console.log(target[propertyName]);
-            if (validatorjs.isAlpha(target[propertyName])) {
-              errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is alphanumeric');
-            };
+      let metadata = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
+      if (metadata !== undefined
+        && types !== undefined) {
+        // Loop over sets of Metadata, execute requested type dependant validation.
+        for (let metadataEntry of metadata) {
+          switch (types.name) {
+            case 'String':
+              this.validateString(target, propertyName, metadataEntry);
+              break;
+            case 'Number':
+              this.validateNumber(target, propertyName, metadataEntry);
+              break;
+            case 'Boolean':
+              break;
+          }
+          // Execute requested type independant validation.
+          switch (metadataEntry.type) {
+            case decorators.DecoratorTypes.IS_STRING:
+              if (types.name !== 'String') {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no string.');
+              }
+              break;
+            case decorators.DecoratorTypes.IS_BOOL:
+              if (types.name !== 'Boolean') {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Boolean.');
+              }
+              break;
+            case decorators.DecoratorTypes.IS_NUMBER:
+              if (types.name !== 'Number') {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no number.');
+              }
+              break;
+            case decorators.DecoratorTypes.IS_INT:
+              if (!validator.isInt(target[propertyName].toString())) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Integer.');
+              }
+              break;
+            case decorators.DecoratorTypes.IS_FLOAT:
+              if (!validator.isFloat(target[propertyName].toString())) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Float.');
+              }
+              break;
+            case decorators.DecoratorTypes.IS_DECIMAL:
+              if (!validator.isDecimal(target[propertyName].toString())) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Decimal.');
+              }
+              break;
+            case decorators.DecoratorTypes.NOT_EMPTY:
+              if (target[propertyName] === ''
+                || target[propertyName] === null
+                || target[propertyName] === undefined) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is empty.');
+              }
+              break;
+            case decorators.DecoratorTypes.IS_EMPTY:
+              if (target[propertyName] !== ''
+                && target[propertyName] !== null
+                && target[propertyName] !== undefined) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not empty.');
+              }
+              break;
+            case decorators.DecoratorTypes.DEFINED:
+              if (target[propertyName] !== null
+                && target[propertyName] !== undefined) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not defined.');
+              }
+              break;
+            case decorators.DecoratorTypes.IN_ARRAY:
+              if (!validator.isIn(target[propertyName].toString(), metadataEntry.value)) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' not found in relevant array.');
+              }
+              break;
+            case decorators.DecoratorTypes.MATCHING:
+              if (!validator.matches(target[propertyName].toString(), metadataEntry.value)) {
+                this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' does not match' + metadataEntry.value + '.');
+              }
+              break;
+          }
         }
       }
     }
+    if (this.errors.length > 0) {
+      return this.errors;
+    } else {
+      return;
+    }
   }
-}
 
-
-export function MaxLen(value, validatorOptions?: ValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
-    if (!validators) {
-      validators = [];
+  private validateString(target: Object, propertyName: string, metadataEntry: any) {
+    switch (metadataEntry.type) {
+      case decorators.DecoratorTypes.MAX_LEN:
+        if (!validator.isLength(target[propertyName], { max: metadataEntry.value })) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is too long.');
+        }
+        break;
+      case decorators.DecoratorTypes.MIN_LEN:
+        if (!validator.isLength(target[propertyName], { min: metadataEntry.value })) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is too short.');
+        }
+        break;
+      case decorators.DecoratorTypes.CONTAINS:
+        if (!validator.contains(target[propertyName], metadataEntry.value)) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' does not contain ' + metadataEntry.value + '.');
+        }
+        break;
+      case decorators.DecoratorTypes.ALPHA:
+        if (!validator.isAlpha(target[propertyName])) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not exclusively composed of letter characters.');
+        }
+        break;
+      case decorators.DecoratorTypes.ALPHA_NUM:
+        if (!validator.isAlphanumeric(target[propertyName])) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not alphanumeric.');
+        }
+        break;
+      case decorators.DecoratorTypes.DATE:
+        if (!validator.isDate(target[propertyName])) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a date.');
+        }
+        break;
+      case decorators.DecoratorTypes.DATE_ISO8601:
+        if (!validator.isISO8601(target[propertyName])) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a ISO8601 conform date.');
+        }
+        break;
+      case decorators.DecoratorTypes.DATE_AFTER:
+        if (!validator.isAfter(target[propertyName]), metadataEntry.value) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a date after ' + validator.toDate(metadataEntry.value) + '.');
+        }
+        break;
+      case decorators.DecoratorTypes.DATE_BEFORE:
+        if (!validator.isBefore(target[propertyName]), metadataEntry.value) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a date before ' + validator.toDate(metadataEntry.value) + '.');
+        }
+        break;
+      case decorators.DecoratorTypes.UPPERCASE:
+        if (!validator.isUppercase(target[propertyName])) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not uppercase.');
+        }
+        break;
+      case decorators.DecoratorTypes.LOWERCASE:
+        if (!validator.isLowercase(target[propertyName])) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not lowercase.');
+        }
+        break;
+      case decorators.DecoratorTypes.MOBILE_PHONE_NUMBER:
+        if (!validator.isMobilePhone(target[propertyName], metadataEntry.value)) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no mobile phone number.');
+        }
+        break;
     }
-    validators.push({ type: 'max_len', value: value, validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
-  };
-}
+  }
 
-export function MinLen(value, validatorOptions?: ValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
-    if (!validators) {
-      validators = [];
+  private validateNumber(target: Object, propertyName: string, metadataEntry: any) {
+    switch (metadataEntry.type) {
+      case decorators.DecoratorTypes.MAX_LEN:
+        if (!validator.isLength(target[propertyName].toString(), { max: metadataEntry.value })) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is too long.');
+        }
+        break;
+      case decorators.DecoratorTypes.MIN_LEN:
+        if (!validator.isLength(target[propertyName].toString(), { min: metadataEntry.value })) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is too short.');
+        }
+        break;
+      case decorators.DecoratorTypes.CONTAINS:
+        if (!validator.contains(target[propertyName].toString(), metadataEntry.value)) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' does not contain ' + metadataEntry.value + '.');
+        }
+        break;
+      case decorators.DecoratorTypes.MOBILE_PHONE_NUMBER:
+        if (!validator.isMobilePhone(target[propertyName].toString(), metadataEntry.value)) {
+          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no mobile phone number.');
+        }
+        break;
     }
-    validators.push({ type: 'min_len', value: value, validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
-  };
-}
-
-export function Contains(value: string, validatorOptions?: ValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
-    if (!validators) {
-      validators = [];
-    }
-    validators.push({ type: validatorTypes.CONTAINS, value: value, validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
-  };
-}
-
-export function IsEmpty(value, validatorOptions?: ValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
-    if (!validators) {
-      validators = [];
-    }
-    validators.push({ type: validatorTypes.IS_EMPTY, value: value, validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
-  };
-}
-
-export function IsNotEmpty(value, validatorOptions?: ValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
-    if (!validators) {
-      validators = [];
-    }
-    validators.push({ type: validatorTypes.NOT_EMPTY, value: value, validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
-  };
-}
-
-export function AlphaNum(validatorOptions?: ValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    let validators = Reflect.getMetadata('tsvalidate:validators', target, propertyName);
-    if (!validators) {
-      validators = [];
-    }
-    console.log(validatorTypes);
-    validators.push({ type: 'alpha_num', validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', validators, target, propertyName);
-  };
+  }
 }
