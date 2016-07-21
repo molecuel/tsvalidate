@@ -15,7 +15,8 @@ describe('validator', function() {
 
       localTestClass = new TestClass('desoxyribonucleic acid');
       testValidator = new Validator();
-      testValidator.validate(localTestClass);
+      let errors = testValidator.validate(localTestClass);
+      console.log(errors);
     })
   });
 })

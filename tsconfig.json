@@ -16,6 +16,9 @@
     "test/classes/TestClass.ts",
     "src/index.ts",
     "src/config.ts",
+    "src/interfaces/IValidator.ts",
+    "src/interfaces/IValidatorOptions.ts",
+    "src/classes/validators/MaxLen.ts",
     "dist/index.d.ts"
   ],
   "exclude": [],

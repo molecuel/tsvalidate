@@ -9,7 +9,8 @@ describe('validator', function () {
         it('should validate lengths', function () {
             localTestClass = new TestClass_1.TestClass('desoxyribonucleic acid');
             testValidator = new dist_1.Validator();
-            testValidator.validate(localTestClass);
+            let errors = testValidator.validate(localTestClass);
+            console.log(errors);
         });
     });
 });
