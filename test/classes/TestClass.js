@@ -8,19 +8,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const decorators_1 = require('../../dist/decorators');
-class TestClass {
-    constructor(name) {
-        this.testString = name;
+const D = require('../../dist/decorators');
+class InnerTestClass {
+    constructor(value = 0, decoratorName = D.DecoratorTypes.IS_NUMBER, decoratorValue) {
+        this._decoratorName = D.DecoratorTypes.IS_NUMBER;
+        this._decoratorValue = 0;
+        this.testBool = false;
+        this.testText = 'text';
+        this.testNumber = value;
+        this._decoratorName = decoratorName;
+        this._decoratorValue = decoratorValue;
     }
 }
 __decorate([
-    decorators_1.MinLen(2),
-    decorators_1.MaxLen(10),
-    decorators_1.AlphaNumeric(),
-    decorators_1.IsBoolean(), 
+    D.IsString(), 
+    __metadata('design:type', Number)
+], InnerTestClass.prototype, "testNumber", void 0);
+__decorate([
+    D.IsNumber(), 
+    __metadata('design:type', Boolean)
+], InnerTestClass.prototype, "testBool", void 0);
+__decorate([
+    D.IsBoolean(), 
     __metadata('design:type', String)
-], TestClass.prototype, "testString", void 0);
-exports.TestClass = TestClass;
-class TestContainer {
+], InnerTestClass.prototype, "testText", void 0);
+exports.InnerTestClass = InnerTestClass;
+class CustomTestClass {
+    constructor(name = 'newTestClass', decoratorName = D.DecoratorTypes.IS_STRING, decoratorValue, nestedValue, nestedDecoratorName, nestedDecoratorValue) {
+        this._decoratorName = D.DecoratorTypes.IS_STRING;
+        this._decoratorValue = 0;
+        this.testString = name;
+        this._decoratorName = decoratorName;
+        this._decoratorValue = decoratorValue;
+        this.testContainer = new InnerTestClass(nestedValue, nestedDecoratorName, nestedDecoratorValue);
+    }
 }
+__decorate([
+    D.ValidateNested(), 
+    __metadata('design:type', InnerTestClass)
+], CustomTestClass.prototype, "testContainer", void 0);
+exports.CustomTestClass = CustomTestClass;

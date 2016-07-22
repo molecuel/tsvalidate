@@ -1,49 +1,61 @@
 import { IValidatorOptions } from './interfaces/IValidatorOptions';
+import validator = require('validator');
 
 export class DecoratorTypes {
 
-  static IS_BOOL = 'is_bool';
-  static IS_INT = 'is_int';
-  static IS_NUMBER = 'is_number';
-  static IS_STRING = 'is_string';
-  static IS_FLOAT = 'is_float';
-  static IS_DECIMAL = 'is_decimal';
+  // all types
+  static IS_BOOL = 'IsBoolean';
+  static IS_INT = 'IsInt';
+  static IS_NUMBER = 'IsNumber';
+  static IS_STRING = 'IsString';
+  static IS_FLOAT = 'IsFloat';
+  static IS_DECIMAL = 'IsDecimal';
+  static IS_EMPTY = 'IsEmpty';
+  static NOT_EMPTY = 'IsNotEmpty';
+  static DEFINED = 'IsDefined';
+  static EQUALS = 'Equals';
+  static IN_ARRAY = 'InArray';
 
-  static MAX_LEN = 'max_len';
-  static MIN_LEN = 'min_len';
-  static MAX_BYTE_LEN = 'max_byte_len';
-  static MIN_BYTE_LEN = 'mix_byte_len';
-  static DATE_AFTER = 'date_after';
-  static DATE_BEFORE = 'date_before';
-  static CONTAINS = 'contains';
-  static IS_EMPTY = 'is_empty';
-  static NOT_EMPTY = 'not_empty';
-  static DEFINED = 'defined';
-  static EQUALS = 'equals';
-  static UPPERCASE = 'uppercase';
-  static LOWERCASE = 'lowercase';
-  static MULTIPLE_OF = 'multiple_of';
-  static IN_ARRAY = 'in_array';
-  static MATCHING = 'matching';
+  // string and number type
+  static MAX_LEN = 'MaxLen';
+  static MIN_LEN = 'MinLen';
+  static CONTAINS = 'Contains';
+  static MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
 
-  static CREDITCARD = 'creditcard';
-  static CURRENCY = 'currency';
-  static DATE = 'is_date';
-  static EMAIL = 'is_email';
-  static ALPHA = 'is_alpha';
-  static ALPHA_NUM = 'is_alpha_num';
-  static FULLY_QUALIFIED_DOMAIN_NAME = 'is_fqdn';
-  static HEX_COLOR = 'is_hexcolor';
-  static HEXADECIMAL = 'is_hexadecimal';
-  static IP_ADDRESS = 'is_ip';
-  static ISBN = 'is_isbn';
-  static DATE_ISO8601 = 'is_iso_date';
-  static JSON = 'is_json';
-  static MAC_ADDRESS = 'is_mac';
-  static MOBILE_PHONE_NUMBER = 'is_cell';
-  static MONGO_ID = 'is_mongo_id';
-  static URL = 'is_url';
-  static UUID = 'is_uuid';
+  // string type
+  static MAX_BYTE_LEN = 'MaxByteLen';
+  static MIN_BYTE_LEN = 'MinByteLen';
+  static DATE_AFTER = 'DateAfter';
+  static DATE_BEFORE = 'DateBefore';
+  static UPPERCASE = 'Uppercase';
+  static LOWERCASE = 'Lowercase';
+  static MATCHING = 'Matching';
+  static DATE = 'IsDate';
+  static EMAIL = 'IsEmail';
+  static ALPHA = 'Alpha';
+  static ALPHA_NUM = 'AlphaNumeric';
+  static HEX_COLOR = 'HexColor';
+  static HEXADECIMAL = 'Hexadecimal';
+  static IP_ADDRESS = 'IsIP';
+  static DATE_ISO8601 = 'ISO8601Date';
+  static MAC_ADDRESS = 'IsMAC';
+  static MONGO_ID = 'MongoID';
+  static URL = 'IsURL';
+
+  // number type
+  static MAX_VALUE = 'MaxValue';
+  static MIN_VALUE = 'MinValue';
+  static MULTIPLE_OF = 'MultipleOf';
+
+  // object type
+  static NESTED = 'ValidateNested';
+
+  //// disabled
+  // static FULLY_QUALIFIED_DOMAIN_NAME = 'FullyDefinedDomainName';
+  // static ISBN = 'IsISBN';
+  // static CREDITCARD = 'Creditcard';
+  // static CURRENCY = 'Currency';
+  // static UUID = 'IsUUID';
 }
 
 export function IsBoolean(validatorOptions?: IValidatorOptions) {
@@ -78,7 +90,7 @@ export function IsFloat(validatorOptions?: IValidatorOptions) {
 
 export function IsDecimal(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_BOOL, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_DECIMAL, validatorOptions);
   };
 }
 
@@ -103,6 +115,18 @@ export function MaxByteLen(value: number, validatorOptions?: IValidatorOptions) 
 export function MinByteLen(value: number, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.MIN_BYTE_LEN, value, validatorOptions);
+  };
+}
+
+export function MaxValue(value: number, validatorOptions?: IValidatorOptions) {
+  return function(target: Object, propertyName: string) {
+    BasicDecorator(target, propertyName, DecoratorTypes.MAX_VALUE, value, validatorOptions);
+  };
+}
+
+export function MinValue(value: number, validatorOptions?: IValidatorOptions) {
+  return function(target: Object, propertyName: string) {
+    BasicDecorator(target, propertyName, DecoratorTypes.MIN_VALUE, value, validatorOptions);
   };
 }
 
@@ -148,7 +172,7 @@ export function InArray(array: any[], validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function Contains(value: string, validatorOptions?: IValidatorOptions) {
+export function Contains(value: string | number, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
   };
@@ -156,7 +180,7 @@ export function Contains(value: string, validatorOptions?: IValidatorOptions) {
 
 export function Matching(value: string, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MATCHING, value, validatorOptions);
   };
 }
 
@@ -196,17 +220,17 @@ export function MobilePhoneNumber(language: string, validatorOptions?: IValidato
   };
 }
 
-export function Creditcard(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.CREDITCARD, validatorOptions);
-  };
-}
+// export function Creditcard(validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.CREDITCARD, validatorOptions);
+//   };
+// }
 
-export function Currency(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.CURRENCY, validatorOptions);
-  };
-}
+// export function Currency(validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.CURRENCY, validatorOptions);
+//   };
+// }
 
 export function IsDate(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
@@ -220,11 +244,11 @@ export function IsEmail(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function FullyQualifiedDomainName(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.FULLY_QUALIFIED_DOMAIN_NAME, validatorOptions);
-  };
-}
+// export function FullyQualifiedDomainName(validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.FULLY_QUALIFIED_DOMAIN_NAME, validatorOptions);
+//   };
+// }
 
 export function HexColor(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
@@ -232,9 +256,9 @@ export function HexColor(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function IsIP(validatorOptions?: IValidatorOptions) {
+export function IsIP(version?: number, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, version, validatorOptions);
   };
 }
 
@@ -244,11 +268,11 @@ export function Hexadecimal(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function IsISBN(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.ISBN, validatorOptions);
-  };
-}
+// export function IsISBN(validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.ISBN, validatorOptions);
+//   };
+// }
 
 export function ISO8601Date(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
@@ -274,17 +298,41 @@ export function IsURL(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function IsUUID(validatorOptions?: IValidatorOptions) {
+// export function IsUUID(validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.UUID, validatorOptions);
+//   };
+// }
+
+export function ValidateNested(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.UUID, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);
   };
 }
 
 export function Trim() {
   return function(target: Object, propertyName: string) {
-    // Trim target string.
+    for (let propertyName in target) {
+      // Check object for property.
+      if (!target.hasOwnProperty(propertyName)) {
+        continue;
+      }
+      validator.trim(target[propertyName]);
+    }
   };
 }
+
+// export function CustomDecorator(decoratorName: string = DecoratorTypes.CONTAINS, owningObject?: Object, ...decoratorValues: any[]) {
+//   return function(target: Object, propertyName: string) {
+//     if (owningObject === null
+//       || owningObject === undefined) {
+//       window[decoratorName](decoratorValues);
+//     }
+//     else {
+//       owningObject[decoratorName](decoratorValues);
+//     }
+//   };
+// }
 
 function BasicDecorator(_target: Object, _propertyName: string, _type: string, _value: any, validatorOptions?: IValidatorOptions) {
   let metadata = Reflect.getMetadata('tsvalidate:validators', _target, _propertyName);

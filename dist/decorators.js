@@ -1,46 +1,44 @@
 "use strict";
+const validator = require('validator');
 class DecoratorTypes {
 }
-DecoratorTypes.IS_BOOL = 'is_bool';
-DecoratorTypes.IS_INT = 'is_int';
-DecoratorTypes.IS_NUMBER = 'is_number';
-DecoratorTypes.IS_STRING = 'is_string';
-DecoratorTypes.IS_FLOAT = 'is_float';
-DecoratorTypes.IS_DECIMAL = 'is_decimal';
-DecoratorTypes.MAX_LEN = 'max_len';
-DecoratorTypes.MIN_LEN = 'min_len';
-DecoratorTypes.MAX_BYTE_LEN = 'max_byte_len';
-DecoratorTypes.MIN_BYTE_LEN = 'mix_byte_len';
-DecoratorTypes.DATE_AFTER = 'date_after';
-DecoratorTypes.DATE_BEFORE = 'date_before';
-DecoratorTypes.CONTAINS = 'contains';
-DecoratorTypes.IS_EMPTY = 'is_empty';
-DecoratorTypes.NOT_EMPTY = 'not_empty';
-DecoratorTypes.DEFINED = 'defined';
-DecoratorTypes.EQUALS = 'equals';
-DecoratorTypes.UPPERCASE = 'uppercase';
-DecoratorTypes.LOWERCASE = 'lowercase';
-DecoratorTypes.MULTIPLE_OF = 'multiple_of';
-DecoratorTypes.IN_ARRAY = 'in_array';
-DecoratorTypes.MATCHING = 'matching';
-DecoratorTypes.CREDITCARD = 'creditcard';
-DecoratorTypes.CURRENCY = 'currency';
-DecoratorTypes.DATE = 'is_date';
-DecoratorTypes.EMAIL = 'is_email';
-DecoratorTypes.ALPHA = 'is_alpha';
-DecoratorTypes.ALPHA_NUM = 'is_alpha_num';
-DecoratorTypes.FULLY_QUALIFIED_DOMAIN_NAME = 'is_fqdn';
-DecoratorTypes.HEX_COLOR = 'is_hexcolor';
-DecoratorTypes.HEXADECIMAL = 'is_hexadecimal';
-DecoratorTypes.IP_ADDRESS = 'is_ip';
-DecoratorTypes.ISBN = 'is_isbn';
-DecoratorTypes.DATE_ISO8601 = 'is_iso_date';
-DecoratorTypes.JSON = 'is_json';
-DecoratorTypes.MAC_ADDRESS = 'is_mac';
-DecoratorTypes.MOBILE_PHONE_NUMBER = 'is_cell';
-DecoratorTypes.MONGO_ID = 'is_mongo_id';
-DecoratorTypes.URL = 'is_url';
-DecoratorTypes.UUID = 'is_uuid';
+DecoratorTypes.IS_BOOL = 'IsBoolean';
+DecoratorTypes.IS_INT = 'IsInt';
+DecoratorTypes.IS_NUMBER = 'IsNumber';
+DecoratorTypes.IS_STRING = 'IsString';
+DecoratorTypes.IS_FLOAT = 'IsFloat';
+DecoratorTypes.IS_DECIMAL = 'IsDecimal';
+DecoratorTypes.IS_EMPTY = 'IsEmpty';
+DecoratorTypes.NOT_EMPTY = 'IsNotEmpty';
+DecoratorTypes.DEFINED = 'IsDefined';
+DecoratorTypes.EQUALS = 'Equals';
+DecoratorTypes.IN_ARRAY = 'InArray';
+DecoratorTypes.MAX_LEN = 'MaxLen';
+DecoratorTypes.MIN_LEN = 'MinLen';
+DecoratorTypes.CONTAINS = 'Contains';
+DecoratorTypes.MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
+DecoratorTypes.MAX_BYTE_LEN = 'MaxByteLen';
+DecoratorTypes.MIN_BYTE_LEN = 'MinByteLen';
+DecoratorTypes.DATE_AFTER = 'DateAfter';
+DecoratorTypes.DATE_BEFORE = 'DateBefore';
+DecoratorTypes.UPPERCASE = 'Uppercase';
+DecoratorTypes.LOWERCASE = 'Lowercase';
+DecoratorTypes.MATCHING = 'Matching';
+DecoratorTypes.DATE = 'IsDate';
+DecoratorTypes.EMAIL = 'IsEmail';
+DecoratorTypes.ALPHA = 'Alpha';
+DecoratorTypes.ALPHA_NUM = 'AlphaNumeric';
+DecoratorTypes.HEX_COLOR = 'HexColor';
+DecoratorTypes.HEXADECIMAL = 'Hexadecimal';
+DecoratorTypes.IP_ADDRESS = 'IsIP';
+DecoratorTypes.DATE_ISO8601 = 'ISO8601Date';
+DecoratorTypes.MAC_ADDRESS = 'IsMAC';
+DecoratorTypes.MONGO_ID = 'MongoID';
+DecoratorTypes.URL = 'IsURL';
+DecoratorTypes.MAX_VALUE = 'MaxValue';
+DecoratorTypes.MIN_VALUE = 'MinValue';
+DecoratorTypes.MULTIPLE_OF = 'MultipleOf';
+DecoratorTypes.NESTED = 'ValidateNested';
 exports.DecoratorTypes = DecoratorTypes;
 function IsBoolean(validatorOptions) {
     return function (target, propertyName) {
@@ -74,7 +72,7 @@ function IsFloat(validatorOptions) {
 exports.IsFloat = IsFloat;
 function IsDecimal(validatorOptions) {
     return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.IS_BOOL, validatorOptions);
+        BasicDecorator(target, propertyName, DecoratorTypes.IS_DECIMAL, validatorOptions);
     };
 }
 exports.IsDecimal = IsDecimal;
@@ -102,6 +100,18 @@ function MinByteLen(value, validatorOptions) {
     };
 }
 exports.MinByteLen = MinByteLen;
+function MaxValue(value, validatorOptions) {
+    return function (target, propertyName) {
+        BasicDecorator(target, propertyName, DecoratorTypes.MAX_VALUE, value, validatorOptions);
+    };
+}
+exports.MaxValue = MaxValue;
+function MinValue(value, validatorOptions) {
+    return function (target, propertyName) {
+        BasicDecorator(target, propertyName, DecoratorTypes.MIN_VALUE, value, validatorOptions);
+    };
+}
+exports.MinValue = MinValue;
 function DateBefore(value, validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.DATE_BEFORE, value, validatorOptions);
@@ -152,7 +162,7 @@ function Contains(value, validatorOptions) {
 exports.Contains = Contains;
 function Matching(value, validatorOptions) {
     return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
+        BasicDecorator(target, propertyName, DecoratorTypes.MATCHING, value, validatorOptions);
     };
 }
 exports.Matching = Matching;
@@ -192,18 +202,6 @@ function MobilePhoneNumber(language, validatorOptions) {
     };
 }
 exports.MobilePhoneNumber = MobilePhoneNumber;
-function Creditcard(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.CREDITCARD, validatorOptions);
-    };
-}
-exports.Creditcard = Creditcard;
-function Currency(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.CURRENCY, validatorOptions);
-    };
-}
-exports.Currency = Currency;
 function IsDate(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
@@ -216,21 +214,15 @@ function IsEmail(validatorOptions) {
     };
 }
 exports.IsEmail = IsEmail;
-function FullyQualifiedDomainName(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.FULLY_QUALIFIED_DOMAIN_NAME, validatorOptions);
-    };
-}
-exports.FullyQualifiedDomainName = FullyQualifiedDomainName;
 function HexColor(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.HEX_COLOR, validatorOptions);
     };
 }
 exports.HexColor = HexColor;
-function IsIP(validatorOptions) {
+function IsIP(version, validatorOptions) {
     return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, validatorOptions);
+        BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, version, validatorOptions);
     };
 }
 exports.IsIP = IsIP;
@@ -240,12 +232,6 @@ function Hexadecimal(validatorOptions) {
     };
 }
 exports.Hexadecimal = Hexadecimal;
-function IsISBN(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.ISBN, validatorOptions);
-    };
-}
-exports.IsISBN = IsISBN;
 function ISO8601Date(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.DATE_ISO8601, validatorOptions);
@@ -270,14 +256,20 @@ function IsURL(validatorOptions) {
     };
 }
 exports.IsURL = IsURL;
-function IsUUID(validatorOptions) {
+function ValidateNested(validatorOptions) {
     return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.UUID, validatorOptions);
+        BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);
     };
 }
-exports.IsUUID = IsUUID;
+exports.ValidateNested = ValidateNested;
 function Trim() {
     return function (target, propertyName) {
+        for (let propertyName in target) {
+            if (!target.hasOwnProperty(propertyName)) {
+                continue;
+            }
+            validator.trim(target[propertyName]);
+        }
     };
 }
 exports.Trim = Trim;
