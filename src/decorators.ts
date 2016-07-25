@@ -16,20 +16,18 @@ export class DecoratorTypes {
   static EQUALS = 'Equals';
   static IN_ARRAY = 'InArray';
 
-  // string and number type
+  // string and number types
   static MAX_LEN = 'MaxLen';
   static MIN_LEN = 'MinLen';
   static CONTAINS = 'Contains';
-  static MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
 
-  // string type
+  // string types
   static MAX_BYTE_LEN = 'MaxByteLen';
   static MIN_BYTE_LEN = 'MinByteLen';
   static DATE_AFTER = 'DateAfter';
   static DATE_BEFORE = 'DateBefore';
   static UPPERCASE = 'Uppercase';
   static LOWERCASE = 'Lowercase';
-  static MATCHING = 'Matching';
   static DATE = 'IsDate';
   static EMAIL = 'IsEmail';
   static ALPHA = 'Alpha';
@@ -41,16 +39,18 @@ export class DecoratorTypes {
   static MAC_ADDRESS = 'IsMAC';
   static MONGO_ID = 'MongoID';
   static URL = 'IsURL';
+  static MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
 
-  // number type
+  // number types
   static MAX_VALUE = 'MaxValue';
   static MIN_VALUE = 'MinValue';
   static MULTIPLE_OF = 'MultipleOf';
 
-  // object type
+  // object types
   static NESTED = 'ValidateNested';
 
   //// disabled
+  // static MATCHING = 'Matching';
   // static FULLY_QUALIFIED_DOMAIN_NAME = 'FullyDefinedDomainName';
   // static ISBN = 'IsISBN';
   // static CREDITCARD = 'Creditcard';
@@ -178,11 +178,11 @@ export function Contains(value: string | number, validatorOptions?: IValidatorOp
   };
 }
 
-export function Matching(value: string, validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.MATCHING, value, validatorOptions);
-  };
-}
+// export function Matching(value: string, validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.MATCHING, value, validatorOptions);
+//   };
+// }
 
 export function IsEmpty(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {

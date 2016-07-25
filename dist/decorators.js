@@ -16,14 +16,12 @@ DecoratorTypes.IN_ARRAY = 'InArray';
 DecoratorTypes.MAX_LEN = 'MaxLen';
 DecoratorTypes.MIN_LEN = 'MinLen';
 DecoratorTypes.CONTAINS = 'Contains';
-DecoratorTypes.MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
 DecoratorTypes.MAX_BYTE_LEN = 'MaxByteLen';
 DecoratorTypes.MIN_BYTE_LEN = 'MinByteLen';
 DecoratorTypes.DATE_AFTER = 'DateAfter';
 DecoratorTypes.DATE_BEFORE = 'DateBefore';
 DecoratorTypes.UPPERCASE = 'Uppercase';
 DecoratorTypes.LOWERCASE = 'Lowercase';
-DecoratorTypes.MATCHING = 'Matching';
 DecoratorTypes.DATE = 'IsDate';
 DecoratorTypes.EMAIL = 'IsEmail';
 DecoratorTypes.ALPHA = 'Alpha';
@@ -35,6 +33,7 @@ DecoratorTypes.DATE_ISO8601 = 'ISO8601Date';
 DecoratorTypes.MAC_ADDRESS = 'IsMAC';
 DecoratorTypes.MONGO_ID = 'MongoID';
 DecoratorTypes.URL = 'IsURL';
+DecoratorTypes.MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
 DecoratorTypes.MAX_VALUE = 'MaxValue';
 DecoratorTypes.MIN_VALUE = 'MinValue';
 DecoratorTypes.MULTIPLE_OF = 'MultipleOf';
@@ -160,12 +159,6 @@ function Contains(value, validatorOptions) {
     };
 }
 exports.Contains = Contains;
-function Matching(value, validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.MATCHING, value, validatorOptions);
-    };
-}
-exports.Matching = Matching;
 function IsEmpty(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.IS_EMPTY, validatorOptions);

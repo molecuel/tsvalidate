@@ -3,5 +3,5 @@ export interface IValidatorError {
     property: string;
     type: string;
     message: string;
-    value: any;
+    value?: any;
 }

@@ -1,6 +1,6 @@
 import * as D from '../../dist/decorators';
 
-export class InnerTestClass {
+export class InnermostTestClass {
   private _decoratorName: string = D.DecoratorTypes.IS_NUMBER;
   private _decoratorValue: number | string = 0;
   constructor(value: number = 0, decoratorName: string = D.DecoratorTypes.IS_NUMBER, decoratorValue?: number | string) {
@@ -17,6 +17,23 @@ export class InnerTestClass {
   testText: string = 'text';
 }
 
+export class InnerContainerClass {
+  constructor(name: string = 'newTestClass', _bool: boolean = true, _number: number = 0) {
+    this.testText = name;
+    this.testBool = _bool;
+    this.testNumber = _number;
+    this.testInnermostContainer = new InnermostTestClass();
+  }
+  @D.IsString()
+  testNumber: number;
+  @D.IsNumber()
+  testBool: boolean = false;
+  @D.IsBoolean()
+  testText: string = 'text';
+  @D.ValidateNested()
+  testInnermostContainer: InnermostTestClass;
+}
+
 export class CustomTestClass {
   private _decoratorName: string = D.DecoratorTypes.IS_STRING;
   private _decoratorValue: number | string = 0;
@@ -25,10 +42,19 @@ export class CustomTestClass {
     this.testString = name;
     this._decoratorName = decoratorName;
     this._decoratorValue = decoratorValue;
-    this.testContainer = new InnerTestClass(nestedValue, nestedDecoratorName, nestedDecoratorValue);
+    this.testContainer = new InnermostTestClass(nestedValue, nestedDecoratorName, nestedDecoratorValue);
   }
   // @D.CustomDecorator(this._decoratorName, this._decoratorValue)
   testString: string;
   @D.ValidateNested()
-  testContainer: InnerTestClass;
+  testContainer: InnermostTestClass;
+}
+
+export class OuterContainerClass {
+  constructor() {
+    this.testInnerContainer = new InnerContainerClass();
+  }
+
+  @D.ValidateNested()
+  testInnerContainer: InnerContainerClass;
 }

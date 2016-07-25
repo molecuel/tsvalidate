@@ -18,5 +18,5 @@ export interface IValidatorError {
   /**
    * Value of that target's property, that didn't pass a validation.
    */
-  value: any;
+  value?: any;
 }

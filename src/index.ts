@@ -7,10 +7,16 @@ import validator = require('validator');
 
 export class Validator {
 
-  private errors: string[] = [];
+  private errors: IValidatorError[] = [];
   private nestedMode: boolean = false;
 
-  public validate(target: Object, validatorOptions?: IValidatorOptions) {
+  /**
+   * Validate per decorator predefined metadata of properties of objects and nested objects. Returns error messages via array of the IValidatorError interface.
+   * @param target Object
+   * @param validatorOptions IValidatorOptions optional
+   * @return IValidatorError[]
+   */
+  public validate(target: Object, validatorOptions?: IValidatorOptions): IValidatorError[] {
 
     for (let propertyName in target) {
       // Check object for property.
@@ -45,62 +51,62 @@ export class Validator {
             switch (metadataEntry.type) {
               case decorators.DecoratorTypes.IS_STRING:
                 if (types.name !== 'String') {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no string.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_STRING, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no string.' });
                 }
                 break;
               case decorators.DecoratorTypes.IS_BOOL:
                 if (types.name !== 'Boolean') {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Boolean.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_BOOL, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not of type Boolean.' });
                 }
                 break;
               case decorators.DecoratorTypes.IS_NUMBER:
                 if (types.name !== 'Number') {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no number.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_NUMBER, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no number.' });
                 }
                 break;
               case decorators.DecoratorTypes.IS_INT:
                 if (!validator.isInt(target[propertyName].toString())) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Integer.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_INT, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not of type Integer.' });
                 }
                 break;
               case decorators.DecoratorTypes.IS_FLOAT:
                 if (!validator.isFloat(target[propertyName].toString())) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Float.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_FLOAT, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not of type Float.' });
                 }
                 break;
               case decorators.DecoratorTypes.IS_DECIMAL:
                 if (!validator.isDecimal(target[propertyName].toString())) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not of type Decimal.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_DECIMAL, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not of type Decimal.' });
                 }
                 break;
               case decorators.DecoratorTypes.NOT_EMPTY:
                 if (target[propertyName] === ''
                   || target[propertyName] === null
                   || target[propertyName] === undefined) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is empty.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.NOT_EMPTY, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is empty.' });
                 }
                 break;
               case decorators.DecoratorTypes.IS_EMPTY:
                 if (target[propertyName] !== ''
                   && target[propertyName] !== null
                   && target[propertyName] !== undefined) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not empty.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IS_EMPTY, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not empty.' });
                 }
                 break;
               case decorators.DecoratorTypes.DEFINED:
                 if (target[propertyName] === null
                   || target[propertyName] === undefined) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not defined.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.DEFINED, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not defined.' });
                 }
                 break;
               case decorators.DecoratorTypes.IN_ARRAY:
                 if (!validator.isIn(target[propertyName].toString(), metadataEntry.value)) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' not found in relevant array.');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IN_ARRAY, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' not found in relevant array.', value: metadataEntry.value });
                 }
                 break;
               case decorators.DecoratorTypes.EQUALS:
                 if (!validator.isIn(target[propertyName].toString(), metadataEntry.value.toString())) {
-                  this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' not equal to \"' + metadataEntry.value.toString() + '\".');
+                  this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.EQUALS, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' not equal to \"' + metadataEntry.value.toString() + '\".', value: metadataEntry.value });
                 }
                 break;
             }
@@ -111,119 +117,125 @@ export class Validator {
         continue;
       }
     }
-    if (this.errors.length > 0
-      && !this.nestedMode) {
+    if (// this.errors.length > 0 &&
+      !this.nestedMode) {
       return this.errors;
     } else {
       return;
     }
   }
 
+  /**
+   * Validates metadata of properties of type string.
+   * @param target Object
+   * @param propertyName string
+   * @param metadataEntry any
+   */
   private validateString(target: Object, propertyName: string, metadataEntry: any) {
     switch (metadataEntry.type) {
       case decorators.DecoratorTypes.MAX_LEN:
         if (!validator.isLength(target[propertyName], { max: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' digit(s).');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MAX_LEN, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' digit(s).', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MIN_LEN:
         if (!validator.isLength(target[propertyName], { min: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' digit(s).');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MIN_LEN, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' digit(s).', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MAX_BYTE_LEN:
         if (!validator.isByteLength(target[propertyName], { max: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' byte(s).');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MAX_BYTE_LEN, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' byte(s).', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MIN_BYTE_LEN:
         if (!validator.isByteLength(target[propertyName], { min: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' byte(s).');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MIN_BYTE_LEN, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' byte(s).', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.CONTAINS:
         if (!validator.contains(target[propertyName], metadataEntry.value)) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' does not contain \"' + metadataEntry.value + '\".');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.CONTAINS, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' does not contain \"' + metadataEntry.value + '\".', value: metadataEntry.value });
         }
         break;
-      case decorators.DecoratorTypes.MATCHING:
-        if (!validator.matches(target[propertyName], metadataEntry.value)) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' does not match \"' + metadataEntry.value + '\".');
-        }
-        break;
+      // case decorators.DecoratorTypes.MATCHING:
+      //   if (!validator.matches(target[propertyName], metadataEntry.value)) {
+      //     this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MATCHING, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' does not match \"' + metadataEntry.value + '\".', value: metadataEntry.value });
+      //   }
+      //   break;
       case decorators.DecoratorTypes.ALPHA:
         if (!validator.isAlpha(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not exclusively composed of letter characters.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.ALPHA, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not exclusively composed of letter characters.' });
         }
         break;
       case decorators.DecoratorTypes.ALPHA_NUM:
         if (!validator.isAlphanumeric(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not alphanumeric.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.ALPHA_NUM, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not alphanumeric.' });
         }
         break;
       case decorators.DecoratorTypes.DATE:
         if (!validator.isDate(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a date.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.DATE, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not a date.' });
         }
         break;
       case decorators.DecoratorTypes.DATE_ISO8601:
         if (!validator.isISO8601(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a ISO8601 conform date.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.DATE_ISO8601, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not a ISO8601 conform date.' });
         }
         break;
       case decorators.DecoratorTypes.DATE_AFTER:
         if (!validator.isAfter(target[propertyName]), metadataEntry.value) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a date after ' + validator.toDate(metadataEntry.value) + '.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.DATE_AFTER, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not a date after ' + validator.toDate(metadataEntry.value) + '.', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.DATE_BEFORE:
         if (!validator.isBefore(target[propertyName]), metadataEntry.value) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not a date before ' + validator.toDate(metadataEntry.value) + '.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.DATE_BEFORE, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not a date before ' + validator.toDate(metadataEntry.value) + '.', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.UPPERCASE:
         if (!validator.isUppercase(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not uppercase.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.UPPERCASE, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not uppercase.' });
         }
         break;
       case decorators.DecoratorTypes.LOWERCASE:
         if (!validator.isLowercase(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is not lowercase.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.LOWERCASE, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not lowercase.' });
         }
         break;
       case decorators.DecoratorTypes.MOBILE_PHONE_NUMBER:
         if (!validator.isMobilePhone(target[propertyName], metadataEntry.value)) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no mobile phone number.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MOBILE_PHONE_NUMBER, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no mobile phone number.', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.HEXADECIMAL:
         if (!validator.isHexadecimal(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no hexadecimal number.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.HEXADECIMAL, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no hexadecimal number.', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.EMAIL:
         if (!validator.isEmail(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no valid email address.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.EMAIL, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no valid email address.' });
         }
         break;
       case decorators.DecoratorTypes.HEX_COLOR:
         if (!validator.isHexColor(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no hexadecimal color.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.HEX_COLOR, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no hexadecimal color.' });
         }
         break;
       case decorators.DecoratorTypes.MAC_ADDRESS:
         if (!validator.isMACAddress(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no MAC address.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MAC_ADDRESS, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no MAC address.' });
         }
         break;
       case decorators.DecoratorTypes.MONGO_ID:
         if (!validator.isMongoId(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no MongoDB ObjectID.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MONGO_ID, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no MongoDB ObjectID.' });
         }
         break;
       case decorators.DecoratorTypes.URL:
         if (!validator.isURL(target[propertyName])) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no URL.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.URL, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no URL.' });
         }
         break;
       case decorators.DecoratorTypes.IP_ADDRESS:
@@ -231,57 +243,58 @@ export class Validator {
           || metadataEntry.value === undefined) {
           if (!validator.isIP(target[propertyName], 4)
             && !validator.isIP(target[propertyName], 6)) {
-            this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no valid IP address.');
+            this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IP_ADDRESS, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no valid IP address.' });
           }
         }
         else if (metadataEntry.value !== 4
           || metadataEntry.value !== 6) {
-          this.errors.push('Could not validate parameter ' + propertyName + ' of ' + target.constructor.name + '. ' + metadataEntry.value + ' is no valid Internet Protocol version.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IP_ADDRESS, message: 'Could not validate property ' + propertyName + ' of ' + target.constructor.name + '. ' + metadataEntry.value + ' is no valid Internet Protocol version.', value: metadataEntry.value });
         }
         else {
           if (!validator.isIP(target[propertyName], metadataEntry.value)) {
-            this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no valid IP' + metadataEntry.value + ' address.');
+            this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.IP_ADDRESS, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no valid IP' + metadataEntry.value + ' address.', value: metadataEntry.value });
           }
         }
         break;
     }
   }
 
+  /**
+   * Validates metadata of properties of type numbers.
+   * @param target Object
+   * @param propertyName string
+   * @param metadataEntry any
+   */
   private validateNumber(target: Object, propertyName: string, metadataEntry: any) {
     switch (metadataEntry.type) {
       case decorators.DecoratorTypes.MAX_LEN:
         if (!validator.isLength(target[propertyName].toString(), { max: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' digit(s).');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MAX_LEN, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' digit(s).', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MIN_LEN:
         if (!validator.isLength(target[propertyName].toString(), { min: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' digit(s).');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MIN_LEN, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' digit(s).', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MAX_VALUE:
-        if (!validator.isLength(target[propertyName].toString(), { max: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is bigger than ' + metadataEntry.value + '.');
+        if (!validator.isFloat(target[propertyName].toString(), { max: metadataEntry.value })) {
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MAX_VALUE, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is bigger than ' + metadataEntry.value + '.', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MIN_VALUE:
-        if (!validator.isLength(target[propertyName].toString(), { min: metadataEntry.value })) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is smaller than ' + metadataEntry.value + '.');
+        if (!validator.isFloat(target[propertyName].toString(), { min: metadataEntry.value })) {
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MIN_VALUE, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is smaller than ' + metadataEntry.value + '.', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.CONTAINS:
         if (!validator.contains(target[propertyName].toString(), metadataEntry.value.toString())) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' does not contain \"' + metadataEntry.value + '\".');
-        }
-        break;
-      case decorators.DecoratorTypes.MOBILE_PHONE_NUMBER:
-        if (!validator.isMobilePhone(target[propertyName].toString(), metadataEntry.value)) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no mobile phone number.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.CONTAINS, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' does not contain \"' + metadataEntry.value + '\".', value: metadataEntry.value });
         }
         break;
       case decorators.DecoratorTypes.MULTIPLE_OF:
         if (!validator.isDivisibleBy(target[propertyName].toString(), metadataEntry.value)) {
-          this.errors.push('Parameter ' + propertyName + ' of ' + target.constructor.name + ' is no multiple of ' + metadataEntry.value + '.');
+          this.errors.push({ target: target.constructor.name, property: propertyName, type: decorators.DecoratorTypes.MULTIPLE_OF, message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no multiple of ' + metadataEntry.value + '.', value: metadataEntry.value });
         }
         break;
     }

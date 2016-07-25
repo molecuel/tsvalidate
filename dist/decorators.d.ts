@@ -14,14 +14,12 @@ export declare class DecoratorTypes {
     static MAX_LEN: string;
     static MIN_LEN: string;
     static CONTAINS: string;
-    static MOBILE_PHONE_NUMBER: string;
     static MAX_BYTE_LEN: string;
     static MIN_BYTE_LEN: string;
     static DATE_AFTER: string;
     static DATE_BEFORE: string;
     static UPPERCASE: string;
     static LOWERCASE: string;
-    static MATCHING: string;
     static DATE: string;
     static EMAIL: string;
     static ALPHA: string;
@@ -33,6 +31,7 @@ export declare class DecoratorTypes {
     static MAC_ADDRESS: string;
     static MONGO_ID: string;
     static URL: string;
+    static MOBILE_PHONE_NUMBER: string;
     static MAX_VALUE: string;
     static MIN_VALUE: string;
     static MULTIPLE_OF: string;
@@ -58,7 +57,6 @@ export declare function Lowercase(validatorOptions?: IValidatorOptions): (target
 export declare function MultipleOf(value: number, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function InArray(array: any[], validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Contains(value: string | number, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
-export declare function Matching(value: string, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsEmpty(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsNotEmpty(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Alpha(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
