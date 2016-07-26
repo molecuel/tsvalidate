@@ -4,10 +4,8 @@ import validator = require('validator');
 export class DecoratorTypes {
 
   // all types
-  static IS_BOOL = 'IsBoolean';
+  static IS_TYPED = 'ValidateType';
   static IS_INT = 'IsInt';
-  static IS_NUMBER = 'IsNumber';
-  static IS_STRING = 'IsString';
   static IS_FLOAT = 'IsFloat';
   static IS_DECIMAL = 'IsDecimal';
   static IS_EMPTY = 'IsEmpty';
@@ -15,6 +13,9 @@ export class DecoratorTypes {
   static DEFINED = 'IsDefined';
   static EQUALS = 'Equals';
   static IN_ARRAY = 'InArray';
+  // static IS_NUMBER = 'IsNumber'; // disabled
+  // static IS_STRING = 'IsString'; // disabled
+  // static IS_BOOL = 'IsBoolean'; // disabled
 
   // string and number types
   static MAX_LEN = 'MaxLen';
@@ -48,37 +49,17 @@ export class DecoratorTypes {
 
   // object types
   static NESTED = 'ValidateNested';
-
-  //// disabled
-  // static MATCHING = 'Matching';
-  // static FULLY_QUALIFIED_DOMAIN_NAME = 'FullyDefinedDomainName';
-  // static ISBN = 'IsISBN';
-  // static CREDITCARD = 'Creditcard';
-  // static CURRENCY = 'Currency';
-  // static UUID = 'IsUUID';
 }
 
-export function IsBoolean(validatorOptions?: IValidatorOptions) {
+export function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_BOOL, validatorOptions);
-  };
-}
-
-export function IsNumber(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_NUMBER, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, validatorOptions);
   };
 }
 
 export function IsInt(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_INT, validatorOptions);
-  };
-}
-
-export function IsString(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_STRING, validatorOptions);
   };
 }
 
@@ -178,12 +159,6 @@ export function Contains(value: string | number, validatorOptions?: IValidatorOp
   };
 }
 
-// export function Matching(value: string, validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.MATCHING, value, validatorOptions);
-//   };
-// }
-
 export function IsEmpty(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_EMPTY, validatorOptions);
@@ -220,18 +195,6 @@ export function MobilePhoneNumber(language: string, validatorOptions?: IValidato
   };
 }
 
-// export function Creditcard(validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.CREDITCARD, validatorOptions);
-//   };
-// }
-
-// export function Currency(validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.CURRENCY, validatorOptions);
-//   };
-// }
-
 export function IsDate(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
@@ -243,12 +206,6 @@ export function IsEmail(validatorOptions?: IValidatorOptions) {
     BasicDecorator(target, propertyName, DecoratorTypes.EMAIL, validatorOptions);
   };
 }
-
-// export function FullyQualifiedDomainName(validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.FULLY_QUALIFIED_DOMAIN_NAME, validatorOptions);
-//   };
-// }
 
 export function HexColor(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
@@ -267,12 +224,6 @@ export function Hexadecimal(validatorOptions?: IValidatorOptions) {
     BasicDecorator(target, propertyName, DecoratorTypes.HEXADECIMAL, validatorOptions);
   };
 }
-
-// export function IsISBN(validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.ISBN, validatorOptions);
-//   };
-// }
 
 export function ISO8601Date(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
@@ -298,12 +249,6 @@ export function IsURL(validatorOptions?: IValidatorOptions) {
   };
 }
 
-// export function IsUUID(validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.UUID, validatorOptions);
-//   };
-// }
-
 export function ValidateNested(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);
@@ -321,18 +266,6 @@ export function Trim() {
     }
   };
 }
-
-// export function CustomDecorator(decoratorName: string = DecoratorTypes.CONTAINS, owningObject?: Object, ...decoratorValues: any[]) {
-//   return function(target: Object, propertyName: string) {
-//     if (owningObject === null
-//       || owningObject === undefined) {
-//       window[decoratorName](decoratorValues);
-//     }
-//     else {
-//       owningObject[decoratorName](decoratorValues);
-//     }
-//   };
-// }
 
 function BasicDecorator(_target: Object, _propertyName: string, _type: string, _value: any, validatorOptions?: IValidatorOptions) {
   let metadata = Reflect.getMetadata('tsvalidate:validators', _target, _propertyName);

@@ -19,25 +19,6 @@ describe('validator', function () {
         let testValidator;
         let validationResult;
         let localTestClass;
-        it('Should validate types (Boolean)', function () {
-            class OuterTestClass {
-                constructor(_number = 0) {
-                    this.testNumber = _number;
-                }
-            }
-            __decorate([
-                D.IsBoolean(), 
-                __metadata('design:type', Number)
-            ], OuterTestClass.prototype, "testNumber", void 0);
-            testValidator = new dist_1.Validator();
-            localTestClass = new OuterTestClass();
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(validationResult[0].message);
-            }
-            (validationResult.length > 0).should.be.ok();
-            validationResult = [];
-        });
         it('Should validate types (Decimal)', function () {
             class OuterTestClass {
                 constructor(_string = 'new') {
@@ -57,25 +38,6 @@ describe('validator', function () {
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
         });
-        it('Should validate types (String)', function () {
-            class OuterTestClass {
-                constructor(_bool = true) {
-                    this.testBool = _bool;
-                }
-            }
-            __decorate([
-                D.IsString(), 
-                __metadata('design:type', Boolean)
-            ], OuterTestClass.prototype, "testBool", void 0);
-            testValidator = new dist_1.Validator();
-            localTestClass = new OuterTestClass();
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(validationResult[0].message);
-            }
-            (validationResult.length > 0).should.be.ok();
-            validationResult = [];
-        });
         it('Should validate types (Float)', function () {
             class OuterTestClass {
                 constructor(_bool = true) {
@@ -86,25 +48,6 @@ describe('validator', function () {
                 D.IsFloat(), 
                 __metadata('design:type', Boolean)
             ], OuterTestClass.prototype, "testBool", void 0);
-            testValidator = new dist_1.Validator();
-            localTestClass = new OuterTestClass();
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(validationResult[0].message);
-            }
-            (validationResult.length > 0).should.be.ok();
-            validationResult = [];
-        });
-        it('Should validate types (Number)', function () {
-            class OuterTestClass {
-                constructor(_string = 'new') {
-                    this.testString = _string;
-                }
-            }
-            __decorate([
-                D.IsNumber(), 
-                __metadata('design:type', String)
-            ], OuterTestClass.prototype, "testString", void 0);
             testValidator = new dist_1.Validator();
             localTestClass = new OuterTestClass();
             validationResult = testValidator.validate(localTestClass);
@@ -429,7 +372,10 @@ describe('validator', function () {
             testValidator = new dist_1.Validator();
             localTestClass = new stringTestClass('desoxyribonucleic acid');
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
             }
             (validationResult.length > 0).should.be.ok();
@@ -452,7 +398,10 @@ describe('validator', function () {
             testValidator = new dist_1.Validator();
             localTestClass = new stringTestClass('desoxyribonucleic acid');
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
             }
             (validationResult.length > 0).should.be.ok();
@@ -520,6 +469,52 @@ describe('validator', function () {
             ], stringTestClass.prototype, "testString", void 0);
             testValidator = new dist_1.Validator();
             localTestClass = new stringTestClass('desoxyribonucleic acid');
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(validationResult[0].message);
+            }
+            (validationResult.length > 0).should.be.ok();
+            validationResult = [];
+        });
+        it('Should validate string metadata (alphanumeric)', function () {
+            testValidator = new dist_1.Validator();
+            class stringTestClass {
+                constructor(_string = 'new') {
+                    this.testString = _string;
+                    this.lowercaseTestString = 'LOWERCASE';
+                    this.notEmptyTestString = '';
+                    this.definedTestString = undefined;
+                }
+            }
+            __decorate([
+                D.AlphaNumeric(), 
+                __metadata('design:type', String)
+            ], stringTestClass.prototype, "testString", void 0);
+            testValidator = new dist_1.Validator();
+            localTestClass = new stringTestClass('This is a full sentence with PUNCTUATION.');
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(validationResult[0].message);
+            }
+            (validationResult.length > 0).should.be.ok();
+            validationResult = [];
+        });
+        it('Should validate string metadata (alpha)', function () {
+            testValidator = new dist_1.Validator();
+            class stringTestClass {
+                constructor(_string = 'new') {
+                    this.testString = _string;
+                    this.lowercaseTestString = 'LOWERCASE';
+                    this.notEmptyTestString = '';
+                    this.definedTestString = undefined;
+                }
+            }
+            __decorate([
+                D.Alpha(), 
+                __metadata('design:type', String)
+            ], stringTestClass.prototype, "testString", void 0);
+            testValidator = new dist_1.Validator();
+            localTestClass = new stringTestClass('This is a full sentence with PUNCTUATION.');
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
@@ -698,7 +693,10 @@ describe('validator', function () {
             testValidator = new dist_1.Validator();
             localTestClass = new numberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
             }
             (validationResult.length > 0).should.be.ok();
@@ -720,7 +718,10 @@ describe('validator', function () {
             testValidator = new dist_1.Validator();
             localTestClass = new numberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
             }
             (validationResult.length > 0).should.be.ok();
@@ -850,7 +851,10 @@ describe('validator', function () {
             testValidator = new dist_1.Validator();
             localTestClass = new booleanTestClass(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
             }
             (validationResult.length > 0).should.be.ok();
@@ -871,7 +875,10 @@ describe('validator', function () {
             testValidator = new dist_1.Validator();
             localTestClass = new booleanTestClass(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
                 console.log(validationResult[0].message);
             }
             (validationResult.length > 0).should.be.ok();
@@ -891,6 +898,24 @@ describe('validator', function () {
             ], booleanTestClass.prototype, "definedTestBool", void 0);
             testValidator = new dist_1.Validator();
             localTestClass = new booleanTestClass(true);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 1) {
+                console.log(validationResult[1].message);
+            }
+            else if (validationResult.length > 0) {
+                console.log(validationResult[0].message);
+            }
+            (validationResult.length > 0).should.be.ok();
+            validationResult = [];
+        });
+        it('Should validate types (Boolean)', function () {
+            class OuterTestClass {
+                constructor(_number) {
+                    this.testNumber = _number;
+                }
+            }
+            testValidator = new dist_1.Validator();
+            localTestClass = new OuterTestClass(true);
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(validationResult[0].message);

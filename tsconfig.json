@@ -19,7 +19,6 @@
     "src/decorators.ts",
     "src/interfaces/IValidatorError.ts",
     "src/interfaces/IValidatorOptions.ts",
-    "src/interfaces/IMetadataInformation.ts",
     "dist/index.d.ts"
   ],
   "exclude": [],

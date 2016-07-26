@@ -2,10 +2,8 @@
 const validator = require('validator');
 class DecoratorTypes {
 }
-DecoratorTypes.IS_BOOL = 'IsBoolean';
+DecoratorTypes.IS_TYPED = 'ValidateType';
 DecoratorTypes.IS_INT = 'IsInt';
-DecoratorTypes.IS_NUMBER = 'IsNumber';
-DecoratorTypes.IS_STRING = 'IsString';
 DecoratorTypes.IS_FLOAT = 'IsFloat';
 DecoratorTypes.IS_DECIMAL = 'IsDecimal';
 DecoratorTypes.IS_EMPTY = 'IsEmpty';
@@ -39,30 +37,18 @@ DecoratorTypes.MIN_VALUE = 'MinValue';
 DecoratorTypes.MULTIPLE_OF = 'MultipleOf';
 DecoratorTypes.NESTED = 'ValidateNested';
 exports.DecoratorTypes = DecoratorTypes;
-function IsBoolean(validatorOptions) {
+function ValidateType(objectType, validatorOptions) {
     return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.IS_BOOL, validatorOptions);
+        BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, validatorOptions);
     };
 }
-exports.IsBoolean = IsBoolean;
-function IsNumber(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.IS_NUMBER, validatorOptions);
-    };
-}
-exports.IsNumber = IsNumber;
+exports.ValidateType = ValidateType;
 function IsInt(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.IS_INT, validatorOptions);
     };
 }
 exports.IsInt = IsInt;
-function IsString(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.IS_STRING, validatorOptions);
-    };
-}
-exports.IsString = IsString;
 function IsFloat(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.IS_FLOAT, validatorOptions);

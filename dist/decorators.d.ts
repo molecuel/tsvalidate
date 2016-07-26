@@ -1,9 +1,7 @@
 import { IValidatorOptions } from './interfaces/IValidatorOptions';
 export declare class DecoratorTypes {
-    static IS_BOOL: string;
+    static IS_TYPED: string;
     static IS_INT: string;
-    static IS_NUMBER: string;
-    static IS_STRING: string;
     static IS_FLOAT: string;
     static IS_DECIMAL: string;
     static IS_EMPTY: string;
@@ -37,10 +35,8 @@ export declare class DecoratorTypes {
     static MULTIPLE_OF: string;
     static NESTED: string;
 }
-export declare function IsBoolean(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
-export declare function IsNumber(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
+export declare function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsInt(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
-export declare function IsString(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsFloat(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsDecimal(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function MaxLen(value: number, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
