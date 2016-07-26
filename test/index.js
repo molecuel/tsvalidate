@@ -19,10 +19,7 @@ describe('validator', function () {
         let testValidator;
         let validationResult;
         let localTestClass;
-        after(function (done) {
-            done();
-        });
-        it('Should validate types (Boolean)', function (done) {
+        it('Should validate types (Boolean)', function () {
             class OuterTestClass {
                 constructor(_number = 0) {
                     this.testNumber = _number;
@@ -40,9 +37,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate types (Decimal)', function (done) {
+        it('Should validate types (Decimal)', function () {
             class OuterTestClass {
                 constructor(_string = 'new') {
                     this.testString = _string;
@@ -60,9 +56,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate types (String)', function (done) {
+        it('Should validate types (String)', function () {
             class OuterTestClass {
                 constructor(_bool = true) {
                     this.testBool = _bool;
@@ -80,9 +75,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate types (Float)', function (done) {
+        it('Should validate types (Float)', function () {
             class OuterTestClass {
                 constructor(_bool = true) {
                     this.testBool = _bool;
@@ -100,9 +94,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate types (Number)', function (done) {
+        it('Should validate types (Number)', function () {
             class OuterTestClass {
                 constructor(_string = 'new') {
                     this.testString = _string;
@@ -120,9 +113,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate types (Integer)', function (done) {
+        it('Should validate types (Integer)', function () {
             class OuterTestClass {
                 constructor(_number = 1.4) {
                     this.testNumber = _number;
@@ -140,9 +132,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate nested types', function (done) {
+        it('Should validate nested types', function () {
             testValidator = new dist_1.Validator();
             let localTestClass;
             localTestClass = new TestClass_1.CustomTestClass();
@@ -153,10 +144,9 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
         console.log('\n');
-        it('Should validate multi-nested types', function (done) {
+        it('Should validate multi-nested types', function () {
             testValidator = new dist_1.Validator();
             let localTestClass;
             localTestClass = new TestClass_1.OuterContainerClass();
@@ -167,10 +157,9 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
         console.log('\n');
-        it('Should validate string length (maximum)', function (done) {
+        it('Should validate string length (maximum)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -192,9 +181,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string length (minimum)', function (done) {
+        it('Should validate string length (minimum)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -216,9 +204,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string byte length (maximum)', function (done) {
+        it('Should validate string byte length (maximum)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -240,9 +227,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string byte length (minimum)', function (done) {
+        it('Should validate string byte length (minimum)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -264,9 +250,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string date', function (done) {
+        it('Should validate string date', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -288,9 +273,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string date (ISO8601)', function (done) {
+        it('Should validate string date (ISO8601)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -312,9 +296,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string dates prior to xx-yy-zzzz', function (done) {
+        it('Should validate string dates prior to xx-yy-zzzz', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -336,9 +319,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string dates after xx-yy-zzzz', function (done) {
+        it('Should validate string dates after xx-yy-zzzz', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -360,9 +342,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate uppercase strings', function (done) {
+        it('Should validate uppercase strings', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -384,9 +365,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate lowercase strings', function (done) {
+        it('Should validate lowercase strings', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -408,9 +388,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string content state (empty)', function (done) {
+        it('Should validate string content state (empty)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -432,9 +411,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string content state (filled)', function (done) {
+        it('Should validate string content state (filled)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -456,9 +434,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string content state (defined)', function (done) {
+        it('Should validate string content state (defined)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -480,9 +457,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string content state (equal to xyz)', function (done) {
+        it('Should validate string content state (equal to xyz)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -504,9 +480,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string content state (contains xyz)', function (done) {
+        it('Should validate string content state (contains xyz)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -528,9 +503,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate string content state (in array xyz)', function (done) {
+        it('Should validate string content state (in array xyz)', function () {
             testValidator = new dist_1.Validator();
             class stringTestClass {
                 constructor(_string = 'new') {
@@ -552,10 +526,9 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
         console.log('\n');
-        it('Should validate number metadata (maximum length)', function (done) {
+        it('Should validate number metadata (maximum length)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -576,9 +549,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number metadata (minimum length)', function (done) {
+        it('Should validate number metadata (minimum length)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -599,9 +571,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number metadata (maximum value)', function (done) {
+        it('Should validate number metadata (maximum value)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -622,9 +593,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number metadata (minimum value)', function (done) {
+        it('Should validate number metadata (minimum value)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -645,9 +615,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number content state (contains xyz)', function (done) {
+        it('Should validate number content state (contains xyz)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -668,9 +637,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number content state (equals xyz)', function (done) {
+        it('Should validate number content state (equals xyz)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -691,9 +659,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number content state (empty)', function (done) {
+        it('Should validate number content state (empty)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -714,9 +681,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number content state (filled)', function (done) {
+        it('Should validate number content state (filled)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -737,9 +703,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number content state (defined)', function (done) {
+        it('Should validate number content state (defined)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -760,9 +725,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number content state (in array xyz)', function (done) {
+        it('Should validate number content state (in array xyz)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -783,9 +747,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number metadata (multiple of xyz)', function (done) {
+        it('Should validate number metadata (multiple of xyz)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -806,9 +769,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate number metadata (equals xyz)', function (done) {
+        it('Should validate number metadata (equals xyz)', function () {
             testValidator = new dist_1.Validator();
             class numberTestClass {
                 constructor(_number = 0) {
@@ -829,10 +791,9 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
         console.log('\n');
-        it('Should validate boolean metadata (equals xyz)', function (done) {
+        it('Should validate boolean metadata (equals xyz)', function () {
             testValidator = new dist_1.Validator();
             class booleanTestClass {
                 constructor(_bool = false) {
@@ -852,9 +813,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate boolean metadata (in array xyz)', function (done) {
+        it('Should validate boolean metadata (in array xyz)', function () {
             testValidator = new dist_1.Validator();
             class booleanTestClass {
                 constructor(_bool = false) {
@@ -874,9 +834,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate boolean content state (defined)', function (done) {
+        it('Should validate boolean content state (defined)', function () {
             testValidator = new dist_1.Validator();
             class booleanTestClass {
                 constructor(_bool = false) {
@@ -896,9 +855,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate boolean content state (empty)', function (done) {
+        it('Should validate boolean content state (empty)', function () {
             testValidator = new dist_1.Validator();
             class booleanTestClass {
                 constructor(_bool = false) {
@@ -918,9 +876,8 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
-        it('Should validate boolean content state (filled)', function (done) {
+        it('Should validate boolean content state (filled)', function () {
             testValidator = new dist_1.Validator();
             class booleanTestClass {
                 constructor(_bool = false) {
@@ -940,7 +897,6 @@ describe('validator', function () {
             }
             (validationResult.length > 0).should.be.ok();
             validationResult = [];
-            done();
         });
     });
 });
