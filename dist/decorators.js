@@ -39,7 +39,7 @@ DecoratorTypes.NESTED = 'ValidateNested';
 exports.DecoratorTypes = DecoratorTypes;
 function ValidateType(objectType, validatorOptions) {
     return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, validatorOptions);
+        BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType, validatorOptions);
     };
 }
 exports.ValidateType = ValidateType;

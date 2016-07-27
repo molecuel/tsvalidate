@@ -4,7 +4,7 @@
   "description": "Typescript validator",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha -R spec --debug-brk"
+    "test": "mocha -R spec"
   },
   "repository": {
     "type": "git",

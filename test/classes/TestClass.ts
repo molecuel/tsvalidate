@@ -9,8 +9,11 @@ export class InnermostTestClass {
     this._decoratorValue = decoratorValue;
   }
   // @D.CustomDecorator(this._decoratorName, this._decoratorValue)
+  @D.ValidateType(InnermostTestClass)
   testNumber: number;
+  @D.IsFloat()
   testBool: boolean = false;
+  @D.IsInt()
   testText: string = 'text';
 }
 
@@ -24,6 +27,8 @@ export class InnerContainerClass {
   testNumber: number;
   testBool: boolean = false;
   testText: string = 'text';
+  @D.ValidateNested()
+  @D.ValidateType()
   testInnermostContainer: InnermostTestClass;
 }
 
@@ -40,6 +45,7 @@ export class CustomTestClass {
   // @D.CustomDecorator(this._decoratorName, this._decoratorValue)
   testString: string;
   @D.ValidateNested()
+  @D.ValidateType()
   testContainer: InnermostTestClass;
 }
 
@@ -47,7 +53,7 @@ export class OuterContainerClass {
   constructor() {
     this.testInnerContainer = new InnerContainerClass();
   }
-
   @D.ValidateNested()
+  @D.ValidateType(InnermostTestClass)
   testInnerContainer: InnerContainerClass;
 }

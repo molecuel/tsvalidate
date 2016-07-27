@@ -53,7 +53,7 @@ export class DecoratorTypes {
 
 export function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType, validatorOptions);
   };
 }
 

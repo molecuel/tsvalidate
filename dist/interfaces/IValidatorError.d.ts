@@ -4,4 +4,5 @@ export interface IValidatorError {
     type: string;
     message: string;
     value?: any;
+    comparison?: any;
 }

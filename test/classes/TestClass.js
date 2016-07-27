@@ -20,6 +20,18 @@ class InnermostTestClass {
         this._decoratorValue = decoratorValue;
     }
 }
+__decorate([
+    D.ValidateType(InnermostTestClass), 
+    __metadata('design:type', Number)
+], InnermostTestClass.prototype, "testNumber", void 0);
+__decorate([
+    D.IsFloat(), 
+    __metadata('design:type', Boolean)
+], InnermostTestClass.prototype, "testBool", void 0);
+__decorate([
+    D.IsInt(), 
+    __metadata('design:type', String)
+], InnermostTestClass.prototype, "testText", void 0);
 exports.InnermostTestClass = InnermostTestClass;
 class InnerContainerClass {
     constructor(name = 'newTestClass', _bool = true, _number = 0) {
@@ -31,6 +43,11 @@ class InnerContainerClass {
         this.testInnermostContainer = new InnermostTestClass();
     }
 }
+__decorate([
+    D.ValidateNested(),
+    D.ValidateType(), 
+    __metadata('design:type', InnermostTestClass)
+], InnerContainerClass.prototype, "testInnermostContainer", void 0);
 exports.InnerContainerClass = InnerContainerClass;
 class CustomTestClass {
     constructor(name = 'newTestClass', decoratorName = D.DecoratorTypes.IS_TYPED, decoratorValue, nestedValue, nestedDecoratorName, nestedDecoratorValue) {
@@ -43,7 +60,8 @@ class CustomTestClass {
     }
 }
 __decorate([
-    D.ValidateNested(), 
+    D.ValidateNested(),
+    D.ValidateType(), 
     __metadata('design:type', InnermostTestClass)
 ], CustomTestClass.prototype, "testContainer", void 0);
 exports.CustomTestClass = CustomTestClass;
@@ -53,7 +71,8 @@ class OuterContainerClass {
     }
 }
 __decorate([
-    D.ValidateNested(), 
+    D.ValidateNested(),
+    D.ValidateType(InnermostTestClass), 
     __metadata('design:type', InnerContainerClass)
 ], OuterContainerClass.prototype, "testInnerContainer", void 0);
 exports.OuterContainerClass = OuterContainerClass;

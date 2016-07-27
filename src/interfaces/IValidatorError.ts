@@ -19,4 +19,8 @@ export interface IValidatorError {
    * Value of that target's property, that didn't pass a validation.
    */
   value?: any;
+  /**
+   * That which the target's property was validated against.
+   */
+  comparison?: any;
 }
