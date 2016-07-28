@@ -13,6 +13,7 @@ describe('validator', function() {
   let testValidator: Validator;
   let validationResult: IValidatorError[];
   let localTestClass;
+  let indent: string = '       ';
   describe('for all types', function() {
 
     it('VALIDATION ERROR: Should validate string content state (equal to xyz)', function() {
@@ -28,7 +29,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -47,7 +48,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass(new String());
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -60,7 +61,7 @@ describe('validator', function() {
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         for (let i in validationResult)
-          console.log(validationResult[i].message);
+          console.log(indent + validationResult[i].message);
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -73,7 +74,7 @@ describe('validator', function() {
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         for (let i in validationResult)
-          console.log(validationResult[i].message);
+          console.log(indent + validationResult[i].message);
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -86,7 +87,7 @@ describe('validator', function() {
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         for (let i in validationResult)
-          console.log(validationResult[i].message);
+          console.log(indent + validationResult[i].message);
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -99,7 +100,7 @@ describe('validator', function() {
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         for (let i in validationResult)
-          console.log(validationResult[i].message);
+          console.log(indent + validationResult[i].message);
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -117,7 +118,7 @@ describe('validator', function() {
       localTestClass = new TestClass('text');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -135,7 +136,7 @@ describe('validator', function() {
       localTestClass = new TestClass(123);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -153,7 +154,7 @@ describe('validator', function() {
       localTestClass = new TestClass(true);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -171,7 +172,7 @@ describe('validator', function() {
       localTestClass = new TestClass('test');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -189,7 +190,7 @@ describe('validator', function() {
       localTestClass = new TestClass(123);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -207,7 +208,7 @@ describe('validator', function() {
       localTestClass = new TestClass(false);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -225,7 +226,7 @@ describe('validator', function() {
       localTestClass = new TestClass('text');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -243,7 +244,7 @@ describe('validator', function() {
       localTestClass = new TestClass(true);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -265,7 +266,7 @@ describe('validator', function() {
       localTestClass = new TestClass('test');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -283,7 +284,7 @@ describe('validator', function() {
       localTestClass = new TestClass(123.45);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -301,7 +302,7 @@ describe('validator', function() {
       localTestClass = new TestClass('1234.5');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -319,7 +320,7 @@ describe('validator', function() {
       localTestClass = new TestClass(123.45);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -337,7 +338,7 @@ describe('validator', function() {
       localTestClass = new TestClass(543.21);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -355,7 +356,7 @@ describe('validator', function() {
       localTestClass = new TestClass(100);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -374,7 +375,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -393,7 +394,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -412,7 +413,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -431,7 +432,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -450,7 +451,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -469,7 +470,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -488,7 +489,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -507,7 +508,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -526,7 +527,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -545,7 +546,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('07-27-16');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -564,7 +565,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('24-12-2015');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -583,7 +584,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('2015-12-24');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -602,7 +603,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('blablub.wruff');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -621,7 +622,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('info@inspirationlabs.com');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -640,7 +641,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('256.256.256.1');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -659,7 +660,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('127.0.0.1');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -678,7 +679,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('0123.4567.89ab');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -697,7 +698,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('01:23:45:67:89:AB');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -716,7 +717,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('gh:ab:11');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -735,7 +736,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('FCFCFC');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -754,7 +755,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('ghab11');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -773,7 +774,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('fcfcfc');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -792,7 +793,7 @@ describe('validator', function() {
     //   localTestClass = new stringTestClass('gnarf.exe');
     //   validationResult = testValidator.validate(localTestClass);
     //   if (validationResult.length > 0) {
-    //     console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+    //     console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
     //   }
     //   (validationResult.length > 0).should.be.ok();
     //   validationResult = [];
@@ -811,7 +812,7 @@ describe('validator', function() {
     //   localTestClass = new stringTestClass('www.wruff.meow');
     //   validationResult = testValidator.validate(localTestClass);
     //   if (validationResult.length > 0) {
-    //     console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+    //     console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
     //   }
     //   (validationResult.length === 0).should.be.ok();
     //   validationResult = [];
@@ -830,7 +831,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('nonononotanobjectidatall');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -849,7 +850,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('507f191e810c19729de860ea');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -868,7 +869,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('08.15.16');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -887,7 +888,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('06-12-2016');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -906,7 +907,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('01.07.2016');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -925,7 +926,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('01.08.2016');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -944,7 +945,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -963,7 +964,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('UPPERCASE');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -982,7 +983,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('Totally NOT lowercase');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1001,7 +1002,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('just lowercase');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1020,7 +1021,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1039,7 +1040,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1058,10 +1059,10 @@ describe('validator', function() {
       localTestClass = new stringTestClass();
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1080,10 +1081,10 @@ describe('validator', function() {
       localTestClass = new stringTestClass('aircraft carrier');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1102,10 +1103,10 @@ describe('validator', function() {
       localTestClass = new stringTestClass();
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1124,10 +1125,10 @@ describe('validator', function() {
       localTestClass = new stringTestClass(null);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1146,7 +1147,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1165,7 +1166,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('amino acid base pairs');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1184,7 +1185,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('desoxyribonucleic acid');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1203,7 +1204,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('two');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1222,7 +1223,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('three');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1241,7 +1242,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('amino acid base pairs');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1260,7 +1261,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('This is a full sentence with PUNCTUATION.');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1279,7 +1280,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('No punctuation here');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1298,7 +1299,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('h3r3 b3 m0n573r5');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1317,7 +1318,7 @@ describe('validator', function() {
       localTestClass = new stringTestClass('here be monsters');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1340,7 +1341,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1359,7 +1360,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(9);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1378,7 +1379,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1397,7 +1398,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(125);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1417,7 +1418,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1437,7 +1438,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(5);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1457,7 +1458,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1477,7 +1478,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(12);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1497,7 +1498,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1517,7 +1518,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(12);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1537,7 +1538,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1557,7 +1558,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass();
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1577,7 +1578,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass();
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1597,7 +1598,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1617,7 +1618,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(undefined);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1637,7 +1638,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(101);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1657,7 +1658,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(9);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1677,7 +1678,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(3);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1697,7 +1698,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(10);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1717,7 +1718,7 @@ describe('validator', function() {
       localTestClass = new numberTestClass(12);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1741,7 +1742,7 @@ describe('validator', function() {
       localTestClass = new booleanTestClass(false);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1761,7 +1762,7 @@ describe('validator', function() {
       localTestClass = new booleanTestClass(true);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1781,7 +1782,7 @@ describe('validator', function() {
       localTestClass = new booleanTestClass(undefined);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1801,7 +1802,7 @@ describe('validator', function() {
       localTestClass = new booleanTestClass(false);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1821,10 +1822,10 @@ describe('validator', function() {
       localTestClass = new booleanTestClass(true);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1844,10 +1845,10 @@ describe('validator', function() {
       localTestClass = new booleanTestClass();
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];
@@ -1867,10 +1868,10 @@ describe('validator', function() {
       localTestClass = new booleanTestClass();
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length > 0).should.be.ok();
       validationResult = [];
@@ -1890,10 +1891,10 @@ describe('validator', function() {
       localTestClass = new booleanTestClass(false);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 1) {
-        console.log(validationResult[1].message + ' [' + validationResult[1].value + ']');
+        console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
       }
       else if (validationResult.length > 0) {
-        console.log(validationResult[0].message + ' [' + validationResult[0].value + ']');
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length === 0).should.be.ok();
       validationResult = [];

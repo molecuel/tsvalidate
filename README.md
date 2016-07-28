@@ -12,13 +12,22 @@ Allows validating properties of objects and (multi-)nested objects via predefine
 
 ## Usage
 
-Upon defining classes add any of the predefined decorators to their properties, then call validate method passing the object:
-
-Either
+Import either the validator and specific decorators,
 
 ```typescript
-import {Validator, AlphaNumeric, MaxLen, IsInt, IsNotEmpty, InArray, IsDecimal, HexColor, IValidatorError} from "class-validator";
+import {Validator, AlphaNumeric, MaxLen, IsInt, IsNotEmpty, InArray, IsDecimal, HexColor, IValidatorError}
+  from "class-validator";
+```
 
+or use an alias for all exports.
+
+```typescript
+import * as V from "class-validator";
+```
+
+Upon defining classes add any of the predefined decorators to their properties, then call validate method passing the object:
+
+```typescript
 export class Engine {
 
   @IsInt()
@@ -62,58 +71,6 @@ car.color = 'red';              // Should fail.
 car.engine.horsepower = 513.5;  // Should fail.
 
 let validator = new Validator();
-let errors: IValidatorError = validator.validate(car);
-if (errors.length > 0) {
-  for (let i in errors)
-    console.log(errors[i].message);
-}
-```
-
-or
-
-```typescript
-import * as V from "class-validator";
-
-export class Engine {
-
-  @V.IsInt()
-  horsepower: number;
-}
-
-export class Car {
-
-  @V.IsNotEmpty()
-  model: string;
-
-  @V.InArray(['BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Honda', 'Porsche', 'Ford', 'Toyota'])
-  make: string;
-
-  @V.IsNotEmpty()
-  @V.MinLen(17)
-  @V.MaxLen(17)
-  @V.AlphaNumeric()
-  vehicleIdentificationNumber: string;
-
-  @V.IsDecimal()
-  fuelCapacity: number;
-
-  @V.AlphaNumeric()
-  @V.HexColor()
-  color: string;
-
-  @V.ValidateNested()
-  engine: Engine;
-}
-
-let car = new Car();
-car.model = 'Gallardo';         // Should succeed.
-car.make =  'Laborghini';       // Should fail.
-car.vin = 'VWV1234XX99......';  // AlphaNumeric should fail.
-car.fuelCapacity = 35;          // Should ?.
-car.color = 'red';              // Should fail.
-car.engine.horsepower = 513.5;  // Should fail.
-
-let validator = new V.Validator();
 let errors: IValidatorError = validator.validate(car);
 if (errors.length > 0) {
   for (let i in errors)
