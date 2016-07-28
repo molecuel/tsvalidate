@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/molecuel/mlcl_i18n.svg?branch=master)](https://travis-ci.org/molecuel/tsvalidate)
+[![Build Status](https://travis-ci.org/molecuel/tsvalidate.svg?branch=master)](https://travis-ci.org/molecuel/tsvalidate)
 
-[![NPM](https://nodei.co/npm-dl/mlcl_i18n.png?months=1)](https://nodei.co/npm/tsvalidate/)
+[![NPM](https://nodei.co/npm-dl/tsvalidate.png?months=1)](https://nodei.co/npm/tsvalidate/)
 
-[![NPM](https://nodei.co/npm/mlcl_i18n.png?downloads=true&stars=true)](https://nodei.co/npm/tsvalidate/)
+[![NPM](https://nodei.co/npm/tsvalidate.png?downloads=true&stars=true)](https://nodei.co/npm/tsvalidate/)
 
-[![NPM version](https://badge.fury.io/js/mlcl_i18n@2x.png)](http://badge.fury.io/js/tsvalidate)
+[![NPM version](https://badge.fury.io/js/tsvalidate@master.png)](http://badge.fury.io/js/tsvalidate)
 
 # tsvalidate
 
@@ -28,9 +28,11 @@ import * as V from "class-validator";
 Upon defining classes add any of the predefined decorators to their properties, then call validate method passing the object:
 
 ```typescript
+import * as V from "class-validator";
+
 export class Engine {
 
-  @IsInt()
+  @V.IsInt()
   horsepower: number;
 }
 
@@ -39,26 +41,26 @@ export class Car {
       this.engine = new Engine();      
     }
 
-    @IsNotEmpty()
+    @V.IsNotEmpty()
     model: string;
 
-    @InArray(['BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Honda', 'Porsche', 'Ford', 'Toyota'])
+    @V.InArray(['BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Honda', 'Porsche', 'Ford', 'Toyota'])
     make: string;
 
-    @IsNotEmpty()
-    @MinLen(17)
-    @MaxLen(17)
-    @AlphaNumeric()
+    @V.IsNotEmpty()
+    @V.MinLen(17)
+    @V.MaxLen(17)
+    @V.AlphaNumeric()
     vehicleIdentificationNumber: string;
 
-    @IsDecimal()
+    @V.IsDecimal()
     fuelCapacity: number;
 
-    @AlphaNumeric()
-    @HexColor()
+    @V.AlphaNumeric()
+    @V.HexColor()
     color: string;
 
-    @ValidateNested()
+    @V.ValidateNested()
     engine: Engine;
 }
 
@@ -70,8 +72,8 @@ car.fuelCapacity = 35;          // Should ?.
 car.color = 'red';              // Should fail.
 car.engine.horsepower = 513.5;  // Should fail.
 
-let validator = new Validator();
-let errors: IValidatorError = validator.validate(car);
+let validator = new V.Validator();
+let errors: V.IValidatorError = validator.validate(car);
 if (errors.length > 0) {
   for (let i in errors)
     console.log(errors[i].message);
