@@ -66,7 +66,7 @@ export class Car {
 
 let car = new Car();
 car.model = 'Gallardo';         // Should succeed.
-car.make =  'Laborghini';       // Should fail.
+car.make =  'Lamborghini';       // Should fail.
 car.vin = 'VWV1234XX99......';  // AlphaNumeric should fail.
 car.fuelCapacity = 35;          // Should ?.
 car.color = 'red';              // Should fail.
