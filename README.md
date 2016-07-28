@@ -15,7 +15,8 @@ Allows validating properties of objects and (multi-)nested objects via predefine
 Upon defining classes add any of the predefined decorators to their properties, then call validate method passing the object:
 
 Either
-`typescript
+
+```typescript
 import {Validator, AlphaNumeric, MaxLen, IsInt, IsNotEmpty, InArray, IsDecimal, HexColor, IValidatorError} from "class-validator";
 
 export class Engine {
@@ -66,10 +67,11 @@ if (errors.length > 0) {
   for (let i in errors)
     console.log(errors[i].message);
 }
-`
+```
 
 or
-`typescript
+
+```typescript
 import * as V from "class-validator";
 
 export class Engine {
@@ -117,13 +119,13 @@ if (errors.length > 0) {
   for (let i in errors)
     console.log(errors[i].message);
 }
-`
+```
 
 ## Errors
 
 Returned errors use the supplied IValidatorError interface:
 
-`typescript
+```typescript
 export interface IValidatorError {
   /**
    * Name of the target class that was validated.
@@ -150,7 +152,7 @@ export interface IValidatorError {
    */
   comparison?: any;
 }
-`
+```
 
 ## Decorators
 
@@ -197,4 +199,4 @@ Currently, the following decorators are supported:
 | `@MinValue(value: number)`                      | Checks if the number is not smaller than the defined cardinality.                                                                                                |
 | `@MultipleOf(value: number)`                    | Checks if the number is a multiple of the defined integer.                                                                                                |
 | **Object validation decorators**                                                                                                                                                     |
-| `@ValidateNested(value: number)`                | Checks all properties of the given object for decorators and handles all applicable.                                                                                                |
+| `@ValidateNested()`                             | Checks all properties of the given object for decorators and handles all applicable.                                                                                                |
