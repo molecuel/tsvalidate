@@ -9,6 +9,7 @@ export declare class DecoratorTypes {
     static DEFINED: string;
     static EQUALS: string;
     static IN_ARRAY: string;
+    static NOT_IN_ARRAY: string;
     static MAX_LEN: string;
     static MIN_LEN: string;
     static CONTAINS: string;
@@ -28,8 +29,6 @@ export declare class DecoratorTypes {
     static DATE_ISO8601: string;
     static MAC_ADDRESS: string;
     static MONGO_ID: string;
-    static URL: string;
-    static MOBILE_PHONE_NUMBER: string;
     static MAX_VALUE: string;
     static MIN_VALUE: string;
     static MULTIPLE_OF: string;
@@ -52,13 +51,13 @@ export declare function Uppercase(validatorOptions?: IValidatorOptions): (target
 export declare function Lowercase(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function MultipleOf(value: number, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function InArray(array: any[], validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
+export declare function NotInArray(array: any[], validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Contains(value: string | number, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsEmpty(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsNotEmpty(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Alpha(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function AlphaNumeric(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsDefined(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
-export declare function MobilePhoneNumber(language: string, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsDate(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsEmail(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function HexColor(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
@@ -67,6 +66,5 @@ export declare function Hexadecimal(validatorOptions?: IValidatorOptions): (targ
 export declare function ISO8601Date(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsMAC(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function MongoID(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
-export declare function IsURL(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function ValidateNested(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Trim(): (target: Object, propertyName: string) => void;

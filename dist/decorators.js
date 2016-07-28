@@ -11,6 +11,7 @@ DecoratorTypes.NOT_EMPTY = 'IsNotEmpty';
 DecoratorTypes.DEFINED = 'IsDefined';
 DecoratorTypes.EQUALS = 'Equals';
 DecoratorTypes.IN_ARRAY = 'InArray';
+DecoratorTypes.NOT_IN_ARRAY = 'NotInArray';
 DecoratorTypes.MAX_LEN = 'MaxLen';
 DecoratorTypes.MIN_LEN = 'MinLen';
 DecoratorTypes.CONTAINS = 'Contains';
@@ -30,8 +31,6 @@ DecoratorTypes.IP_ADDRESS = 'IsIP';
 DecoratorTypes.DATE_ISO8601 = 'ISO8601Date';
 DecoratorTypes.MAC_ADDRESS = 'IsMAC';
 DecoratorTypes.MONGO_ID = 'MongoID';
-DecoratorTypes.URL = 'IsURL';
-DecoratorTypes.MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
 DecoratorTypes.MAX_VALUE = 'MaxValue';
 DecoratorTypes.MIN_VALUE = 'MinValue';
 DecoratorTypes.MULTIPLE_OF = 'MultipleOf';
@@ -139,6 +138,12 @@ function InArray(array, validatorOptions) {
     };
 }
 exports.InArray = InArray;
+function NotInArray(array, validatorOptions) {
+    return function (target, propertyName) {
+        BasicDecorator(target, propertyName, DecoratorTypes.NOT_IN_ARRAY, array, validatorOptions);
+    };
+}
+exports.NotInArray = NotInArray;
 function Contains(value, validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
@@ -175,12 +180,6 @@ function IsDefined(validatorOptions) {
     };
 }
 exports.IsDefined = IsDefined;
-function MobilePhoneNumber(language, validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.MOBILE_PHONE_NUMBER, language, validatorOptions);
-    };
-}
-exports.MobilePhoneNumber = MobilePhoneNumber;
 function IsDate(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
@@ -229,12 +228,6 @@ function MongoID(validatorOptions) {
     };
 }
 exports.MongoID = MongoID;
-function IsURL(validatorOptions) {
-    return function (target, propertyName) {
-        BasicDecorator(target, propertyName, DecoratorTypes.URL, validatorOptions);
-    };
-}
-exports.IsURL = IsURL;
 function ValidateNested(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);

@@ -1,59 +1,31 @@
 import * as D from '../../dist/decorators';
 
 export class InnermostTestClass {
-  private _decoratorName: string = D.DecoratorTypes.IS_TYPED;
-  private _decoratorValue: number | string = 0;
-  constructor(value: number = 0, decoratorName: string = D.DecoratorTypes.IS_TYPED, decoratorValue?: number | string) {
-    this.testNumber = value;
-    this._decoratorName = decoratorName;
-    this._decoratorValue = decoratorValue;
+  constructor(propertyValue: any = 0) {
+    this.testProperty = propertyValue;
   }
-  // @D.CustomDecorator(this._decoratorName, this._decoratorValue)
-  @D.ValidateType(InnermostTestClass)
-  testNumber: number;
-  @D.IsFloat()
-  testBool: boolean = false;
-  @D.IsInt()
-  testText: string = 'text';
+  @D.ValidateType()
+  testProperty: number;
 }
 
-export class InnerContainerClass {
-  constructor(name: string = 'newTestClass', _bool: boolean = true, _number: number = 0) {
-    this.testText = name;
-    this.testBool = _bool;
-    this.testNumber = _number;
-    this.testInnermostContainer = new InnermostTestClass();
+export class NestedTestClass {
+  constructor(propertyValue: any = 'property', nestedPropertyValue?: any) {
+    this.testProperty = propertyValue;
+    this.testInnermostContainer = new InnermostTestClass(nestedPropertyValue);
   }
-  testNumber: number;
-  testBool: boolean = false;
-  testText: string = 'text';
-  @D.ValidateNested()
   @D.ValidateType()
+  testProperty: string;
+  @D.ValidateNested()
   testInnermostContainer: InnermostTestClass;
 }
 
-export class CustomTestClass {
-  private _decoratorName: string = D.DecoratorTypes.IS_TYPED;
-  private _decoratorValue: number | string = 0;
-  constructor(name: string = 'newTestClass', decoratorName: string = D.DecoratorTypes.IS_TYPED, decoratorValue?: number | string,
-    nestedValue?: number, nestedDecoratorName?: string, nestedDecoratorValue?: number | string) {
-    this.testString = name;
-    this._decoratorName = decoratorName;
-    this._decoratorValue = decoratorValue;
-    this.testContainer = new InnermostTestClass(nestedValue, nestedDecoratorName, nestedDecoratorValue);
+export class MultiNestedTestClass {
+  constructor(propertyValue: any = false, nestedpropertyValue?: any, multiNestedPropertyValue?: any) {
+    this.testProperty = propertyValue;
+    this.testInnerContainer = new NestedTestClass(nestedpropertyValue, multiNestedPropertyValue);
   }
-  // @D.CustomDecorator(this._decoratorName, this._decoratorValue)
-  testString: string;
-  @D.ValidateNested()
   @D.ValidateType()
-  testContainer: InnermostTestClass;
-}
-
-export class OuterContainerClass {
-  constructor() {
-    this.testInnerContainer = new InnerContainerClass();
-  }
+  testProperty: boolean;
   @D.ValidateNested()
-  @D.ValidateType(InnermostTestClass)
-  testInnerContainer: InnerContainerClass;
+  testInnerContainer: NestedTestClass;
 }

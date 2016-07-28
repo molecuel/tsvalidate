@@ -119,7 +119,8 @@ class Validator {
                                 }
                                 break;
                             case decorators.DecoratorTypes.IS_INT:
-                                if (!validator.isInt(target[propertyName].toString())) {
+                                if (!validator.isInt(target[propertyName].toString())
+                                    || typeof target[propertyName] !== 'number') {
                                     this.errors.push({
                                         target: target.constructor.name,
                                         property: propertyName,
@@ -130,7 +131,8 @@ class Validator {
                                 }
                                 break;
                             case decorators.DecoratorTypes.IS_FLOAT:
-                                if (!validator.isFloat(target[propertyName].toString())) {
+                                if (!validator.isFloat(target[propertyName].toString())
+                                    || typeof target[propertyName] !== 'number') {
                                     this.errors.push({
                                         target: target.constructor.name,
                                         property: propertyName,
@@ -141,7 +143,8 @@ class Validator {
                                 }
                                 break;
                             case decorators.DecoratorTypes.IS_DECIMAL:
-                                if (!validator.isDecimal(target[propertyName].toString())) {
+                                if (!validator.isDecimal(target[propertyName].toString())
+                                    || typeof target[propertyName] !== 'number') {
                                     this.errors.push({
                                         target: target.constructor.name,
                                         property: propertyName,
@@ -178,8 +181,7 @@ class Validator {
                                 }
                                 break;
                             case decorators.DecoratorTypes.DEFINED:
-                                if (target[propertyName] === null
-                                    || target[propertyName] === undefined) {
+                                if (target[propertyName] === undefined) {
                                     this.errors.push({
                                         target: target.constructor.name,
                                         property: propertyName,
@@ -201,8 +203,20 @@ class Validator {
                                     });
                                 }
                                 break;
+                            case decorators.DecoratorTypes.NOT_IN_ARRAY:
+                                if (validator.isIn(target[propertyName].toString(), metadataEntry.value)) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: propertyName,
+                                        type: decorators.DecoratorTypes.NOT_IN_ARRAY,
+                                        message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' found in array of disallowed values.',
+                                        value: target[propertyName],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
                             case decorators.DecoratorTypes.EQUALS:
-                                if (!validator.isIn(target[propertyName].toString(), metadataEntry.value.toString())) {
+                                if (!validator.equals(target[propertyName].toString(), metadataEntry.value.toString())) {
                                     this.errors.push({
                                         target: target.constructor.name,
                                         property: propertyName, type: decorators.DecoratorTypes.EQUALS,
@@ -290,7 +304,7 @@ class Validator {
                 }
                 break;
             case decorators.DecoratorTypes.ALPHA:
-                if (!validator.isAlpha(target[propertyName].toString().replace(' ', ''))) {
+                if (!validator.isAlpha(target[propertyName].toString().replace(/\s/g, ''))) {
                     this.errors.push({
                         target: target.constructor.name,
                         property: propertyName,
@@ -303,7 +317,7 @@ class Validator {
                 }
                 break;
             case decorators.DecoratorTypes.ALPHA_NUM:
-                if (!validator.isAlphanumeric(target[propertyName].toString().replace(' ', ''))) {
+                if (!validator.isAlphanumeric(target[propertyName].toString().replace(/\s/g, ''))) {
                     this.errors.push({
                         target: target.constructor.name,
                         property: propertyName,
@@ -336,7 +350,7 @@ class Validator {
                 }
                 break;
             case decorators.DecoratorTypes.DATE_AFTER:
-                if (!validator.isAfter(target[propertyName]), metadataEntry.value) {
+                if (!validator.isAfter(target[propertyName], metadataEntry.value)) {
                     this.errors.push({
                         target: target.constructor.name,
                         property: propertyName,
@@ -348,7 +362,7 @@ class Validator {
                 }
                 break;
             case decorators.DecoratorTypes.DATE_BEFORE:
-                if (!validator.isBefore(target[propertyName]), metadataEntry.value) {
+                if (!validator.isBefore(target[propertyName], metadataEntry.value)) {
                     this.errors.push({
                         target: target.constructor.name,
                         property: propertyName,
@@ -377,18 +391,6 @@ class Validator {
                         type: decorators.DecoratorTypes.LOWERCASE,
                         message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is not lowercase.',
                         value: target[propertyName]
-                    });
-                }
-                break;
-            case decorators.DecoratorTypes.MOBILE_PHONE_NUMBER:
-                if (!validator.isMobilePhone(target[propertyName], metadataEntry.value)) {
-                    this.errors.push({
-                        target: target.constructor.name,
-                        property: propertyName,
-                        type: decorators.DecoratorTypes.MOBILE_PHONE_NUMBER,
-                        message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no mobile phone number.',
-                        value: target[propertyName],
-                        comparison: metadataEntry.value
                     });
                 }
                 break;
@@ -444,17 +446,6 @@ class Validator {
                         property: propertyName,
                         type: decorators.DecoratorTypes.MONGO_ID,
                         message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no MongoDB ObjectID.',
-                        value: target[propertyName]
-                    });
-                }
-                break;
-            case decorators.DecoratorTypes.URL:
-                if (!validator.isURL(target[propertyName])) {
-                    this.errors.push({
-                        target: target.constructor.name,
-                        property: propertyName,
-                        type: decorators.DecoratorTypes.URL,
-                        message: 'Property ' + propertyName + ' of ' + target.constructor.name + ' is no URL.',
                         value: target[propertyName]
                     });
                 }

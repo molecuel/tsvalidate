@@ -13,6 +13,7 @@ export class DecoratorTypes {
   static DEFINED = 'IsDefined';
   static EQUALS = 'Equals';
   static IN_ARRAY = 'InArray';
+  static NOT_IN_ARRAY = 'NotInArray';
   // static IS_NUMBER = 'IsNumber'; // disabled
   // static IS_STRING = 'IsString'; // disabled
   // static IS_BOOL = 'IsBoolean'; // disabled
@@ -39,8 +40,8 @@ export class DecoratorTypes {
   static DATE_ISO8601 = 'ISO8601Date';
   static MAC_ADDRESS = 'IsMAC';
   static MONGO_ID = 'MongoID';
-  static URL = 'IsURL';
-  static MOBILE_PHONE_NUMBER = 'MobilePhoneNumber';
+  // static URL = 'IsURL'; // disabled
+  // static MOBILE_PHONE_NUMBER = 'MobilePhoneNumber'; // disabled
 
   // number types
   static MAX_VALUE = 'MaxValue';
@@ -153,6 +154,12 @@ export function InArray(array: any[], validatorOptions?: IValidatorOptions) {
   };
 }
 
+export function NotInArray(array: any[], validatorOptions?: IValidatorOptions) {
+  return function(target: Object, propertyName: string) {
+    BasicDecorator(target, propertyName, DecoratorTypes.NOT_IN_ARRAY, array, validatorOptions);
+  };
+}
+
 export function Contains(value: string | number, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
@@ -189,11 +196,11 @@ export function IsDefined(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function MobilePhoneNumber(language: string, validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.MOBILE_PHONE_NUMBER, language, validatorOptions);
-  };
-}
+// export function MobilePhoneNumber(language: string, validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.MOBILE_PHONE_NUMBER, language, validatorOptions);
+//   };
+// }
 
 export function IsDate(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
@@ -243,11 +250,11 @@ export function MongoID(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function IsURL(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    BasicDecorator(target, propertyName, DecoratorTypes.URL, validatorOptions);
-  };
-}
+// export function IsURL(validatorOptions?: IValidatorOptions) {
+//   return function(target: Object, propertyName: string) {
+//     BasicDecorator(target, propertyName, DecoratorTypes.URL, validatorOptions);
+//   };
+// }
 
 export function ValidateNested(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
