@@ -2,7 +2,9 @@
 import 'reflect-metadata';
 import { IValidatorOptions } from './interfaces/IValidatorOptions';
 import { IValidatorError } from './interfaces/IValidatorError';
+export * from './interfaces/IValidatorError';
 import * as decorators from './decorators';
+export * from './decorators';
 import validator = require('validator');
 
 export class Validator {
