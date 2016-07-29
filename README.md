@@ -16,19 +16,21 @@ Import either the validator and specific decorators,
 
 ```typescript
 import {Validator, AlphaNumeric, MaxLen, IsInt, IsNotEmpty, InArray, IsDecimal, HexColor, IValidatorError}
-  from "class-validator";
+  from "tsvalidate";
 ```
 
 or use an alias for all exports.
 
 ```typescript
-import * as V from "class-validator";
+import * as V from "tsvalidate";
 ```
+
+
 
 Upon defining classes add any of the predefined decorators to their properties, then call validate method passing the object:
 
 ```typescript
-import * as V from "class-validator";
+import * as V from "tsvalidate";
 
 export class Engine {
 
@@ -146,7 +148,7 @@ Currently, the following decorators are supported:
 | `@Alpha()`                                      | Checks if the string consists entirely of letters (ignoring whitespace).                                                                                                |
 | `@AlphaNumeric()`                               | Checks if the string is alphanumeric (ignoring whitespace).                                                                                                |
 | `@Hexadecimal()`                                | Checks if the string is a hexadecimal number.                                                                                                |
-| `@HexColor()`                                   | Checks if the string is a hex color (uppercase only).                                                                                              |
+| `@HexColor()`                                   | Checks if the string is a hex color.   [#FF#FF#FF] or [FFFFFF]                                                                                           |
 | `@MaxByteLen(value: number)`                    | Checks if the string is no longer than the defined byte length.                                                                                                |
 | `@MinByteLen(value: number)`                    | Checks if the string is not shorter than the defined byte length.                                                                                                |
 | `@DateBefore(value: string)`                    | Checks if the string is a date prior to the defined date.                                                                                                |
