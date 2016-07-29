@@ -5,7 +5,6 @@
   },
   "globalDevDependencies": {
     "Q": "github:DefinitelyTyped/DefinitelyTyped/q/Q.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
-    "async": "registry:dt/async#1.4.2+20160602152629",
     "del": "github:DefinitelyTyped/DefinitelyTyped/del/del.d.ts#9027703c0bd831319dcdf7f3169f7a468537f448",
     "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#a14d724826174d1669d4df04c80f4838b7e71fdf",
     "gulp-plumber": "github:DefinitelyTyped/DefinitelyTyped/gulp-plumber/gulp-plumber.d.ts#4e950fdf8cbd5a8b001be640046f98935c08ce61",
