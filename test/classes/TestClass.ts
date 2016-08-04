@@ -1,16 +1,16 @@
 import * as D from '../../dist/decorators';
 
 export class InnermostTestClass {
-  constructor(propertyValue: any = 0) {
-    this.testProperty = propertyValue;
+  constructor(propertyValue?: any) {
+    this.testProperty = propertyValue || 0;
   }
   @D.ValidateType()
   testProperty: number;
 }
 
 export class NestedTestClass {
-  constructor(propertyValue: any = 'property', nestedPropertyValue?: any) {
-    this.testProperty = propertyValue;
+  constructor(propertyValue?: any, nestedPropertyValue?: any) {
+    this.testProperty = propertyValue || 'property';
     this.testInnermostContainer = new InnermostTestClass(nestedPropertyValue);
   }
   @D.ValidateType()
@@ -20,8 +20,8 @@ export class NestedTestClass {
 }
 
 export class MultiNestedTestClass {
-  constructor(propertyValue: any = false, nestedpropertyValue?: any, multiNestedPropertyValue?: any) {
-    this.testProperty = propertyValue;
+  constructor(propertyValue?: any, nestedpropertyValue?: any, multiNestedPropertyValue?: any) {
+    this.testProperty = propertyValue || false;
     this.testInnerContainer = new NestedTestClass(nestedpropertyValue, multiNestedPropertyValue);
   }
   @D.ValidateType()

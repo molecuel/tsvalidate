@@ -823,7 +823,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Hexadecimal(), 
+                V.MongoID(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -843,7 +843,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Hexadecimal(), 
+                V.MongoID(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();

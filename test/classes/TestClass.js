@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const D = require('../../dist/decorators');
 class InnermostTestClass {
-    constructor(propertyValue = 0) {
-        this.testProperty = propertyValue;
+    constructor(propertyValue) {
+        this.testProperty = propertyValue || 0;
     }
 }
 __decorate([
@@ -20,8 +20,8 @@ __decorate([
 ], InnermostTestClass.prototype, "testProperty", void 0);
 exports.InnermostTestClass = InnermostTestClass;
 class NestedTestClass {
-    constructor(propertyValue = 'property', nestedPropertyValue) {
-        this.testProperty = propertyValue;
+    constructor(propertyValue, nestedPropertyValue) {
+        this.testProperty = propertyValue || 'property';
         this.testInnermostContainer = new InnermostTestClass(nestedPropertyValue);
     }
 }
@@ -35,8 +35,8 @@ __decorate([
 ], NestedTestClass.prototype, "testInnermostContainer", void 0);
 exports.NestedTestClass = NestedTestClass;
 class MultiNestedTestClass {
-    constructor(propertyValue = false, nestedpropertyValue, multiNestedPropertyValue) {
-        this.testProperty = propertyValue;
+    constructor(propertyValue, nestedpropertyValue, multiNestedPropertyValue) {
+        this.testProperty = propertyValue || false;
         this.testInnerContainer = new NestedTestClass(nestedpropertyValue, multiNestedPropertyValue);
     }
 }

@@ -822,7 +822,7 @@ describe('validator', function() {
         constructor(value?: any) {
           this.testProp = value;
         }
-        @V.Hexadecimal()
+        @V.MongoID()
         testProp: string;
       }
       testValidator = new V.Validator();
@@ -841,7 +841,7 @@ describe('validator', function() {
         constructor(value?: any) {
           this.testProp = value;
         }
-        @V.Hexadecimal()
+        @V.MongoID()
         testProp: string;
       }
       testValidator = new V.Validator();
