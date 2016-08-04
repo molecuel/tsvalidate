@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/tsvalidate.png?downloads=true&stars=true)](https://nodei.co/npm/tsvalidate/)
 
-[![NPM version](https://badge.fury.io/js/tsvalidate@master.png)](http://badge.fury.io/js/tsvalidate)
+[![NPM version](https://badge.fury.io/js/tsvalidate.svg)](https://badge.fury.io/js/tsvalidate)
 
 # tsvalidate
 
