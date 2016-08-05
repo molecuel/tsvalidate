@@ -40,17 +40,17 @@ export class Validator {
           // Execute requested type dependant validation.
           else {
             this.nestedMode = false;
-            switch (types.name) {
+            switch (typeof target[propertyName]) {
 
-              case 'String':
+              case 'string':
                 this.validateString(target, propertyName, metadataEntry);
                 break;
 
-              case 'Number':
+              case 'number':
                 this.validateNumber(target, propertyName, metadataEntry);
                 break;
 
-              case 'Boolean':
+              case 'boolean':
                 break;
             }
             // Execute requested type independant validation.
