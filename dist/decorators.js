@@ -176,6 +176,9 @@ function AlphaNumeric(validatorOptions) {
 exports.AlphaNumeric = AlphaNumeric;
 function IsDefined(validatorOptions) {
     return function (target, propertyName) {
+        if (!(propertyName in target)) {
+            target[propertyName] = undefined;
+        }
         BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
     };
 }

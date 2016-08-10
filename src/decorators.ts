@@ -192,6 +192,9 @@ export function AlphaNumeric(validatorOptions?: IValidatorOptions) {
 
 export function IsDefined(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
+    if (!(propertyName in target)) {
+      target[propertyName] = undefined;
+    }
     BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
   };
 }

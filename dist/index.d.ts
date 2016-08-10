@@ -9,4 +9,5 @@ export declare class Validator {
     validate(target: Object, validatorOptions?: IValidatorOptions): IValidatorError[];
     protected validateString(target: Object, propertyName: string, metadataEntry: any): void;
     protected validateNumber(target: Object, propertyName: string, metadataEntry: any): void;
+    protected validationTypeConflict(target: any, property: string, type: string, conflict: string, comparison?: any): IValidatorError;
 }

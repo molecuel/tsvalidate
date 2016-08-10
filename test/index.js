@@ -20,7 +20,6 @@ describe('validator', function () {
     let indent = '       ';
     describe('for all types', function () {
         it('VALIDATION ERROR: Should validate string content state (equal to xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -36,11 +35,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (equal to xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -56,7 +54,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate nested types', function () {
@@ -68,7 +66,7 @@ describe('validator', function () {
                 for (let i in validationResult)
                     console.log(indent + validationResult[i].message);
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate nested types', function () {
@@ -80,7 +78,7 @@ describe('validator', function () {
                 for (let i in validationResult)
                     console.log(indent + validationResult[i].message);
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate multi-nested types', function () {
@@ -92,7 +90,7 @@ describe('validator', function () {
                 for (let i in validationResult)
                     console.log(indent + validationResult[i].message);
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate multi-nested types', function () {
@@ -104,7 +102,7 @@ describe('validator', function () {
                 for (let i in validationResult)
                     console.log(indent + validationResult[i].message);
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate types (Number)', function () {
@@ -123,7 +121,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate types (Number)', function () {
@@ -142,7 +140,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate types (String)', function () {
@@ -161,7 +159,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate types (String)', function () {
@@ -180,7 +178,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate types (Boolean)', function () {
@@ -199,7 +197,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate types (Boolean)', function () {
@@ -218,7 +216,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate types (any(superimposed))', function () {
@@ -237,7 +235,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate types (any(superimposed))', function () {
@@ -256,7 +254,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
     });
@@ -277,7 +275,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate format (Decimal)', function () {
@@ -296,7 +294,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate format (Float)', function () {
@@ -315,7 +313,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate format (Float)', function () {
@@ -334,7 +332,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate format (Integer)', function () {
@@ -353,7 +351,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate format (Integer)', function () {
@@ -372,11 +370,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string length (maximum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -392,11 +389,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string length (maximum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -412,11 +408,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string length (minimum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -432,11 +427,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string length (minimum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -452,11 +446,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string byte length (maximum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -472,11 +465,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string byte length (maximum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -492,11 +484,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string byte length (minimum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -512,11 +503,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string byte length (minimum)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -532,11 +522,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string date mm-dd-yyyy', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -552,11 +541,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string date mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -572,11 +560,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string date (ISO8601)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -592,11 +579,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string date (ISO8601)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -612,11 +598,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate whether string is an email address', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -632,11 +617,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate whether string is a valid email address', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -652,11 +636,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate whether string is an IP address', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -672,11 +655,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate whether string is an IP address', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -692,11 +674,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate whether string is a MAC address', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -712,11 +693,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate whether string is a MAC address', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -732,11 +712,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate whether string is a hex color', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -752,11 +731,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate whether string is a hex color', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -772,11 +750,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate whether string is hexadecimal', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -792,11 +769,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate whether string is hexadecimal', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -812,11 +788,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate whether string is a MongoDB ObjectID', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -832,11 +807,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate whether string is a MongoDB ObjectID', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -844,7 +818,7 @@ describe('validator', function () {
             }
             __decorate([
                 V.MongoID(), 
-                __metadata('design:type', String)
+                __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new stringTestClass('507f191e810c19729de860ea');
@@ -852,11 +826,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -872,11 +845,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -892,11 +864,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string dates after mm-dd-yyyy', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -912,11 +883,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string dates after mm-dd-yyyy', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -932,11 +902,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate uppercase strings', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -952,11 +921,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate uppercase strings', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -972,11 +940,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate lowercase strings', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -992,11 +959,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate lowercase strings', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1012,11 +978,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string content state (empty)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1032,11 +997,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (empty)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1052,11 +1016,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string content state (filled)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1069,17 +1032,13 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new stringTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (filled)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1092,18 +1051,28 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new stringTestClass('aircraft carrier');
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string content state (defined)', function () {
+            class stringTestClass1 {
+            }
+            __decorate([
+                V.IsDefined(), 
+                __metadata('design:type', String)
+            ], stringTestClass1.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            class stringTestClass {
+            localTestClass = new stringTestClass1();
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            class stringTestClass2 {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1111,21 +1080,17 @@ describe('validator', function () {
             __decorate([
                 V.IsDefined(), 
                 __metadata('design:type', String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], stringTestClass2.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass();
+            localTestClass = new stringTestClass2();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (defined)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1138,17 +1103,13 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new stringTestClass(null);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string content state (contains xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1164,11 +1125,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (contains xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1184,11 +1144,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string content state (in array xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1204,11 +1163,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (in array xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1224,11 +1182,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string content state (not in array xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1244,11 +1201,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string content state (not in array xyz)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1264,11 +1220,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string metadata (alphanumeric)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1284,11 +1239,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string metadata (alphanumeric)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1304,11 +1258,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate string metadata (alpha)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1324,11 +1277,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate string metadata (alpha)', function () {
-            testValidator = new V.Validator();
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1344,13 +1296,12 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
     });
     describe('for number type', function () {
         it('VALIDATION ERROR: Should validate number metadata (maximum length)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1366,11 +1317,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number metadata (maximum length)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1386,11 +1336,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number metadata (minimum length)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1406,11 +1355,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number metadata (minimum length)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1426,11 +1374,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number metadata (maximum value)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1446,11 +1393,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number metadata (maximum value)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1466,11 +1412,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number metadata (minimum value)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1486,11 +1431,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number metadata (minimum value)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1506,11 +1450,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number content state (contains xyz)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1526,11 +1469,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number content state (contains xyz)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1546,11 +1488,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number content state (empty)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1566,11 +1507,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number content state (empty)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1586,11 +1526,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number content state (filled)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1606,11 +1545,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number content state (filled)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1626,11 +1564,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number content state (defined)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1646,11 +1583,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number content state (defined)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1666,11 +1602,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number content state (in array xyz)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1686,11 +1621,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number content state (in array xyz)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1706,11 +1640,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate number metadata (multiple of xyz)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1726,11 +1659,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate number metadata (multiple of xyz)', function () {
-            testValidator = new V.Validator();
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1746,13 +1678,12 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
     });
     describe('for string type', function () {
         it('VALIDATION ERROR: Should validate boolean metadata (in array xyz)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1768,11 +1699,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate boolean metadata (in array xyz)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1788,11 +1718,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate boolean content state (defined)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1808,11 +1737,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate boolean content state (defined)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1828,11 +1756,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate boolean content state (empty)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1845,17 +1772,13 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate boolean content state (empty)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1868,17 +1791,13 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
         it('VALIDATION ERROR: Should validate boolean content state (filled)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1891,17 +1810,13 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length > 0).should.be.ok();
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
         it('VALIDATION OKAY: Should validate boolean content state (filled)', function () {
-            testValidator = new V.Validator();
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1914,13 +1829,10 @@ describe('validator', function () {
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass(false);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 1) {
-                console.log(indent + validationResult[1].message + ' [' + validationResult[1].value + ']');
-            }
-            else if (validationResult.length > 0) {
+            if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            (validationResult.length === 0).should.be.ok();
+            should.equal(validationResult, 0);
             validationResult = [];
         });
     });
