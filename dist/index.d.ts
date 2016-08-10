@@ -7,7 +7,7 @@ export declare class Validator {
     private errors;
     private nestedMode;
     validate(target: Object, validatorOptions?: IValidatorOptions): IValidatorError[];
-    protected validateString(target: Object, propertyName: string, metadataEntry: any): void;
-    protected validateNumber(target: Object, propertyName: string, metadataEntry: any): void;
+    protected validateString(target: Object, metadataEntry: any): void;
+    protected validateNumber(target: Object, metadataEntry: any): void;
     protected validationTypeConflict(target: any, property: string, type: string, conflict: string, comparison?: any): IValidatorError;
 }

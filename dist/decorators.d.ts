@@ -57,7 +57,6 @@ export declare function IsEmpty(validatorOptions?: IValidatorOptions): (target: 
 export declare function IsNotEmpty(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Alpha(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function AlphaNumeric(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
-export declare function IsDefined(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsDate(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsEmail(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function HexColor(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
@@ -67,4 +66,5 @@ export declare function ISO8601Date(validatorOptions?: IValidatorOptions): (targ
 export declare function IsMAC(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function MongoID(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function ValidateNested(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
+export declare function IsDefined(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Trim(): (target: Object, propertyName: string) => void;

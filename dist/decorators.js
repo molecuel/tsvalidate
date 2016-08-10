@@ -174,15 +174,6 @@ function AlphaNumeric(validatorOptions) {
     };
 }
 exports.AlphaNumeric = AlphaNumeric;
-function IsDefined(validatorOptions) {
-    return function (target, propertyName) {
-        if (!(propertyName in target)) {
-            target[propertyName] = undefined;
-        }
-        BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
-    };
-}
-exports.IsDefined = IsDefined;
 function IsDate(validatorOptions) {
     return function (target, propertyName) {
         BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
@@ -237,6 +228,17 @@ function ValidateNested(validatorOptions) {
     };
 }
 exports.ValidateNested = ValidateNested;
+function IsDefined(validatorOptions) {
+    return function (target, propertyName) {
+        let metadata = Reflect.getMetadata('tsvalidate:validators', target);
+        if (!metadata) {
+            metadata = [];
+        }
+        metadata.push({ type: DecoratorTypes.DEFINED, property: propertyName, options: validatorOptions });
+        Reflect.defineMetadata('tsvalidate:validators', metadata, target);
+    };
+}
+exports.IsDefined = IsDefined;
 function Trim() {
     return function (target, propertyName) {
         for (let propertyName in target) {
@@ -248,13 +250,13 @@ function Trim() {
     };
 }
 exports.Trim = Trim;
-function BasicDecorator(_target, _propertyName, _type, _value, validatorOptions) {
-    let metadata = Reflect.getMetadata('tsvalidate:validators', _target, _propertyName);
+function BasicDecorator(target, propertyName, type, value, validatorOptions) {
+    let metadata = Reflect.getMetadata('tsvalidate:validators', target);
     if (!metadata) {
         metadata = [];
     }
-    metadata.push({ type: _type, value: _value, validatorOptions: validatorOptions });
-    Reflect.defineMetadata('tsvalidate:validators', metadata, _target, _propertyName);
+    metadata.push({ type: type, property: propertyName, value: value, options: validatorOptions });
+    Reflect.defineMetadata('tsvalidate:validators', metadata, target);
 }
 ;
 

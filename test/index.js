@@ -19,6 +19,58 @@ describe('validator', function () {
     let localTestClass;
     let indent = '       ';
     describe('for all types', function () {
+        it('VALIDATION ERROR: Should validate string content state (defined)', function () {
+            class stringTestClass1 {
+            }
+            __decorate([
+                V.IsDefined(), 
+                __metadata('design:type', String)
+            ], stringTestClass1.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new stringTestClass1();
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            class stringTestClass2 {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.IsDefined(), 
+                __metadata('design:type', String)
+            ], stringTestClass2.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new stringTestClass2();
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('VALIDATION OKAY: Should validate string content state (defined)', function () {
+            class stringTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.IsDefined(), 
+                __metadata('design:type', String)
+            ], stringTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new stringTestClass(null);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+            }
+            should.equal(validationResult, 0);
+            validationResult = [];
+        });
         it('VALIDATION ERROR: Should validate string content state (equal to xyz)', function () {
             class stringTestClass {
                 constructor(value) {
@@ -1050,58 +1102,6 @@ describe('validator', function () {
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new stringTestClass('aircraft carrier');
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
-            should.equal(validationResult, 0);
-            validationResult = [];
-        });
-        it('VALIDATION ERROR: Should validate string content state (defined)', function () {
-            class stringTestClass1 {
-            }
-            __decorate([
-                V.IsDefined(), 
-                __metadata('design:type', String)
-            ], stringTestClass1.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new stringTestClass1();
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
-            (validationResult.length).should.be.above(0);
-            validationResult = [];
-            class stringTestClass2 {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsDefined(), 
-                __metadata('design:type', String)
-            ], stringTestClass2.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new stringTestClass2();
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
-            (validationResult.length).should.be.above(0);
-            validationResult = [];
-        });
-        it('VALIDATION OKAY: Should validate string content state (defined)', function () {
-            class stringTestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsDefined(), 
-                __metadata('design:type', String)
-            ], stringTestClass.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new stringTestClass(null);
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');

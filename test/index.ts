@@ -13,6 +13,55 @@ describe('validator', function() {
   let indent: string = '       ';
   describe('for all types', function() {
 
+    it('VALIDATION ERROR: Should validate string content state (defined)', function() {
+      class stringTestClass1 {
+        @V.IsDefined()
+        testProp: string;
+      }
+      testValidator = new V.Validator();
+      localTestClass = new stringTestClass1();
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+      }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+
+      class stringTestClass2 {
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+        @V.IsDefined()
+        testProp: string;
+      }
+      testValidator = new V.Validator();
+      localTestClass = new stringTestClass2();
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+      }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    })
+
+    it('VALIDATION OKAY: Should validate string content state (defined)', function() {
+      class stringTestClass {
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+        @V.IsDefined()
+        testProp: string;
+      }
+      testValidator = new V.Validator();
+      localTestClass = new stringTestClass(null);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+      }
+      should.equal(validationResult, 0);
+      validationResult = [];
+    })
+
     it('VALIDATION ERROR: Should validate string content state (equal to xyz)', function() {
       class stringTestClass {
         constructor(value?: any) {
@@ -996,55 +1045,6 @@ describe('validator', function() {
       }
       testValidator = new V.Validator();
       localTestClass = new stringTestClass('aircraft carrier');
-      validationResult = testValidator.validate(localTestClass);
-      if (validationResult.length > 0) {
-        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-      }
-      should.equal(validationResult, 0);
-      validationResult = [];
-    })
-
-    it('VALIDATION ERROR: Should validate string content state (defined)', function() {
-      class stringTestClass1 {
-        @V.IsDefined()
-        testProp: string;
-      }
-      testValidator = new V.Validator();
-      localTestClass = new stringTestClass1();
-      validationResult = testValidator.validate(localTestClass);
-      if (validationResult.length > 0) {
-        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-      }
-      (validationResult.length).should.be.above(0);
-      validationResult = [];
-
-      class stringTestClass2 {
-        constructor(value?: any) {
-          this.testProp = value;
-        }
-        @V.IsDefined()
-        testProp: string;
-      }
-      testValidator = new V.Validator();
-      localTestClass = new stringTestClass2();
-      validationResult = testValidator.validate(localTestClass);
-      if (validationResult.length > 0) {
-        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-      }
-      (validationResult.length).should.be.above(0);
-      validationResult = [];
-    })
-
-    it('VALIDATION OKAY: Should validate string content state (defined)', function() {
-      class stringTestClass {
-        constructor(value?: any) {
-          this.testProp = value;
-        }
-        @V.IsDefined()
-        testProp: string;
-      }
-      testValidator = new V.Validator();
-      localTestClass = new stringTestClass(null);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');

@@ -190,21 +190,6 @@ export function AlphaNumeric(validatorOptions?: IValidatorOptions) {
   };
 }
 
-export function IsDefined(validatorOptions?: IValidatorOptions) {
-  return function(target: Object, propertyName: string) {
-    if (!(propertyName in target)) {
-      target[propertyName] = undefined;
-    }
-    BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
-  };
-}
-
-// export function MobilePhoneNumber(language: string, validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.MOBILE_PHONE_NUMBER, language, validatorOptions);
-//   };
-// }
-
 export function IsDate(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
@@ -253,15 +238,20 @@ export function MongoID(validatorOptions?: IValidatorOptions) {
   };
 }
 
-// export function IsURL(validatorOptions?: IValidatorOptions) {
-//   return function(target: Object, propertyName: string) {
-//     BasicDecorator(target, propertyName, DecoratorTypes.URL, validatorOptions);
-//   };
-// }
-
 export function ValidateNested(validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);
+  };
+}
+
+export function IsDefined(validatorOptions?: IValidatorOptions) {
+  return function(target: Object, propertyName: string) {
+    let metadata = Reflect.getMetadata('tsvalidate:validators', target);
+    if (!metadata) {
+      metadata = [];
+    }
+    metadata.push({ type: DecoratorTypes.DEFINED, property: propertyName, options: validatorOptions });
+    Reflect.defineMetadata('tsvalidate:validators', metadata, target);
   };
 }
 
@@ -277,11 +267,11 @@ export function Trim() {
   };
 }
 
-function BasicDecorator(_target: Object, _propertyName: string, _type: string, _value: any, validatorOptions?: IValidatorOptions) {
-  let metadata = Reflect.getMetadata('tsvalidate:validators', _target, _propertyName);
+function BasicDecorator(target: Object, propertyName: string, type: string, value?: any, validatorOptions?: IValidatorOptions) {
+  let metadata = Reflect.getMetadata('tsvalidate:validators', target);
   if (!metadata) {
     metadata = [];
   }
-  metadata.push({ type: _type, value: _value, validatorOptions });
-  Reflect.defineMetadata('tsvalidate:validators', metadata, _target, _propertyName);
+  metadata.push({ type: type, property: propertyName, value: value, options: validatorOptions });
+  Reflect.defineMetadata('tsvalidate:validators', metadata, target);
 };
