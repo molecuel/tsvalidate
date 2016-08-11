@@ -567,10 +567,12 @@ export class Validator {
         }
         break;
       case decorators.DecoratorTypes.MONGO_ID:
-        if (typeof target[metadataEntry.property] !== 'string') {
-          this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'String', metadataEntry.value));
+        if (typeof target[metadataEntry.property] !== 'string'
+       && typeof target[metadataEntry.property] !== 'number') {
+          this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'String or Number', metadataEntry.value));
         }
-        else if (!validator.isMongoId(target[metadataEntry.property])) {
+        else if (!validator.isMongoId(target[metadataEntry.property])
+        && typeof target[metadataEntry.property] !== 'number') {
 
           this.errors.push({
             target: target.constructor.name,
