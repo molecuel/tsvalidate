@@ -230,12 +230,7 @@ function ValidateNested(validatorOptions) {
 exports.ValidateNested = ValidateNested;
 function IsDefined(validatorOptions) {
     return function (target, propertyName) {
-        let metadata = Reflect.getMetadata('tsvalidate:validators', target);
-        if (!metadata) {
-            metadata = [];
-        }
-        metadata.push({ type: DecoratorTypes.DEFINED, property: propertyName, options: validatorOptions });
-        Reflect.defineMetadata('tsvalidate:validators', metadata, target);
+        BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
     };
 }
 exports.IsDefined = IsDefined;
@@ -255,7 +250,12 @@ function BasicDecorator(target, propertyName, type, value, validatorOptions) {
     if (!metadata) {
         metadata = [];
     }
-    metadata.push({ type: type, property: propertyName, value: value, options: validatorOptions });
+    metadata.push({
+        type: type,
+        property: propertyName,
+        value: value,
+        options: validatorOptions
+    });
     Reflect.defineMetadata('tsvalidate:validators', metadata, target);
 }
 ;

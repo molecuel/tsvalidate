@@ -20,21 +20,21 @@ describe('validator', function () {
     let indent = '       ';
     describe('for all types', function () {
         it('VALIDATION ERROR: Should validate string content state (defined)', function () {
-            class stringTestClass1 {
+            class TestClass1 {
             }
             __decorate([
                 V.IsDefined(), 
                 __metadata('design:type', String)
-            ], stringTestClass1.prototype, "testProp", void 0);
+            ], TestClass1.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass1();
+            localTestClass = new TestClass1();
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
             (validationResult.length).should.be.above(0);
             validationResult = [];
-            class stringTestClass2 {
+            class TestClass2 {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -42,9 +42,9 @@ describe('validator', function () {
             __decorate([
                 V.IsDefined(), 
                 __metadata('design:type', String)
-            ], stringTestClass2.prototype, "testProp", void 0);
+            ], TestClass2.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass2();
+            localTestClass = new TestClass2();
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
