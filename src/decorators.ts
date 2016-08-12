@@ -52,6 +52,8 @@ export class DecoratorTypes {
   static NESTED = 'ValidateNested';
 }
 
+export const METADATAKEY = 'tsvalidate:validators';
+
 export function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType, validatorOptions);
@@ -262,8 +264,20 @@ export function Trim() {
   };
 }
 
+export function ClearValidators() {
+  return function(target: Object, propertyName: string) {
+    let metadata = Reflect.getMetadata(METADATAKEY, target);
+    if (typeof metadata !== 'undefined') {
+      metadata = metadata.filter(function(entry) {
+        return entry.property !== propertyName;
+      });
+      Reflect.defineMetadata(METADATAKEY, metadata, target);
+    }
+  };
+}
+
 function BasicDecorator(target: Object, propertyName: string, type: string, value?: any, validatorOptions?: IValidatorOptions) {
-  let metadata = Reflect.getMetadata('tsvalidate:validators', target);
+  let metadata = Reflect.getMetadata(METADATAKEY, target);
   if (!metadata) {
     metadata = [];
   }
@@ -273,5 +287,5 @@ function BasicDecorator(target: Object, propertyName: string, type: string, valu
     value: value,
     options: validatorOptions
   });
-  Reflect.defineMetadata('tsvalidate:validators', metadata, target);
+  Reflect.defineMetadata(METADATAKEY, metadata, target);
 };

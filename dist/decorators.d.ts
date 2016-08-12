@@ -34,6 +34,7 @@ export declare class DecoratorTypes {
     static MULTIPLE_OF: string;
     static NESTED: string;
 }
+export declare const METADATAKEY: string;
 export declare function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsInt(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsFloat(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
@@ -68,3 +69,4 @@ export declare function MongoID(validatorOptions?: IValidatorOptions): (target: 
 export declare function ValidateNested(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsDefined(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function Trim(): (target: Object, propertyName: string) => void;
+export declare function ClearValidators(): (target: Object, propertyName: string) => void;

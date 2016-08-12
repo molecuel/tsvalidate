@@ -19,12 +19,12 @@ describe('validator', function () {
     let localTestClass;
     let indent = '       ';
     describe('for all types', function () {
-        it('VALIDATION ERROR: Should validate string content state (defined)', function () {
+        it('should NOT validate content state (defined)', function () {
             class TestClass1 {
             }
             __decorate([
                 V.IsDefined(), 
-                __metadata('design:type', String)
+                __metadata('design:type', Object)
             ], TestClass1.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new TestClass1();
@@ -41,7 +41,7 @@ describe('validator', function () {
             }
             __decorate([
                 V.IsDefined(), 
-                __metadata('design:type', String)
+                __metadata('design:type', Object)
             ], TestClass2.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new TestClass2();
@@ -52,7 +52,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (defined)', function () {
+        it('should validate content state (defined)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -60,7 +60,7 @@ describe('validator', function () {
             }
             __decorate([
                 V.IsDefined(), 
-                __metadata('design:type', String)
+                __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new stringTestClass(null);
@@ -68,10 +68,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string content state (equal to xyz)', function () {
+        it('should NOT validate any content state (equal to xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -79,7 +79,7 @@ describe('validator', function () {
             }
             __decorate([
                 V.Equals('base'), 
-                __metadata('design:type', String)
+                __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new stringTestClass('desoxyribonucleic acid');
@@ -90,7 +90,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (equal to xyz)', function () {
+        it('should validate content state (equal to xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -98,7 +98,7 @@ describe('validator', function () {
             }
             __decorate([
                 V.Equals(new String()), 
-                __metadata('design:type', String)
+                __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new stringTestClass(new String());
@@ -106,10 +106,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate nested types', function () {
+        it('should NOT validate nested types', function () {
             testValidator = new V.Validator();
             let localTestClass;
             localTestClass = new TestClass_1.NestedTestClass(true, false);
@@ -121,7 +121,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate nested types', function () {
+        it('should validate nested types', function () {
             testValidator = new V.Validator();
             let localTestClass;
             localTestClass = new TestClass_1.NestedTestClass('text', 0);
@@ -130,10 +130,10 @@ describe('validator', function () {
                 for (let i in validationResult)
                     console.log(indent + validationResult[i].message);
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate multi-nested types', function () {
+        it('should NOT validate multi-nested types', function () {
             testValidator = new V.Validator();
             let localTestClass;
             localTestClass = new TestClass_1.MultiNestedTestClass('false', 0, false);
@@ -145,7 +145,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate multi-nested types', function () {
+        it('should validate multi-nested types', function () {
             testValidator = new V.Validator();
             let localTestClass;
             localTestClass = new TestClass_1.MultiNestedTestClass(true, 'text', 1);
@@ -154,10 +154,10 @@ describe('validator', function () {
                 for (let i in validationResult)
                     console.log(indent + validationResult[i].message);
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate types (Number)', function () {
+        it('should NOT validate types (Number)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -176,7 +176,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate types (Number)', function () {
+        it('should validate types (Number)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -192,10 +192,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate types (String)', function () {
+        it('should NOT validate types (String)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -214,7 +214,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate types (String)', function () {
+        it('should validate types (String)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -230,10 +230,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate types (Boolean)', function () {
+        it('should NOT validate types (Boolean)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -252,7 +252,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate types (Boolean)', function () {
+        it('should validate types (Boolean)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -268,10 +268,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate types (any(superimposed))', function () {
+        it('should NOT validate types (any(superimposed))', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -290,7 +290,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate types (any(superimposed))', function () {
+        it('should validate types (any(superimposed))', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -306,12 +306,59 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
+            validationResult = [];
+        });
+        it('should NOT remove all earlier applied decorators)', function () {
+            class TestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.IsInt(),
+                V.ClearValidators(),
+                V.ValidateType(Number), 
+                __metadata('design:type', Object)
+            ], TestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new TestClass('text');
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should remove all earlier applied decorators)', function () {
+            class TestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.IsInt(),
+                V.ValidateType(Boolean), 
+                __metadata('design:type', Object)
+            ], TestClass.prototype, "testProp", void 0);
+            class InheritingClass extends TestClass {
+            }
+            __decorate([
+                V.ClearValidators(), 
+                __metadata('design:type', Object)
+            ], InheritingClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new InheritingClass('true');
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+            }
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
     describe('for string type', function () {
-        it('VALIDATION ERROR: Should validate format (Decimal)', function () {
+        it('should NOT validate format (Decimal)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -330,7 +377,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate format (Decimal)', function () {
+        it('should validate format (Decimal)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -346,10 +393,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate format (Float)', function () {
+        it('should NOT validate format (Float)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -368,7 +415,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate format (Float)', function () {
+        it('should validate format (Float)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -384,10 +431,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate format (Integer)', function () {
+        it('should NOT validate format (Integer)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -406,7 +453,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate format (Integer)', function () {
+        it('should validate format (Integer)', function () {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -422,10 +469,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string length (maximum)', function () {
+        it('should NOT validate string length (maximum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -444,7 +491,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string length (maximum)', function () {
+        it('should validate string length (maximum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -460,10 +507,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string length (minimum)', function () {
+        it('should NOT validate string length (minimum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -482,7 +529,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string length (minimum)', function () {
+        it('should validate string length (minimum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -498,10 +545,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string byte length (maximum)', function () {
+        it('should NOT validate string byte length (maximum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -520,7 +567,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string byte length (maximum)', function () {
+        it('should validate string byte length (maximum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -536,10 +583,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string byte length (minimum)', function () {
+        it('should NOT validate string byte length (minimum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -558,7 +605,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string byte length (minimum)', function () {
+        it('should validate string byte length (minimum)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -574,10 +621,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string date mm-dd-yyyy', function () {
+        it('should NOT validate string date mm-dd-yyyy', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -596,7 +643,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string date mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
+        it('should validate string date mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -612,10 +659,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string date (ISO8601)', function () {
+        it('should NOT validate string date (ISO8601)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -634,7 +681,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string date (ISO8601)', function () {
+        it('should validate string date (ISO8601)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -650,10 +697,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate whether string is an email address', function () {
+        it('should NOT validate whether string is an email address', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -672,7 +719,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate whether string is a valid email address', function () {
+        it('should validate whether string is a valid email address', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -688,10 +735,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate whether string is an IP address', function () {
+        it('should NOT validate whether string is an IP address', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -710,7 +757,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate whether string is an IP address', function () {
+        it('should validate whether string is an IP address', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -726,10 +773,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate whether string is a MAC address', function () {
+        it('should NOT validate whether string is a MAC address', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -748,7 +795,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate whether string is a MAC address', function () {
+        it('should validate whether string is a MAC address', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -764,10 +811,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate whether string is a hex color', function () {
+        it('should NOT validate whether string is a hex color', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -786,7 +833,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate whether string is a hex color', function () {
+        it('should validate whether string is a hex color', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -802,10 +849,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate whether string is hexadecimal', function () {
+        it('should NOT validate whether string is hexadecimal', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -824,7 +871,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate whether string is hexadecimal', function () {
+        it('should validate whether string is hexadecimal', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -840,10 +887,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate whether string is a MongoDB ObjectID', function () {
+        it('should NOT validate whether string is a MongoDB ObjectID', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -862,7 +909,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate whether string is a MongoDB ObjectID', function () {
+        it('should validate whether string is a MongoDB ObjectID', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -878,10 +925,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
+        it('should NOT validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -900,7 +947,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
+        it('should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -916,10 +963,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string dates after mm-dd-yyyy', function () {
+        it('should NOT validate string dates after mm-dd-yyyy', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -938,7 +985,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string dates after mm-dd-yyyy', function () {
+        it('should validate string dates after mm-dd-yyyy', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -954,10 +1001,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate uppercase strings', function () {
+        it('should NOT validate uppercase strings', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -976,7 +1023,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate uppercase strings', function () {
+        it('should validate uppercase strings', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -992,10 +1039,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate lowercase strings', function () {
+        it('should NOT validate lowercase strings', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1014,7 +1061,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate lowercase strings', function () {
+        it('should validate lowercase strings', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1030,10 +1077,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string content state (empty)', function () {
+        it('should NOT validate string content state (empty)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1052,7 +1099,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (empty)', function () {
+        it('should validate string content state (empty)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1068,10 +1115,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string content state (filled)', function () {
+        it('should NOT validate string content state (filled)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1090,7 +1137,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (filled)', function () {
+        it('should validate string content state (filled)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1106,10 +1153,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string content state (contains xyz)', function () {
+        it('should NOT validate string content state (contains xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1128,7 +1175,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (contains xyz)', function () {
+        it('should validate string content state (contains xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1144,10 +1191,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string content state (in array xyz)', function () {
+        it('should NOT validate string content state (in array xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1166,7 +1213,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (in array xyz)', function () {
+        it('should validate string content state (in array xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1182,10 +1229,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string content state (not in array xyz)', function () {
+        it('should NOT validate string content state (not in array xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1204,7 +1251,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string content state (not in array xyz)', function () {
+        it('should validate string content state (not in array xyz)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1220,10 +1267,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string metadata (alphanumeric)', function () {
+        it('should NOT validate string metadata (alphanumeric)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1242,7 +1289,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string metadata (alphanumeric)', function () {
+        it('should validate string metadata (alphanumeric)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1258,10 +1305,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate string metadata (alpha)', function () {
+        it('should NOT validate string metadata (alpha)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1280,7 +1327,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate string metadata (alpha)', function () {
+        it('should validate string metadata (alpha)', function () {
             class stringTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1296,12 +1343,12 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
     describe('for number type', function () {
-        it('VALIDATION ERROR: Should validate number metadata (maximum length)', function () {
+        it('should NOT validate number metadata (maximum length)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1320,7 +1367,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number metadata (maximum length)', function () {
+        it('should validate number metadata (maximum length)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1336,10 +1383,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number metadata (minimum length)', function () {
+        it('should NOT validate number metadata (minimum length)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1358,7 +1405,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number metadata (minimum length)', function () {
+        it('should validate number metadata (minimum length)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1374,10 +1421,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number metadata (maximum value)', function () {
+        it('should NOT validate number metadata (maximum value)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1396,7 +1443,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number metadata (maximum value)', function () {
+        it('should validate number metadata (maximum value)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1412,10 +1459,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number metadata (minimum value)', function () {
+        it('should NOT validate number metadata (minimum value)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1434,7 +1481,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number metadata (minimum value)', function () {
+        it('should validate number metadata (minimum value)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1450,10 +1497,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number content state (contains xyz)', function () {
+        it('should NOT validate number content state (contains xyz)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1472,7 +1519,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number content state (contains xyz)', function () {
+        it('should validate number content state (contains xyz)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1488,10 +1535,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number content state (empty)', function () {
+        it('should NOT validate number content state (empty)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1510,7 +1557,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number content state (empty)', function () {
+        it('should validate number content state (empty)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1526,10 +1573,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number content state (filled)', function () {
+        it('should NOT validate number content state (filled)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1548,7 +1595,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number content state (filled)', function () {
+        it('should validate number content state (filled)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1564,10 +1611,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number content state (defined)', function () {
+        it('should NOT validate number content state (defined)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1586,7 +1633,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number content state (defined)', function () {
+        it('should validate number content state (defined)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1602,10 +1649,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number content state (in array xyz)', function () {
+        it('should NOT validate number content state (in array xyz)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1624,7 +1671,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number content state (in array xyz)', function () {
+        it('should validate number content state (in array xyz)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1640,10 +1687,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate number metadata (multiple of xyz)', function () {
+        it('should NOT validate number metadata (multiple of xyz)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1662,7 +1709,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate number metadata (multiple of xyz)', function () {
+        it('should validate number metadata (multiple of xyz)', function () {
             class numberTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1678,12 +1725,12 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
     describe('for string type', function () {
-        it('VALIDATION ERROR: Should validate boolean metadata (in array xyz)', function () {
+        it('should NOT validate boolean metadata (in array xyz)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1702,7 +1749,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate boolean metadata (in array xyz)', function () {
+        it('should validate boolean metadata (in array xyz)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1718,10 +1765,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate boolean content state (defined)', function () {
+        it('should NOT validate boolean content state (defined)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1740,7 +1787,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate boolean content state (defined)', function () {
+        it('should validate boolean content state (defined)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1756,10 +1803,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate boolean content state (empty)', function () {
+        it('should NOT validate boolean content state (empty)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1778,7 +1825,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate boolean content state (empty)', function () {
+        it('should validate boolean content state (empty)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1794,10 +1841,10 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('VALIDATION ERROR: Should validate boolean content state (filled)', function () {
+        it('should NOT validate boolean content state (filled)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1816,7 +1863,7 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('VALIDATION OKAY: Should validate boolean content state (filled)', function () {
+        it('should validate boolean content state (filled)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -1832,7 +1879,7 @@ describe('validator', function () {
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
             }
-            should.equal(validationResult, 0);
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });

@@ -20,7 +20,7 @@ export class Validator {
    */
   public validate(target: Object, validatorOptions?: IValidatorOptions): IValidatorError[] {
 
-    let metadata = Reflect.getMetadata('tsvalidate:validators', target);
+    let metadata = Reflect.getMetadata(decorators.METADATAKEY, target);
     // Loop over sets of Metadata, execute requested validation.
     for (let metadataEntry of metadata) {
       if (metadataEntry.type === decorators.DecoratorTypes.NESTED
@@ -568,11 +568,11 @@ export class Validator {
         break;
       case decorators.DecoratorTypes.MONGO_ID:
         if (typeof target[metadataEntry.property] !== 'string'
-       && typeof target[metadataEntry.property] !== 'number') {
+          && typeof target[metadataEntry.property] !== 'number') {
           this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'String or Number', metadataEntry.value));
         }
         else if (!validator.isMongoId(target[metadataEntry.property])
-        && typeof target[metadataEntry.property] !== 'number') {
+          && typeof target[metadataEntry.property] !== 'number') {
 
           this.errors.push({
             target: target.constructor.name,

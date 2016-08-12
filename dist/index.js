@@ -12,7 +12,7 @@ class Validator {
         this.nestedMode = false;
     }
     validate(target, validatorOptions) {
-        let metadata = Reflect.getMetadata('tsvalidate:validators', target);
+        let metadata = Reflect.getMetadata(decorators.METADATAKEY, target);
         for (let metadataEntry of metadata) {
             if (metadataEntry.type === decorators.DecoratorTypes.NESTED
                 && typeof target[metadataEntry.property] === 'object') {
