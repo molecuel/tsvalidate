@@ -498,8 +498,8 @@ class Validator {
                     && typeof target[metadataEntry.property] !== 'number') {
                     this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'String or Number', metadataEntry.value));
                 }
-                else if (!validator.isMongoId(target[metadataEntry.property])
-                    && typeof target[metadataEntry.property] !== 'number') {
+                else if (typeof target[metadataEntry.property] !== 'number'
+                    && !validator.isMongoId(target[metadataEntry.property])) {
                     this.errors.push({
                         target: target.constructor.name,
                         property: metadataEntry.property,
