@@ -91,6 +91,19 @@ export class Validator {
                     }
                     break;
 
+                  // decared type: array
+                  case 'Array':
+                    if (target[metadataEntry.property] !== null) {
+                      console.log(typeof target[metadataEntry.property]);
+                      console.log(target[metadataEntry.property] instanceof Array<number>().constructor);
+                      console.log(Reflect.getMetadata('design:type', target, metadataEntry.property));
+                      for (let item in target[metadataEntry.property]) {
+                        console.log('typeof: ' + typeof target[metadataEntry.property][item]);
+                        console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));
+                      }
+                    }
+                    break;
+
                   // declared type: string
                   case 'String':
                     if (target[metadataEntry.property] !== null) {
@@ -572,7 +585,7 @@ export class Validator {
           this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'String or Number', metadataEntry.value));
         }
         else if (typeof target[metadataEntry.property] !== 'number'
-        && !validator.isMongoId(target[metadataEntry.property])) {
+          && !validator.isMongoId(target[metadataEntry.property])) {
 
           this.errors.push({
             target: target.constructor.name,

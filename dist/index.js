@@ -67,6 +67,17 @@ class Validator {
                                             }
                                         }
                                         break;
+                                    case 'Array':
+                                        if (target[metadataEntry.property] !== null) {
+                                            console.log(typeof target[metadataEntry.property]);
+                                            console.log(target[metadataEntry.property] instanceof Array().constructor);
+                                            console.log(Reflect.getMetadata('design:type', target, metadataEntry.property));
+                                            for (let item in target[metadataEntry.property]) {
+                                                console.log('typeof: ' + typeof target[metadataEntry.property][item]);
+                                                console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));
+                                            }
+                                        }
+                                        break;
                                     case 'String':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
