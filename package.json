@@ -34,7 +34,7 @@
     "should": ">= 0.0.1",
     "tslint": "^3.5.0",
     "tslint-stylish": "^2.1.0-beta",
-    "typescript": "^1.8.2"
+    "typescript": "github:inspirationlabs/TypeScript"
   },
   "dependencies": {
     "lodash": "^4.13.1",

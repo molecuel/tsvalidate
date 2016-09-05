@@ -1828,13 +1828,13 @@ describe('validator', function() {
       validationResult = [];
     })
 
-    it('should NOT validate array type (number)', function() {
+    it('should NOT validate array type (class)', function() {
       class booleanTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
         @V.ValidateType()
-        testProp: number[];
+        testProp: Array<Element>;
       }
       testValidator = new V.Validator();
       localTestClass = new booleanTestClass([false]);
@@ -1852,7 +1852,7 @@ describe('validator', function() {
           this.testProp = value;
         }
         @V.ValidateType()
-        testProp: number[];
+        testProp: Element[];
       }
       testValidator = new V.Validator();
       localTestClass = new booleanTestClass([101]);

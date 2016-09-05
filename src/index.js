@@ -3,17 +3,25 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 require('reflect-metadata');
-const decorators = require('./decorators');
+var decorators = require('./decorators');
 __export(require('./decorators'));
-const validator = require('validator');
-class Validator {
-    constructor() {
+var validator = require('validator');
+var Validator = (function () {
+    function Validator() {
         this.errors = [];
         this.nestedMode = false;
     }
-    validate(target, validatorOptions) {
-        let metadata = Reflect.getMetadata(decorators.METADATAKEY, target);
-        for (let metadataEntry of metadata) {
+    /**
+     * Validate via decorator predefined metadata of properties of objects and nested objects. Returns error messages via array of the IValidatorError interface.
+     * @param target Object
+     * @param validatorOptions IValidatorOptions optional
+     * @return IValidatorError[]
+     */
+    Validator.prototype.validate = function (target, validatorOptions) {
+        var metadata = Reflect.getMetadata(decorators.METADATAKEY, target);
+        // Loop over sets of Metadata, execute requested validation.
+        for (var _i = 0, metadata_1 = metadata; _i < metadata_1.length; _i++) {
+            var metadataEntry = metadata_1[_i];
             if (metadataEntry.type === decorators.DecoratorTypes.NESTED
                 && typeof target[metadataEntry.property] === 'object') {
                 this.nestedMode = true;
@@ -21,6 +29,7 @@ class Validator {
             }
             else {
                 this.nestedMode = false;
+                // Get system- and validator-predefined Metadata, then check for sufficient results.
                 if (metadataEntry.type === decorators.DecoratorTypes.DEFINED
                     && typeof target[metadataEntry.property] === 'undefined') {
                     this.errors.push({
@@ -45,13 +54,16 @@ class Validator {
                 }
                 else if (typeof target[metadataEntry.property] !== 'undefined'
                     && target[metadataEntry.property] !== null) {
-                    let types = Reflect.getMetadata('design:type', target, metadataEntry.property);
+                    var types = Reflect.getMetadata('design:type', target, metadataEntry.property);
+                    // Execute requested type dependant validation.
                     this.validateString(target, metadataEntry);
                     this.validateNumber(target, metadataEntry);
+                    // Execute requested type independant validation.
                     switch (metadataEntry.type) {
                         case decorators.DecoratorTypes.IS_TYPED:
                             if (typeof types !== 'undefined') {
                                 switch (types.name) {
+                                    // declared type: any
                                     case 'Object':
                                         if (metadataEntry.value
                                             && target[metadataEntry.property] !== null) {
@@ -67,18 +79,20 @@ class Validator {
                                             }
                                         }
                                         break;
+                                    // decared type: array
                                     case 'Array':
                                         if (target[metadataEntry.property] !== null) {
                                             console.log(typeof target[metadataEntry.property]);
                                             console.log(metadataEntry.property + ': ' + target[metadataEntry.property]);
+                                            // console.log(target[metadataEntry.property] instanceof Array<number>().constructor);
                                             console.log('array design: ' + Reflect.getMetadata('design:type', target, metadataEntry.property));
-                                            console.log('array design name: ' + Reflect.getMetadata('design:type', target, metadataEntry.property).name);
-                                            for (let item in target[metadataEntry.property]) {
+                                            for (var item in target[metadataEntry.property]) {
                                                 console.log('typeof: ' + typeof target[metadataEntry.property][item]);
                                                 console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));
                                             }
                                         }
                                         break;
+                                    // declared type: string
                                     case 'String':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
@@ -95,6 +109,7 @@ class Validator {
                                             }
                                         }
                                         break;
+                                    // declared type: number
                                     case 'Number':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
@@ -111,6 +126,7 @@ class Validator {
                                             }
                                         }
                                         break;
+                                    // declared type: boolean
                                     case 'Boolean':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
@@ -127,6 +143,7 @@ class Validator {
                                             }
                                         }
                                         break;
+                                    // declared type: object
                                     default:
                                         if (target[metadataEntry.property]) {
                                             if ((metadataEntry.value
@@ -146,6 +163,7 @@ class Validator {
                                 }
                             }
                             else {
+                                // limit to once per property(!?)
                                 this.errors.push({
                                     target: target.constructor.name,
                                     property: metadataEntry.property,
@@ -300,8 +318,14 @@ class Validator {
         else {
             return [];
         }
-    }
-    validateString(target, metadataEntry) {
+    }; // method end (validate)
+    /**
+     * Validates metadata of properties of type string.
+     * @param target Object
+     * @param metadataEntry.property string
+     * @param metadataEntry any
+     */
+    Validator.prototype.validateString = function (target, metadataEntry) {
         switch (metadataEntry.type) {
             case decorators.DecoratorTypes.MAX_BYTE_LEN:
                 if (typeof target[metadataEntry.property] !== 'string') {
@@ -565,8 +589,14 @@ class Validator {
                 }
                 break;
         }
-    }
-    validateNumber(target, metadataEntry) {
+    }; // method end (validateString)
+    /**
+     * Validates metadata of properties of type number.
+     * @param target Object
+     * @param metadataEntry.property string
+     * @param metadataEntry any
+     */
+    Validator.prototype.validateNumber = function (target, metadataEntry) {
         switch (metadataEntry.type) {
             case decorators.DecoratorTypes.MAX_VALUE:
                 if (typeof target[metadataEntry.property] !== 'number') {
@@ -614,8 +644,8 @@ class Validator {
                 }
                 break;
         }
-    }
-    validationTypeConflict(target, property, type, conflict, comparison) {
+    }; // method end (validateNumber)
+    Validator.prototype.validationTypeConflict = function (target, property, type, conflict, comparison) {
         return {
             target: target.constructor.name,
             property: property,
@@ -624,8 +654,7 @@ class Validator {
             value: target[property],
             comparison: comparison
         };
-    }
-}
-exports.Validator = Validator;
-
-//# sourceMappingURL=index.js.map
+    }; // method end (validationTypeConflict)
+    return Validator;
+}());
+exports.Validator = Validator; // class end (Validator)

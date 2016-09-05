@@ -1922,7 +1922,7 @@ describe('validator', function () {
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate array type (number)', function () {
+        it('should NOT validate array type (class)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
