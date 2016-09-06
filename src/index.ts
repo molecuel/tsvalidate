@@ -94,14 +94,16 @@ export class Validator {
                   // decared type: array
                   case 'Array':
                     if (target[metadataEntry.property] !== null) {
-                      console.log(typeof target[metadataEntry.property]);
-                      console.log(metadataEntry.property + ': ' + target[metadataEntry.property]);
+                      // console.log(typeof target[metadataEntry.property]);
+                      // console.log(metadataEntry.property + ': ' + target[metadataEntry.property]);
                       // console.log(target[metadataEntry.property] instanceof Array<number>().constructor);
-                      console.log('array design: ' + Reflect.getMetadata('design:type', target, metadataEntry.property));
-                      console.log('array design name: ' + Reflect.getMetadata('design:type', target, metadataEntry.property).name);
+                      console.log('array design: ');
+                      console.log(Reflect.getMetadata('design:type', target, metadataEntry.property));
+                      console.log('array design name: ');
+                      console.log(Reflect.getMetadata('design:type', target, metadataEntry.property).name);
                       for (let item in target[metadataEntry.property]) {
-                        console.log('typeof: ' + typeof target[metadataEntry.property][item]);
-                        console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));
+                        console.log('typeof item: ' + typeof target[metadataEntry.property][item]);
+                        // console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));
                       }
                     }
                     break;
