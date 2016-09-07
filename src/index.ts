@@ -70,7 +70,7 @@ export class Validator {
             case decorators.DecoratorTypes.IS_TYPED:
 
               if (typeof types !== 'undefined') {
-                switch (types.name) {
+                switch (types.name.split('<')[0]) {
 
                   // declared type: any
                   case 'Object':
@@ -101,8 +101,10 @@ export class Validator {
                       console.log(Reflect.getMetadata('design:type', target, metadataEntry.property));
                       console.log('array design name: ');
                       console.log(Reflect.getMetadata('design:type', target, metadataEntry.property).name);
+                      console.log('new instance: ');
+                      console.log(new (Reflect.getMetadata('design:type', target, metadataEntry.property))());
                       for (let item in target[metadataEntry.property]) {
-                        console.log('typeof item: ' + typeof target[metadataEntry.property][item]);
+                        // console.log('typeof item: ' + typeof target[metadataEntry.property][item]);
                         // console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));
                       }
                     }
@@ -111,7 +113,6 @@ export class Validator {
                   // declared type: string
                   case 'String':
                     if (target[metadataEntry.property] !== null) {
-
                       if ((metadataEntry.value
                         && !(target[metadataEntry.property] instanceof metadataEntry.value))
                         || (!metadataEntry.value

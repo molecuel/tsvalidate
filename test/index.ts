@@ -1829,14 +1829,55 @@ describe('validator', function() {
       validationResult = [];
     })
     */
-    it('should NOT validate array type (number)', function() {
+    it('should NOT validate array type (number[][])', function() {
       class booleanTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
         @V.ValidateType()
-        testProp: number[];
+        testProp: number[][];
       }
+      console.log('requested type instance: ');
+      console.log(new Array<Array<number>>());
+      testValidator = new V.Validator();
+      localTestClass = new booleanTestClass([false]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    })
+
+    it('should NOT validate array type (Array<Array<number>>)', function() {
+      class booleanTestClass {
+        constructor(value?: any[]) {
+          this.testProp = value;
+        }
+        @V.ValidateType()
+        testProp: Array<Array<number>>;
+      }
+      console.log('requested type instance: ');
+      console.log(new Array<Array<number>>());
+      testValidator = new V.Validator();
+      localTestClass = new booleanTestClass([false]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    })
+
+    it('should NOT validate array type (mixed)', function() {
+      class booleanTestClass {
+        constructor(value?: any[]) {
+          this.testProp = value;
+        }
+        @V.ValidateType()
+        testProp: (boolean | number | string)[];
+      }
+      let union = new Array<Boolean | Number | String>();
       testValidator = new V.Validator();
       localTestClass = new booleanTestClass([false]);
       validationResult = testValidator.validate(localTestClass);
@@ -1864,6 +1905,7 @@ describe('validator', function() {
       (validationResult.length).should.be.above(0);
       validationResult = [];
     })
+
     /*
     it('should validate array type (class)', function() {
       class booleanTestClass {

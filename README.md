@@ -10,6 +10,15 @@
 
 Allows validating properties of objects and (multi-)nested objects via predefined decorators.
 
+## Installation
+
+```
+npm install tsvalidate
+```
+
+
+Important: This is using a modified version of MS's TypeScript Compiler for improved Array validation.
+
 ## Usage
 
 Import either the validator and specific decorators,
