@@ -23,7 +23,7 @@ describe('validator', function () {
             class TestClass1 {
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Object)
             ], TestClass1.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -40,7 +40,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Object)
             ], TestClass2.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -59,7 +59,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -78,7 +78,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Equals('base'),
+                V.Equals('base'), 
                 __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -97,7 +97,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Equals(new String()),
+                V.Equals(new String()), 
                 __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -164,7 +164,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', Number)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -183,7 +183,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', Number)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -202,7 +202,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -221,7 +221,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -240,7 +240,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', Boolean)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -259,7 +259,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', Boolean)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -278,7 +278,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(Number),
+                V.ValidateType(Number), 
                 __metadata('design:type', Object)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -297,7 +297,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(Boolean),
+                V.ValidateType(Boolean), 
                 __metadata('design:type', Object)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -318,7 +318,7 @@ describe('validator', function () {
             __decorate([
                 V.IsInt(),
                 V.ClearValidators(),
-                V.ValidateType(Number),
+                V.ValidateType(Number), 
                 __metadata('design:type', Object)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -338,13 +338,13 @@ describe('validator', function () {
             }
             __decorate([
                 V.IsInt(),
-                V.ValidateType(Boolean),
+                V.ValidateType(Boolean), 
                 __metadata('design:type', Object)
             ], TestClass.prototype, "testProp", void 0);
             class InheritingClass extends TestClass {
             }
             __decorate([
-                V.ClearValidators(),
+                V.ClearValidators(), 
                 __metadata('design:type', Object)
             ], InheritingClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -365,7 +365,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDecimal(),
+                V.IsDecimal(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -384,7 +384,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDecimal(),
+                V.IsDecimal(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -403,7 +403,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsFloat(),
+                V.IsFloat(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -422,7 +422,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsFloat(),
+                V.IsFloat(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -441,7 +441,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsInt(),
+                V.IsInt(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -460,7 +460,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsInt(),
+                V.IsInt(), 
                 __metadata('design:type', String)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -479,7 +479,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxLen(5),
+                V.MaxLen(5), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -498,7 +498,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxLen(35),
+                V.MaxLen(35), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -517,7 +517,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinLen(26),
+                V.MinLen(26), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -536,7 +536,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinLen(5),
+                V.MinLen(5), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -555,7 +555,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxByteLen(7),
+                V.MaxByteLen(7), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -574,7 +574,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxByteLen(32),
+                V.MaxByteLen(32), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -593,7 +593,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinLen(26),
+                V.MinLen(26), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -612,7 +612,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinLen(4),
+                V.MinLen(4), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -631,7 +631,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDate(),
+                V.IsDate(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -650,7 +650,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDate(),
+                V.IsDate(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -669,7 +669,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ISO8601Date(),
+                V.ISO8601Date(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -688,7 +688,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ISO8601Date(),
+                V.ISO8601Date(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -707,7 +707,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmail(),
+                V.IsEmail(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -726,7 +726,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmail(),
+                V.IsEmail(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -745,7 +745,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsIP(),
+                V.IsIP(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -764,7 +764,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsIP(),
+                V.IsIP(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -783,7 +783,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsMAC(),
+                V.IsMAC(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -802,7 +802,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsMAC(),
+                V.IsMAC(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -821,7 +821,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.HexColor(),
+                V.HexColor(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -840,7 +840,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.HexColor(),
+                V.HexColor(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -859,7 +859,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Hexadecimal(),
+                V.Hexadecimal(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -878,7 +878,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Hexadecimal(),
+                V.Hexadecimal(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -897,7 +897,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MongoID(),
+                V.MongoID(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -916,7 +916,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MongoID(),
+                V.MongoID(), 
                 __metadata('design:type', Object)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -935,7 +935,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.DateBefore('07.01.2016'),
+                V.DateBefore('07.01.2016'), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -954,7 +954,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.DateBefore('07.02.2016'),
+                V.DateBefore('07.02.2016'), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -973,7 +973,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.DateAfter('01.07.2016'),
+                V.DateAfter('01.07.2016'), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -992,7 +992,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.DateAfter('01.07.2016'),
+                V.DateAfter('01.07.2016'), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1011,7 +1011,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Uppercase(),
+                V.Uppercase(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1030,7 +1030,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Uppercase(),
+                V.Uppercase(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1049,7 +1049,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Lowercase(),
+                V.Lowercase(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1068,7 +1068,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Lowercase(),
+                V.Lowercase(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1087,7 +1087,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmpty(),
+                V.IsEmpty(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1106,7 +1106,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmpty(),
+                V.IsEmpty(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1125,7 +1125,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsNotEmpty(),
+                V.IsNotEmpty(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1144,7 +1144,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsNotEmpty(),
+                V.IsNotEmpty(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1163,7 +1163,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Contains('base'),
+                V.Contains('base'), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1182,7 +1182,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Contains('base'),
+                V.Contains('base'), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1201,7 +1201,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.InArray(['one', 'two', 'three']),
+                V.InArray(['one', 'two', 'three']), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1220,7 +1220,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.InArray(['one', 'two', 'three']),
+                V.InArray(['one', 'two', 'three']), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1239,7 +1239,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.NotInArray(['one', 'two', 'three']),
+                V.NotInArray(['one', 'two', 'three']), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1258,7 +1258,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.NotInArray(['one', 'two', 'three']),
+                V.NotInArray(['one', 'two', 'three']), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1277,7 +1277,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.AlphaNumeric(),
+                V.AlphaNumeric(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1296,7 +1296,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.AlphaNumeric(),
+                V.AlphaNumeric(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1315,7 +1315,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Alpha(),
+                V.Alpha(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1334,7 +1334,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Alpha(),
+                V.Alpha(), 
                 __metadata('design:type', String)
             ], stringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1355,7 +1355,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxLen(1),
+                V.MaxLen(1), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1374,7 +1374,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxLen(1),
+                V.MaxLen(1), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1393,7 +1393,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinLen(3),
+                V.MinLen(3), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1412,7 +1412,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinLen(3),
+                V.MinLen(3), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1431,7 +1431,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxValue(5),
+                V.MaxValue(5), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1450,7 +1450,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MaxValue(5),
+                V.MaxValue(5), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1469,7 +1469,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinValue(12),
+                V.MinValue(12), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1488,7 +1488,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MinValue(12),
+                V.MinValue(12), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1507,7 +1507,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Contains(2),
+                V.Contains(2), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1526,7 +1526,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.Contains(2),
+                V.Contains(2), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1545,7 +1545,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmpty(),
+                V.IsEmpty(), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1564,7 +1564,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmpty(),
+                V.IsEmpty(), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1583,7 +1583,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsNotEmpty(),
+                V.IsNotEmpty(), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1602,7 +1602,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsNotEmpty(),
+                V.IsNotEmpty(), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1621,7 +1621,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1640,7 +1640,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1659,7 +1659,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.InArray([1, 2, 3, 4, 5]),
+                V.InArray([1, 2, 3, 4, 5]), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1678,7 +1678,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.InArray([1, 2, 3, 4, 5]),
+                V.InArray([1, 2, 3, 4, 5]), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1697,7 +1697,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MultipleOf(4),
+                V.MultipleOf(4), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1716,7 +1716,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.MultipleOf(4),
+                V.MultipleOf(4), 
                 __metadata('design:type', Number)
             ], numberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1737,7 +1737,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.InArray([true]),
+                V.InArray([true]), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1756,7 +1756,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.InArray([true]),
+                V.InArray([true]), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1775,7 +1775,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1794,7 +1794,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.IsDefined(), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1813,7 +1813,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmpty(),
+                V.IsEmpty(), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1832,7 +1832,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsEmpty(),
+                V.IsEmpty(), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1851,7 +1851,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsNotEmpty(),
+                V.IsNotEmpty(), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1870,7 +1870,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.IsNotEmpty(),
+                V.IsNotEmpty(), 
                 __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1891,8 +1891,8 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
-                __metadata('design:type', {name: 'Array<Array<Number>>', type: Array<Array<Number>>, elemType: Array<Number>})
+                V.ValidateType(), 
+                __metadata('design:type', {name: 'Array<Array<Number>>', type: Array, elemType: {name: 'Array<Number>', type: Array, elemType: Number}})
             ], booleanTestClass.prototype, "testProp", void 0);
             console.log('requested type instance: ');
             console.log(new Array());
@@ -1912,7 +1912,7 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
+                V.ValidateType(), 
                 __metadata('design:type', Array)
             ], booleanTestClass.prototype, "testProp", void 0);
             console.log('requested type instance: ');
@@ -1933,10 +1933,12 @@ describe('validator', function () {
                 }
             }
             __decorate([
-                V.ValidateType(),
-                __metadata('design:type', {name: 'Array<Boolean | Number | String>', type: Array<Boolean | Number | String>, elemType: Boolean | Number | String})
+                V.ValidateType(), 
+                __metadata('design:type', {name: 'Array<Boolean | Number | String>', type: Array, elemType: Boolean | Number | String})
             ], booleanTestClass.prototype, "testProp", void 0);
+            console.log('requested type instance: ');
             let union = new Array();
+            console.log(union);
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass([false]);
             validationResult = testValidator.validate(localTestClass);
@@ -1946,15 +1948,15 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should NOT validate array type (class)', function () {
+        it('should NOT validate array type (class[])', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.ValidateType(),
-                __metadata('design:type', {name: 'Array<Element>', type: Array<Element>, elemType: Element})
+                V.ValidateType(), 
+                __metadata('design:type', {name: 'Array<InnermostTestClass>', type: Array, elemType: TestClass_1.InnermostTestClass})
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass([false]);
@@ -1963,6 +1965,44 @@ describe('validator', function () {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
             (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should NOT validate type (class)', function () {
+            class TestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType(), 
+                __metadata('design:type', TestClass_1.InnermostTestClass)
+            ], TestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new TestClass([101]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should validate type (union)', function () {
+            class booleanTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType(), 
+                __metadata('design:type', Boolean | Number | String)
+            ], booleanTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new booleanTestClass([101]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });

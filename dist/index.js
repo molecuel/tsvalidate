@@ -74,7 +74,8 @@ class Validator {
                                             console.log('array design name: ');
                                             console.log(Reflect.getMetadata('design:type', target, metadataEntry.property).name);
                                             console.log('new instance: ');
-                                            console.log(new (Reflect.getMetadata('design:type', target, metadataEntry.property))());
+                                            let arrayDesign = Reflect.getMetadata('design:type', target, metadataEntry.property);
+                                            console.log(new arrayDesign);
                                             for (let item in target[metadataEntry.property]) {
                                             }
                                         }

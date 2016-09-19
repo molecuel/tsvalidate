@@ -102,7 +102,15 @@ export class Validator {
                       console.log('array design name: ');
                       console.log(Reflect.getMetadata('design:type', target, metadataEntry.property).name);
                       console.log('new instance: ');
-                      console.log(new (Reflect.getMetadata('design:type', target, metadataEntry.property))());
+                      let arrayDesign = Reflect.getMetadata('design:type', target, metadataEntry.property);
+                      console.log(new arrayDesign);
+                      // if (arrayDesign.elemType){
+                      //   let arrayElemType = arrayDesign.elemType;
+                      //   console.log()
+                      //   while (typeof arrayElemType !== 'function'){
+                      //
+                      //   }
+                      // }
                       for (let item in target[metadataEntry.property]) {
                         // console.log('typeof item: ' + typeof target[metadataEntry.property][item]);
                         // console.log('design: ' + Reflect.getMetadata('design:type', target[metadataEntry.property], item));

@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import should = require('should');
 import assert = require('assert');
-import { MultiNestedTestClass, NestedTestClass } from './classes/TestClass';
+import { MultiNestedTestClass, NestedTestClass, InnermostTestClass } from './classes/TestClass';
 import * as V from '../dist';
 should();
 
@@ -1877,7 +1877,9 @@ describe('validator', function() {
         @V.ValidateType()
         testProp: (boolean | number | string)[];
       }
+      console.log('requested type instance: ');
       let union = new Array<Boolean | Number | String>();
+      console.log(union);
       testValidator = new V.Validator();
       localTestClass = new booleanTestClass([false]);
       validationResult = testValidator.validate(localTestClass);
@@ -1888,13 +1890,13 @@ describe('validator', function() {
       validationResult = [];
     })
 
-    it('should NOT validate array type (class)', function() {
+    it('should NOT validate array type (class[])', function() {
       class booleanTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
         @V.ValidateType()
-        testProp: Element[];
+        testProp: InnermostTestClass[];
       }
       testValidator = new V.Validator();
       localTestClass = new booleanTestClass([false]);
@@ -1906,15 +1908,35 @@ describe('validator', function() {
       validationResult = [];
     })
 
-    /*
-    it('should validate array type (class)', function() {
+    it('should NOT validate type (class)', function() {
+      class TestClass {
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+        @V.ValidateType()
+        testProp: InnermostTestClass;
+      }
+      testValidator = new V.Validator();
+      localTestClass = new TestClass([101]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    })
+
+    it('should validate type (union)', function() {
       class booleanTestClass {
         constructor(value?: any) {
           this.testProp = value;
         }
         @V.ValidateType()
-        testProp: Element[];
+        testProp: boolean | number | string;
       }
+      // console.log('requested type instance: ');
+      // let union = new (Boolean | Number | String)();
+      // console.log(union);
       testValidator = new V.Validator();
       localTestClass = new booleanTestClass([101]);
       validationResult = testValidator.validate(localTestClass);
@@ -1924,6 +1946,5 @@ describe('validator', function() {
       should.equal(validationResult.length, 0);
       validationResult = [];
     })
-    */
   }); // category end
 }) // test end
