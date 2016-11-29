@@ -6,6 +6,7 @@ require('reflect-metadata');
 const decorators = require('./decorators');
 __export(require('./decorators'));
 const validator = require('validator');
+const _ = require('lodash');
 class Validator {
     constructor() {
         this.errors = [];
@@ -51,7 +52,14 @@ class Validator {
                     switch (metadataEntry.type) {
                         case decorators.DecoratorTypes.IS_TYPED:
                             if (typeof types !== 'undefined') {
-                                switch (types.name.split('<')[0]) {
+                                let switchCondition;
+                                if (metadataEntry.value) {
+                                    switchCondition = metadataEntry.value.name || metadataEntry.value.constructor.name;
+                                }
+                                else {
+                                    switchCondition = types.name;
+                                }
+                                switch (switchCondition) {
                                     case 'Object':
                                         if (metadataEntry.value
                                             && target[metadataEntry.property] !== null) {
@@ -68,22 +76,27 @@ class Validator {
                                         }
                                         break;
                                     case 'Array':
-                                        if (target[metadataEntry.property] !== null) {
-                                            console.log('array design: ');
-                                            console.log(Reflect.getMetadata('design:type', target, metadataEntry.property));
-                                            console.log('array design name: ');
-                                            console.log(Reflect.getMetadata('design:type', target, metadataEntry.property).name);
-                                            console.log('new instance: ');
-                                            let arrayDesign = Reflect.getMetadata('design:type', target, metadataEntry.property);
-                                            console.log(new arrayDesign);
-                                            for (let item in target[metadataEntry.property]) {
-                                            }
+                                        if (target[metadataEntry.property] !== null
+                                            && metadataEntry.value) {
+                                            let allowedTypes = [];
+                                            let allTypes = (typeRestrictions, depth) => {
+                                                for (let currType of typeRestrictions) {
+                                                    if (_.isArray(currType)) {
+                                                        allTypes(currType, depth + 1);
+                                                    }
+                                                    else {
+                                                        allowedTypes.push({ type: currType, depth: depth });
+                                                    }
+                                                }
+                                            };
+                                            allTypes(metadataEntry.value, 1);
                                         }
                                         break;
                                     case 'String':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value))
+                                                && !(target[metadataEntry.property] instanceof metadataEntry.value)
+                                                && (typeof target[metadataEntry.property] !== 'string'))
                                                 || (!metadataEntry.value
                                                     && (typeof target[metadataEntry.property] !== 'string'))) {
                                                 this.errors.push({
@@ -99,7 +112,8 @@ class Validator {
                                     case 'Number':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value))
+                                                && !(target[metadataEntry.property] instanceof metadataEntry.value)
+                                                && (typeof target[metadataEntry.property] !== 'number'))
                                                 || (!metadataEntry.value
                                                     && (typeof target[metadataEntry.property] !== 'number'))) {
                                                 this.errors.push({
@@ -115,7 +129,8 @@ class Validator {
                                     case 'Boolean':
                                         if (target[metadataEntry.property] !== null) {
                                             if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value))
+                                                && !(target[metadataEntry.property] instanceof metadataEntry.value)
+                                                && (typeof target[metadataEntry.property] !== 'boolean'))
                                                 || (!metadataEntry.value
                                                     && (typeof target[metadataEntry.property] !== 'boolean'))) {
                                                 this.errors.push({

@@ -5,6 +5,7 @@ export class DecoratorTypes {
 
   // all types
   static IS_TYPED = 'ValidateType';
+  static IS_ARRAY = 'ValidateArray';
   static IS_INT = 'IsInt';
   static IS_FLOAT = 'IsFloat';
   static IS_DECIMAL = 'IsDecimal';
@@ -52,9 +53,32 @@ export class DecoratorTypes {
   static NESTED = 'ValidateNested';
 }
 
+export function UseMongoCollection(collection: string) {
+  return function(target: Object) {
+    let input: any = target;
+    let className: string;
+    if ('prototype' in input) {
+      className = input.prototype.constructor.name;
+    }
+    else {
+      className = input.constructor.name;
+    }
+    let metadata = Reflect.getMetadata(METADATAKEY, target);
+    if (!metadata) {
+      metadata = [];
+    }
+    metadata.push({
+      type: 'UseMongoCollection',
+      property: className,
+      value: collection
+    });
+    Reflect.defineMetadata(METADATAKEY, metadata, target);
+  };
+}
+
 export const METADATAKEY = 'tsvalidate:validators';
 
-export function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions) {
+export function ValidateType(objectType?: Object|any[], validatorOptions?: IValidatorOptions) {
   return function(target: Object, propertyName: string) {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType, validatorOptions);
   };

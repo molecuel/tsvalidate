@@ -3,6 +3,7 @@ const validator = require('validator');
 class DecoratorTypes {
 }
 DecoratorTypes.IS_TYPED = 'ValidateType';
+DecoratorTypes.IS_ARRAY = 'ValidateArray';
 DecoratorTypes.IS_INT = 'IsInt';
 DecoratorTypes.IS_FLOAT = 'IsFloat';
 DecoratorTypes.IS_DECIMAL = 'IsDecimal';
@@ -36,6 +37,29 @@ DecoratorTypes.MIN_VALUE = 'MinValue';
 DecoratorTypes.MULTIPLE_OF = 'MultipleOf';
 DecoratorTypes.NESTED = 'ValidateNested';
 exports.DecoratorTypes = DecoratorTypes;
+function UseMongoCollection(collection) {
+    return function (target) {
+        let input = target;
+        let className;
+        if ('prototype' in input) {
+            className = input.prototype.constructor.name;
+        }
+        else {
+            className = input.constructor.name;
+        }
+        let metadata = Reflect.getMetadata(exports.METADATAKEY, target);
+        if (!metadata) {
+            metadata = [];
+        }
+        metadata.push({
+            type: 'UseMongoCollection',
+            property: className,
+            value: collection
+        });
+        Reflect.defineMetadata(exports.METADATAKEY, metadata, target);
+    };
+}
+exports.UseMongoCollection = UseMongoCollection;
 exports.METADATAKEY = 'tsvalidate:validators';
 function ValidateType(objectType, validatorOptions) {
     return function (target, propertyName) {

@@ -1884,39 +1884,16 @@ describe('validator', function () {
         });
     });
     describe('for array type', function () {
-        it('should NOT validate array type (number[][])', function () {
+        it('should NOT validate array metadata (in array xyz)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.ValidateType(), 
-                __metadata('design:type', {name: 'Array<Array<Number>>', type: Array, elemType: {name: 'Array<Number>', type: Array, elemType: Number}})
-            ], booleanTestClass.prototype, "testProp", void 0);
-            console.log('requested type instance: ');
-            console.log(new Array());
-            testValidator = new V.Validator();
-            localTestClass = new booleanTestClass([false]);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
-            (validationResult.length).should.be.above(0);
-            validationResult = [];
-        });
-        it('should NOT validate array type (Array<Array<number>>)', function () {
-            class booleanTestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(), 
+                V.InArray([[true], ['boolean']]), 
                 __metadata('design:type', Array)
             ], booleanTestClass.prototype, "testProp", void 0);
-            console.log('requested type instance: ');
-            console.log(new Array());
             testValidator = new V.Validator();
             localTestClass = new booleanTestClass([false]);
             validationResult = testValidator.validate(localTestClass);
@@ -1926,78 +1903,18 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should NOT validate array type (mixed)', function () {
+        it('should validate boolean metadata (in array xyz)', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.ValidateType(), 
-                __metadata('design:type', {name: 'Array<Boolean | Number | String>', type: Array, elemType: Boolean | Number | String})
-            ], booleanTestClass.prototype, "testProp", void 0);
-            console.log('requested type instance: ');
-            let union = new Array();
-            console.log(union);
-            testValidator = new V.Validator();
-            localTestClass = new booleanTestClass([false]);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
-            (validationResult.length).should.be.above(0);
-            validationResult = [];
-        });
-        it('should NOT validate array type (class[])', function () {
-            class booleanTestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(), 
-                __metadata('design:type', {name: 'Array<InnermostTestClass>', type: Array, elemType: TestClass_1.InnermostTestClass})
+                V.InArray([[true], [false]]), 
+                __metadata('design:type', Boolean)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass([false]);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
-            (validationResult.length).should.be.above(0);
-            validationResult = [];
-        });
-        it('should NOT validate type (class)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(), 
-                __metadata('design:type', TestClass_1.InnermostTestClass)
-            ], TestClass.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new TestClass([101]);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
-            (validationResult.length).should.be.above(0);
-            validationResult = [];
-        });
-        it('should validate type (union)', function () {
-            class booleanTestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(), 
-                __metadata('design:type', Boolean | Number | String)
-            ], booleanTestClass.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new booleanTestClass([101]);
+            localTestClass = new booleanTestClass([true]);
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');

@@ -1,6 +1,7 @@
 import { IValidatorOptions } from './interfaces/IValidatorOptions';
 export declare class DecoratorTypes {
     static IS_TYPED: string;
+    static IS_ARRAY: string;
     static IS_INT: string;
     static IS_FLOAT: string;
     static IS_DECIMAL: string;
@@ -34,8 +35,9 @@ export declare class DecoratorTypes {
     static MULTIPLE_OF: string;
     static NESTED: string;
 }
+export declare function UseMongoCollection(collection: string): (target: Object) => void;
 export declare const METADATAKEY: string;
-export declare function ValidateType(objectType?: Object, validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
+export declare function ValidateType(objectType?: Object | any[], validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsInt(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsFloat(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
 export declare function IsDecimal(validatorOptions?: IValidatorOptions): (target: Object, propertyName: string) => void;
