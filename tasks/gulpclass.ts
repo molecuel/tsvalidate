@@ -10,6 +10,7 @@ import * as del from 'del';
 import * as fs from 'fs';
 import * as merge from 'merge2';
 import * as sourcemaps from 'gulp-sourcemaps';
+import * as typedoc from 'gulp-typedoc';
 
 @Gulpclass()
 export class Gulpfile {
@@ -98,6 +99,26 @@ export class Gulpfile {
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
   build() {
     return [['clean::dist', 'ts::lint'], 'ts::compile', 'ts::test::compile'];
+  }
+
+  @SequenceTask('docs') //  this special annotation using "run-sequence" module to run returned tasks in sequence
+  docs() {
+    return gulp
+            .src(["./src/*.ts"])
+            .pipe(typedoc({
+            // TypeScript options (see typescript docs) 
+            target: "es6",
+            // includeDeclarations: true,
+ 
+            // Output options (see typedoc docs) 
+            out: "./docs",
+            mode: "file",
+            disableOutputCheck: false,
+ 
+            // TypeDoc options (see typedoc docs) 
+            name: "tsvalidate",
+            ignoreCompilerErrors: true
+        })); 
   }
 
   @SequenceTask('watch') // this special annotation using "run-sequence" module to run returned tasks in sequence
