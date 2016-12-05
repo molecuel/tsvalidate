@@ -47,6 +47,14 @@ export class Gulpfile {
   }
 
   /**
+   * Clean docs directory
+   */
+  @Task('clean::docs')
+  clean(cb: Function) {
+    return del(['./docs/**'], cb);
+  }
+
+  /**
    * Typescript lint task
    */
   @Task('ts::lint')
@@ -97,6 +105,12 @@ export class Gulpfile {
     ]);
   }
 
+  @Task('ghpages::deploy')
+  ghpagesdeploy() {
+    return gulp.src('./.publish/**/*')
+      .pipe(ghPages());
+  }
+
   @Task('docs')
   docs() {
     return gulp
@@ -119,8 +133,7 @@ export class Gulpfile {
 
   @Task('deploy')
   deploy() {
-    return gulp.src('./.publish/**/*')
-    .pipe(ghPages());
+    return ['ghpages::deploy', 'clean::docs'];
   }
 
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
