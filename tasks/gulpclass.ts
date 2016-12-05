@@ -119,8 +119,8 @@ export class Gulpfile {
 
   @Task('deploy')
   deploy() {
-    return gulp.src('./docs/**/*')
-    .pipe(ghPages({cacheDir: 'docs'}));
+    return gulp.src('./.publish/**/*')
+    .pipe(ghPages());
   }
 
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
