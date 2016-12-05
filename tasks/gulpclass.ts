@@ -11,6 +11,7 @@ import * as fs from 'fs';
 import * as merge from 'merge2';
 import * as sourcemaps from 'gulp-sourcemaps';
 import * as typedoc from 'gulp-typedoc';
+import * as ghPages from 'gulp-gh-pages';
 
 @Gulpclass()
 export class Gulpfile {
@@ -96,12 +97,7 @@ export class Gulpfile {
     ]);
   }
 
-  @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
-  build() {
-    return [['clean::dist', 'ts::lint'], 'ts::compile', 'ts::test::compile'];
-  }
-
-  @SequenceTask('docs') //  this special annotation using "run-sequence" module to run returned tasks in sequence
+  @Task('docs')
   docs() {
     return gulp
             .src(["./src/*.ts"])
@@ -119,6 +115,17 @@ export class Gulpfile {
             name: "tsvalidate",
             ignoreCompilerErrors: true
         })); 
+  }
+
+  @Task('deploy')
+  deploy() {
+    return gulp.src('./docs/**/*')
+    .pipe(ghPages({cacheDir: 'docs'}));
+  }
+
+  @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
+  build() {
+    return [['clean::dist', 'ts::lint'], 'ts::compile', 'ts::test::compile'];
   }
 
   @SequenceTask('watch') // this special annotation using "run-sequence" module to run returned tasks in sequence
