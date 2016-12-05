@@ -107,7 +107,7 @@ export class Gulpfile {
             // includeDeclarations: true,
  
             // Output options (see typedoc docs) 
-            out: "./docs",
+            out: "./.publish",
             mode: "file",
             disableOutputCheck: false,
  
