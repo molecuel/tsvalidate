@@ -50,8 +50,16 @@ export class Gulpfile {
    * Clean docs directory
    */
   @Task('clean::docs')
-  clean(cb: Function) {
+  cleandocs(cb: Function) {
     return del(['./docs/**'], cb);
+  }
+
+  /**
+   * Clean .publish directory
+   */
+  @Task('clean::.publish')
+  cleanpubl(cb: Function) {
+    return del(['./.publish/**'], cb);
   }
 
   /**
@@ -107,7 +115,7 @@ export class Gulpfile {
 
   @Task('ghpages::deploy')
   ghpagesdeploy() {
-    return gulp.src('./.publish/**/*')
+    return gulp.src('./docs/**/*')
       .pipe(ghPages());
   }
 
@@ -121,7 +129,7 @@ export class Gulpfile {
             // includeDeclarations: true,
  
             // Output options (see typedoc docs) 
-            out: "./.publish",
+            out: "./docs",
             mode: "file",
             disableOutputCheck: false,
  
@@ -131,9 +139,9 @@ export class Gulpfile {
         })); 
   }
 
-  @Task('deploy')
+  @SequenceTask('deploy') // this special annotation using "run-sequence" module to run returned tasks in sequence
   deploy() {
-    return ['ghpages::deploy', 'clean::docs'];
+    return ['docs', 'ghpages::deploy', 'clean::docs', 'clean::.publish'];
   }
 
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
