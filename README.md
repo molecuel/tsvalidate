@@ -17,8 +17,6 @@ npm install tsvalidate
 ```
 
 
-Important: This is using a modified version of MS's TypeScript Compiler for improved Array validation.
-
 ## Usage
 
 Import either the validator and specific decorators,
@@ -36,7 +34,7 @@ import * as V from "tsvalidate";
 
 
 
-Upon defining classes add any of the predefined decorators to their properties, then call validate method passing the object:
+Upon defining classes add any of the predefined decorators to their properties, then call the validate method passing the object:
 
 ```typescript
 import * as V from "tsvalidate";
@@ -55,7 +53,7 @@ export class Car {
     @V.IsNotEmpty()
     model: string;
 
-    @V.InArray(['BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Honda', 'Porsche', 'Ford', 'Toyota'])
+    @V.InArray(['Tesla', 'BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Honda', 'Porsche', 'Ford', 'Toyota'])
     make: string;
 
     @V.IsNotEmpty()
@@ -146,7 +144,7 @@ Currently, the following decorators are supported:
 | `@IsDecimal()`                                  | Checks if the value is a decimal number.                                                                                                                                                                               |
 | **String and number validation decorators**                                                                                                                                                     |
 | `@MaxLen(value: number)`                        | Checks if the string or the number is no longer than the defined character length.                                                                                                |
-| `@MinLen(value: number)`                        | Checks if the string or the number is not shorter than the defined character length.                                                                                                |
+| `@MinLen(value: number)`                        | Checks if the string or the number is not shorter than the defined character length. To check array items, pass an array of objects (e.g. number[][]: pass [[Number]]).             |
 | `@Contains(value: string | number)`             | Checks if the string or the number contains the defined value.                                                                                                |
 | **String validation decorators**                                                                                                                                                     |
 | `@IsDate()`                                     | Checks if the string is a date.  [mm-dd-(yy)yy] or [mm.dd.(yy)yy]                                                                                                |

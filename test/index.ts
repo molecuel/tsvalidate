@@ -1793,8 +1793,8 @@ describe('validator', function() {
     
   describe('for array type', function() {
     // array validation tests
-    it('should NOT validate array metadata (in array xyz)', function() {
-      class booleanTestClass {
+    it('should NOT validate array items (in array xyz)', function() {
+      class TestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1802,7 +1802,7 @@ describe('validator', function() {
         testProp: boolean[];
       }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([false]);
+      localTestClass = new TestClass([false]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
@@ -1811,24 +1811,24 @@ describe('validator', function() {
       validationResult = [];
     })
 
-    it('should validate boolean metadata (in array xyz)', function() {
-      class booleanTestClass {
-        constructor(value?: any) {
+    it('should validate array items (in array xyz)', function() {
+      class TestClass {
+        constructor(value?: any[]) {
           this.testProp = value;
         }
-        @V.InArray([[true], [false]])
-        testProp: boolean;
+        @V.InArray([[true], ['boolean']])
+        testProp: boolean[];
       }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([true]);
+      localTestClass = new TestClass([true]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
-      should.equal(validationResult.length, 0);
+      (validationResult.length).should.equal(0);
       validationResult = [];
     })
-    /*
+
     it('should NOT validate array type (number[][])', function() {
       class arrayTestClass {
         constructor(value?: any[]) {
@@ -1838,12 +1838,30 @@ describe('validator', function() {
         testProp: number[][];
       }
       testValidator = new V.Validator();
-      localTestClass = new arrayTestClass([false]);
+      localTestClass = new arrayTestClass([[false]]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
+      validationResult = [];
+    })
+
+    it('should validate array type (number[][])', function() {
+      class arrayTestClass {
+        constructor(value?: any[]) {
+          this.testProp = value;
+        }
+        @V.ValidateType([Number, [Number, String]])
+        testProp: number[][];
+      }
+      testValidator = new V.Validator();
+      localTestClass = new arrayTestClass([['false']]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.equal(0);
       validationResult = [];
     })
 
@@ -1852,18 +1870,34 @@ describe('validator', function() {
         constructor(value?: any[]) {
           this.testProp = value;
         }
-        @V.ValidateType()
+        @V.ValidateType([[Number]])
         testProp: Array<Array<number>>;
-      }
-      console.log('requested type instance: ');
-      console.log(new Array<Array<number>>());
+      }      
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([false]);
+      localTestClass = new booleanTestClass([[false]]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
+      validationResult = [];
+    })
+
+    it('should validate array type (Array<Array<number>>)', function() {
+      class booleanTestClass {
+        constructor(value?: any[]) {
+          this.testProp = value;
+        }
+        @V.ValidateType([[Number]])
+        testProp: Array<Array<number>>;
+      }      
+      testValidator = new V.Validator();
+      localTestClass = new booleanTestClass([[123, 456]]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.equal(0);
       validationResult = [];
     })
 
@@ -1872,14 +1906,11 @@ describe('validator', function() {
         constructor(value?: any[]) {
           this.testProp = value;
         }
-        @V.ValidateType()
+        @V.ValidateType([Boolean, Number, String])
         testProp: (boolean | number | string)[];
       }
-      console.log('requested type instance: ');
-      let union = new Array<Boolean | Number | String>();
-      console.log(union);
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([false]);
+      localTestClass = new booleanTestClass([new InnermostTestClass()]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
@@ -1888,12 +1919,30 @@ describe('validator', function() {
       validationResult = [];
     })
 
+    it('should validate array type (mixed)', function() {
+      class booleanTestClass {
+        constructor(value?: any[]) {
+          this.testProp = value;
+        }
+        @V.ValidateType([Boolean, Number, String])
+        testProp: (boolean | number | string)[];
+      }
+      testValidator = new V.Validator();
+      localTestClass = new booleanTestClass([false, true]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.equal(0);
+      validationResult = [];
+    })
+
     it('should NOT validate array type (class[])', function() {
       class booleanTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
-        @V.ValidateType()
+        @V.ValidateType([InnermostTestClass])
         testProp: InnermostTestClass[];
       }
       testValidator = new V.Validator();
@@ -1905,6 +1954,28 @@ describe('validator', function() {
       (validationResult.length).should.be.above(0);
       validationResult = [];
     })
+
+    it('should validate array type (class[])', function() {
+      class booleanTestClass {
+        constructor(value?: any[]) {
+          this.testProp = value;
+        }
+        @V.ValidateType([InnermostTestClass])
+        testProp: InnermostTestClass[];
+      }
+      testValidator = new V.Validator();
+      localTestClass = new booleanTestClass([new InnermostTestClass()]);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.equal(0);
+      validationResult = [];
+    })
+  }); // category end
+    
+  describe('for class type', function() {
+    // class validation tests
 
     it('should NOT validate type (class)', function() {
       class TestClass {
@@ -1923,7 +1994,24 @@ describe('validator', function() {
       (validationResult.length).should.be.above(0);
       validationResult = [];
     })
-    */
+    
+    it('should validate type (class)', function() {
+      class TestClass {
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+        @V.ValidateType()
+        testProp: InnermostTestClass;
+      }
+      testValidator = new V.Validator();
+      localTestClass = new TestClass(new InnermostTestClass());
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+      }
+      (validationResult.length).should.equal(0);
+      validationResult = [];
+    })
 
     /* // WIP
     it('should validate type (union)', function() {

@@ -1884,14 +1884,166 @@ describe('validator', function () {
         });
     });
     describe('for array type', function () {
-        it('should NOT validate array metadata (in array xyz)', function () {
-            class booleanTestClass {
+        it('should NOT validate array items (in array xyz)', function () {
+            class TestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
                 V.InArray([[true], ['boolean']]), 
+                __metadata('design:type', Array)
+            ], TestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new TestClass([false]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should validate array items (in array xyz)', function () {
+            class TestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.InArray([[true], ['boolean']]), 
+                __metadata('design:type', Array)
+            ], TestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new TestClass([true]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+        it('should NOT validate array type (number[][])', function () {
+            class arrayTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([Number, [Number, String]]), 
+                __metadata('design:type', Array)
+            ], arrayTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new arrayTestClass([[false]]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should validate array type (number[][])', function () {
+            class arrayTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([Number, [Number, String]]), 
+                __metadata('design:type', Array)
+            ], arrayTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new arrayTestClass([['false']]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+        it('should NOT validate array type (Array<Array<number>>)', function () {
+            class booleanTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([[Number]]), 
+                __metadata('design:type', Array)
+            ], booleanTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new booleanTestClass([[false]]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should validate array type (Array<Array<number>>)', function () {
+            class booleanTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([[Number]]), 
+                __metadata('design:type', Array)
+            ], booleanTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new booleanTestClass([[123, 456]]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+        it('should NOT validate array type (mixed)', function () {
+            class booleanTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([Boolean, Number, String]), 
+                __metadata('design:type', Array)
+            ], booleanTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new booleanTestClass([new TestClass_1.InnermostTestClass()]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should validate array type (mixed)', function () {
+            class booleanTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([Boolean, Number, String]), 
+                __metadata('design:type', Array)
+            ], booleanTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new booleanTestClass([false, true]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+        it('should NOT validate array type (class[])', function () {
+            class booleanTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType([TestClass_1.InnermostTestClass]), 
                 __metadata('design:type', Array)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -1903,23 +2055,63 @@ describe('validator', function () {
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate boolean metadata (in array xyz)', function () {
+        it('should validate array type (class[])', function () {
             class booleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.InArray([[true], [false]]), 
-                __metadata('design:type', Boolean)
+                V.ValidateType([TestClass_1.InnermostTestClass]), 
+                __metadata('design:type', Array)
             ], booleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass([true]);
+            localTestClass = new booleanTestClass([new TestClass_1.InnermostTestClass()]);
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
                 console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
             }
-            should.equal(validationResult.length, 0);
+            (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+    });
+    describe('for class type', function () {
+        it('should NOT validate type (class)', function () {
+            class TestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType(), 
+                __metadata('design:type', TestClass_1.InnermostTestClass)
+            ], TestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new TestClass([101]);
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it('should validate type (class)', function () {
+            class TestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType(), 
+                __metadata('design:type', TestClass_1.InnermostTestClass)
+            ], TestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new TestClass(new TestClass_1.InnermostTestClass());
+            validationResult = testValidator.validate(localTestClass);
+            if (validationResult.length > 0) {
+                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
+            }
+            (validationResult.length).should.equal(0);
             validationResult = [];
         });
     });

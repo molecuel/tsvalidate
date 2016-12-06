@@ -84,7 +84,6 @@ export class Validator {
                 else {
                   switchCondition = types.name;
                 }
-
                 switch (switchCondition) {
 
                   // declared type: any
@@ -106,25 +105,52 @@ export class Validator {
                     }
                     break;
 
-                  // decared type: array
+                  // declared type: array
                   case 'Array':
                     if (target[metadataEntry.property] !== null
                       && metadataEntry.value) {
 
                       let allowedTypes: any[] = [];
-                      let allTypes = (typeRestrictions, depth) => {
+                      let getAllTypes = (typeRestrictions, depth) => {
                         for (let currType of typeRestrictions) {
                           if(_.isArray(currType)) {
-                            allTypes(currType, depth + 1);
+                            getAllTypes(currType, depth + 1);
                           }
                           else {
                             allowedTypes.push({type: currType, depth: depth});
                           }
                         }
                       };
-                      allTypes(metadataEntry.value, 1);
-                      // console.log('ALLOWED TYPES:');
-                      // console.log(allowedTypes);
+                      let compareTypes = (comparedArray, depth) => {
+                        for (let currItem of comparedArray) {
+                          if(_.isArray(currItem)) {
+                            compareTypes(currItem, depth + 1);
+                          }
+                          else {
+                            let conflictingTypes: any = {value: currItem, type: currItem.constructor, depth: depth, conflicts: []};
+                            for (let currType of allowedTypes) {
+                              if (currType.depth !== depth
+                                || (!(currItem instanceof currType.type)
+                                && !(currItem.constructor === currType.type))) {
+
+                                conflictingTypes.conflicts.push(currType);
+                              }
+                            }
+                            if (conflictingTypes.conflicts.length >= allowedTypes.length) {                              
+                              this.errors.push({
+                                target: target.constructor.name,
+                                property: metadataEntry.property,
+                                type: decorators.DecoratorTypes.IS_TYPED,
+                                message: 'Item of property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of any valid type.',
+                                value: target[metadataEntry.property],
+                                comparison: currItem
+                              });
+                            }
+                          }
+                        }
+                      };
+                      getAllTypes(metadataEntry.value, 1);
+                      compareTypes(target[metadataEntry.property], 1);
                     }
                     break;
 
@@ -204,7 +230,8 @@ export class Validator {
                           property: metadataEntry.property,
                           type: decorators.DecoratorTypes.IS_TYPED,
                           message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type ' + types.name + '.',
-                          value: target[metadataEntry.property]
+                          value: target[metadataEntry.property],
+                          comparison: JSON.stringify(target)
                         });
                       }
                     }
