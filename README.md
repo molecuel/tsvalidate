@@ -53,7 +53,7 @@ export class Car {
     @V.IsNotEmpty()
     model: string;
 
-    @V.InArray(['Tesla', 'BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Honda', 'Porsche', 'Ford', 'Toyota'])
+    @V.InArray(['Tesla', 'BMW', 'Mercedes', 'Volkswagen', 'Audi', 'Ford', 'Toyota'])
     make: string;
 
     @V.IsNotEmpty()
@@ -138,14 +138,14 @@ Currently, the following decorators are supported:
 | `@IsIn(values: any[])`                          | Checks if value is in a array of allowed values.                                                                                 |
 | `@NotInArray(values: any[])`                    | Checks if value is not in a array of disallowed values.                                                                          |
 | **Type validation decorators**                                                                                                                                                     |
-| `@ValidateType(type?: Object)`                  | Checks if a value is of the declared type. Any as parameter passed type has precedence over the declarated type.                                                                                                  |
+| `@ValidateType(type?: Object)`                  | Checks if a value is of the declared type. Any as parameter passed type has precedence over the declarated type. To check array items, pass an array of objects (e.g. number[][]: pass [[Number]]).               |
 | `@IsInt()`                                      | Checks if the value is an integer number.                                                                                        |
 | `@IsFloat()`                                    | Checks if the value is a float number.                                                                                                                                                                               |
 | `@IsDecimal()`                                  | Checks if the value is a decimal number.                                                                                                                                                                               |
 | **String and number validation decorators**                                                                                                                                                     |
 | `@MaxLen(value: number)`                        | Checks if the string or the number is no longer than the defined character length.                                                                                                |
-| `@MinLen(value: number)`                        | Checks if the string or the number is not shorter than the defined character length. To check array items, pass an array of objects (e.g. number[][]: pass [[Number]]).             |
-| `@Contains(value: string | number)`             | Checks if the string or the number contains the defined value.                                                                                                |
+| `@MinLen(value: number)`                        | Checks if the string or the number is not shorter than the defined character length.                                                                                                |
+| `@Contains(value: string &#124; number)`             | Checks if the string or the number contains the defined value.                                                                                                |
 | **String validation decorators**                                                                                                                                                     |
 | `@IsDate()`                                     | Checks if the string is a date.  [mm-dd-(yy)yy] or [mm.dd.(yy)yy]                                                                                                |
 | `@ISO8601Date()`                                | Checks if the string is a date abiding ISO8601.                                                                                                  |
