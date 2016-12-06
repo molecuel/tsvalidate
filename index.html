@@ -97,7 +97,7 @@
     @V.IsNotEmpty()
     model: <span class="hljs-built_in">string</span>;
 
-    @V.InArray([<span class="hljs-string">'Tesla'</span>, <span class="hljs-string">'BMW'</span>, <span class="hljs-string">'Mercedes'</span>, <span class="hljs-string">'Volkswagen'</span>, <span class="hljs-string">'Audi'</span>, <span class="hljs-string">'Honda'</span>, <span class="hljs-string">'Porsche'</span>, <span class="hljs-string">'Ford'</span>, <span class="hljs-string">'Toyota'</span>])
+    @V.InArray([<span class="hljs-string">'Tesla'</span>, <span class="hljs-string">'BMW'</span>, <span class="hljs-string">'Mercedes'</span>, <span class="hljs-string">'Volkswagen'</span>, <span class="hljs-string">'Audi'</span>, <span class="hljs-string">'Ford'</span>, <span class="hljs-string">'Toyota'</span>])
     make: <span class="hljs-built_in">string</span>;
 
     @V.IsNotEmpty()
@@ -204,7 +204,7 @@ car.engine.horsepower = <span class="hljs-number">513.5</span>;  <span class="hl
 						</tr>
 						<tr>
 							<td><code>@ValidateType(type?: Object)</code></td>
-							<td>Checks if a value is of the declared type. Any as parameter passed type has precedence over the declarated type.</td>
+							<td>Checks if a value is of the declared type. Any as parameter passed type has precedence over the declarated type. To check array items, pass an array of objects (e.g. number[][]: pass [[Number]]).</td>
 						</tr>
 						<tr>
 							<td><code>@IsInt()</code></td>
@@ -227,10 +227,10 @@ car.engine.horsepower = <span class="hljs-number">513.5</span>;  <span class="hl
 						</tr>
 						<tr>
 							<td><code>@MinLen(value: number)</code></td>
-							<td>Checks if the string or the number is not shorter than the defined character length. To check array items, pass an array of objects (e.g. number[][]: pass [[Number]]).</td>
+							<td>Checks if the string or the number is not shorter than the defined character length.</td>
 						</tr>
 						<tr>
-							<td>`@Contains(value: string</td>
+							<td>`@Contains(value: string \</td>
 							<td>number)`</td>
 							<td>Checks if the string or the number contains the defined value.</td>
 						</tr>
