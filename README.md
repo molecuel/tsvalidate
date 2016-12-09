@@ -145,7 +145,7 @@ Currently, the following decorators are supported:
 | **String and number validation decorators**                                                                                                                                                     |
 | `@MaxLen(value: number)`                        | Checks if the string or the number is no longer than the defined character length.                                                                                                |
 | `@MinLen(value: number)`                        | Checks if the string or the number is not shorter than the defined character length.                                                                                                |
-| `@Contains(value: string &#124; number)`             | Checks if the string or the number contains the defined value.                                                                                                |
+| `@Contains(value: string `<code>&#124;</code>` number)`             | Checks if the string or the number contains the defined value.                                                                                                |
 | **String validation decorators**                                                                                                                                                     |
 | `@IsDate()`                                     | Checks if the string is a date.  [mm-dd-(yy)yy] or [mm.dd.(yy)yy]                                                                                                |
 | `@ISO8601Date()`                                | Checks if the string is a date abiding ISO8601.                                                                                                  |
