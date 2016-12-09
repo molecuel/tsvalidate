@@ -318,10 +318,12 @@ class Validator {
                             break;
                         case decorators.DecoratorTypes.CONTAINS:
                             if (typeof target[metadataEntry.property] !== 'string'
-                                && typeof target[metadataEntry.property] !== 'number') {
-                                this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Number or String', metadataEntry.value));
+                                && typeof target[metadataEntry.property] !== 'number'
+                                && !_.isArray(target[metadataEntry.property])) {
+                                this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Array, Number or String', metadataEntry.value));
                             }
-                            else if (!validator.contains(target[metadataEntry.property].toString(), metadataEntry.value)) {
+                            else if ((_.isArray(target[metadataEntry.property]) && !_.includes(_.flattenDeep(target[metadataEntry.property]), metadataEntry.value))
+                                || !validator.contains(_.toString(target[metadataEntry.property]), metadataEntry.value)) {
                                 this.errors.push({
                                     target: target.constructor.name,
                                     property: metadataEntry.property,

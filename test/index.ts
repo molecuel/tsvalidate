@@ -1,7 +1,6 @@
-'use strict'
+'use strict';
 import 'reflect-metadata';
 import should = require('should');
-import assert = require('assert');
 import { MultiNestedTestClass, NestedTestClass, InnermostTestClass } from './classes/TestClass';
 import * as V from '../dist';
 should();
@@ -43,7 +42,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate content state (defined)', function() {
       class stringTestClass {
@@ -61,7 +60,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate any content state (equal to xyz)', function() {
       class stringTestClass {
@@ -79,7 +78,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate content state (equal to xyz)', function() {
       class stringTestClass {
@@ -97,59 +96,63 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate nested types', function() {
       testValidator = new V.Validator();
       let localTestClass: NestedTestClass;
-      localTestClass = new NestedTestClass(true, false)
+      localTestClass = new NestedTestClass(true, false);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        for (let i in validationResult)
+        for (let i in validationResult) {
           console.log(indent + validationResult[i].message);
+        }
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate nested types', function() {
       testValidator = new V.Validator();
       let localTestClass: NestedTestClass;
-      localTestClass = new NestedTestClass('text', 0)
+      localTestClass = new NestedTestClass('text', 0);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        for (let i in validationResult)
+        for (let i in validationResult) {
           console.log(indent + validationResult[i].message);
+        }
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate multi-nested types', function() {
       testValidator = new V.Validator();
       let localTestClass: MultiNestedTestClass;
-      localTestClass = new MultiNestedTestClass('false', 0, false)
+      localTestClass = new MultiNestedTestClass('false', 0, false);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        for (let i in validationResult)
+        for (let i in validationResult) {
           console.log(indent + validationResult[i].message);
+        }
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate multi-nested types', function() {
       testValidator = new V.Validator();
       let localTestClass: MultiNestedTestClass;
-      localTestClass = new MultiNestedTestClass(true, 'text', 1)
+      localTestClass = new MultiNestedTestClass(true, 'text', 1);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
-        for (let i in validationResult)
+        for (let i in validationResult) {
           console.log(indent + validationResult[i].message);
+        }
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate types (Number)', function() {
       class TestClass {
@@ -167,7 +170,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate types (Number)', function() {
       class TestClass {
@@ -185,7 +188,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate types (String)', function() {
       class TestClass {
@@ -203,7 +206,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate types (String)', function() {
       class TestClass {
@@ -221,7 +224,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate types (Boolean)', function() {
       class TestClass {
@@ -239,7 +242,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate types (Boolean)', function() {
       class TestClass {
@@ -257,7 +260,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate types (any(superimposed))', function() {
       class TestClass {
@@ -275,7 +278,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate types (any(superimposed))', function() {
       class TestClass {
@@ -293,7 +296,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
 
     it('should NOT remove all earlier applied decorators)', function() {
@@ -314,7 +317,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should remove all earlier applied decorators)', function() {
       class TestClass {
@@ -338,7 +341,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
   }); // category end
 
   describe('for string type', function() {
@@ -359,7 +362,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate format (Decimal)', function() {
       class TestClass {
@@ -374,10 +377,10 @@ describe('validator', function() {
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-      }
+      };
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate format (Float)', function() {
       class TestClass {
@@ -388,14 +391,14 @@ describe('validator', function() {
         testProp: string;
       }
       testValidator = new V.Validator();
-      localTestClass = new TestClass('1234.5');
+      localTestClass = new TestClass('string 1234.5');
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate format (Float)', function() {
       class TestClass {
@@ -413,7 +416,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate format (Integer)', function() {
       class TestClass {
@@ -431,7 +434,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate format (Integer)', function() {
       class TestClass {
@@ -449,7 +452,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string length (maximum)', function() {
       class stringTestClass {
@@ -467,7 +470,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string length (maximum)', function() {
       class stringTestClass {
@@ -485,7 +488,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string length (minimum)', function() {
       class stringTestClass {
@@ -503,7 +506,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string length (minimum)', function() {
       class stringTestClass {
@@ -521,7 +524,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string byte length (maximum)', function() {
       class stringTestClass {
@@ -539,7 +542,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string byte length (maximum)', function() {
       class stringTestClass {
@@ -557,7 +560,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string byte length (minimum)', function() {
       class stringTestClass {
@@ -575,7 +578,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string byte length (minimum)', function() {
       class stringTestClass {
@@ -593,7 +596,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string date mm-dd-yyyy', function() {
       class stringTestClass {
@@ -611,7 +614,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string date mm-dd-(yy)yy or mm.dd.(yy)yy', function() {
       class stringTestClass {
@@ -629,7 +632,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string date (ISO8601)', function() {
       class stringTestClass {
@@ -647,7 +650,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string date (ISO8601)', function() {
       class stringTestClass {
@@ -665,7 +668,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate whether string is an email address', function() {
       class stringTestClass {
@@ -683,7 +686,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate whether string is a valid email address', function() {
       class stringTestClass {
@@ -701,7 +704,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate whether string is an IP address', function() {
       class stringTestClass {
@@ -719,7 +722,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate whether string is an IP address', function() {
       class stringTestClass {
@@ -737,7 +740,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate whether string is a MAC address', function() {
       class stringTestClass {
@@ -755,7 +758,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate whether string is a MAC address', function() {
       class stringTestClass {
@@ -773,7 +776,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate whether string is a hex color', function() {
       class stringTestClass {
@@ -791,7 +794,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate whether string is a hex color', function() {
       class stringTestClass {
@@ -809,7 +812,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate whether string is hexadecimal', function() {
       class stringTestClass {
@@ -827,7 +830,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate whether string is hexadecimal', function() {
       class stringTestClass {
@@ -845,7 +848,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate whether string is a MongoDB ObjectID', function() {
       class stringTestClass {
@@ -863,7 +866,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate whether string is a MongoDB ObjectID', function() {
       class stringTestClass {
@@ -881,7 +884,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function() {
       class stringTestClass {
@@ -899,7 +902,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function() {
       class stringTestClass {
@@ -917,7 +920,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string dates after mm-dd-yyyy', function() {
       class stringTestClass {
@@ -935,7 +938,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string dates after mm-dd-yyyy', function() {
       class stringTestClass {
@@ -953,7 +956,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate uppercase strings', function() {
       class stringTestClass {
@@ -971,7 +974,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate uppercase strings', function() {
       class stringTestClass {
@@ -989,7 +992,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate lowercase strings', function() {
       class stringTestClass {
@@ -1007,7 +1010,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate lowercase strings', function() {
       class stringTestClass {
@@ -1025,7 +1028,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string content state (empty)', function() {
       class stringTestClass {
@@ -1043,7 +1046,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string content state (empty)', function() {
       class stringTestClass {
@@ -1061,7 +1064,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string content state (filled)', function() {
       class stringTestClass {
@@ -1079,7 +1082,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string content state (filled)', function() {
       class stringTestClass {
@@ -1097,7 +1100,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string content state (contains xyz)', function() {
       class stringTestClass {
@@ -1115,7 +1118,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string content state (contains xyz)', function() {
       class stringTestClass {
@@ -1133,7 +1136,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string content state (in array xyz)', function() {
       class stringTestClass {
@@ -1151,7 +1154,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string content state (in array xyz)', function() {
       class stringTestClass {
@@ -1169,7 +1172,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string content state (not in array xyz)', function() {
       class stringTestClass {
@@ -1187,7 +1190,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string content state (not in array xyz)', function() {
       class stringTestClass {
@@ -1205,7 +1208,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string metadata (alphanumeric)', function() {
       class stringTestClass {
@@ -1223,7 +1226,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string metadata (alphanumeric)', function() {
       class stringTestClass {
@@ -1241,7 +1244,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate string metadata (alpha)', function() {
       class stringTestClass {
@@ -1259,7 +1262,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate string metadata (alpha)', function() {
       class stringTestClass {
@@ -1277,7 +1280,7 @@ describe('validator', function() {
       }
       should.equal(validationResult.length, 0);
       validationResult = [];
-    })
+    });
   }); // category end
 
   describe('for number type', function() {
@@ -1298,7 +1301,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
       it('should validate number metadata (maximum length)', function() {
         class numberTestClass {
@@ -1316,7 +1319,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number metadata (minimum length)', function() {
         class numberTestClass {
@@ -1334,7 +1337,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number metadata (minimum length)', function() {
         class numberTestClass {
@@ -1352,7 +1355,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number metadata (maximum value)', function() {
         class numberTestClass {
@@ -1370,7 +1373,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number metadata (maximum value)', function() {
         class numberTestClass {
@@ -1388,7 +1391,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number metadata (minimum value)', function() {
         class numberTestClass {
@@ -1406,7 +1409,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number metadata (minimum value)', function() {
         class numberTestClass {
@@ -1424,7 +1427,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number content state (contains xyz)', function() {
         class numberTestClass {
@@ -1442,7 +1445,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number content state (contains xyz)', function() {
         class numberTestClass {
@@ -1460,7 +1463,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number content state (empty)', function() {
         class numberTestClass {
@@ -1478,7 +1481,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number content state (empty)', function() {
         class numberTestClass {
@@ -1496,7 +1499,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number content state (filled)', function() {
         class numberTestClass {
@@ -1514,7 +1517,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number content state (filled)', function() {
         class numberTestClass {
@@ -1532,7 +1535,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number content state (defined)', function() {
         class numberTestClass {
@@ -1550,7 +1553,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number content state (defined)', function() {
         class numberTestClass {
@@ -1568,7 +1571,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number content state (in array xyz)', function() {
         class numberTestClass {
@@ -1586,7 +1589,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number content state (in array xyz)', function() {
         class numberTestClass {
@@ -1604,7 +1607,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate number metadata (multiple of xyz)', function() {
         class numberTestClass {
@@ -1622,7 +1625,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate number metadata (multiple of xyz)', function() {
         class numberTestClass {
@@ -1640,7 +1643,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
     }); // category end
 
     describe('for boolean type', function() {
@@ -1661,7 +1664,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate boolean metadata (in array xyz)', function() {
         class booleanTestClass {
@@ -1679,7 +1682,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate boolean content state (defined)', function() {
         class booleanTestClass {
@@ -1697,7 +1700,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate boolean content state (defined)', function() {
         class booleanTestClass {
@@ -1715,7 +1718,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate boolean content state (empty)', function() {
         class booleanTestClass {
@@ -1733,7 +1736,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate boolean content state (empty)', function() {
         class booleanTestClass {
@@ -1751,7 +1754,7 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
 
       it('should NOT validate boolean content state (filled)', function() {
         class booleanTestClass {
@@ -1769,7 +1772,7 @@ describe('validator', function() {
         }
         (validationResult.length).should.be.above(0);
         validationResult = [];
-      })
+      });
 
       it('should validate boolean content state (filled)', function() {
         class booleanTestClass {
@@ -1788,13 +1791,49 @@ describe('validator', function() {
         }
         should.equal(validationResult.length, 0);
         validationResult = [];
-      })
+      });
     }); // category end
-    
+
   describe('for array type', function() {
     // array validation tests
+      it('should NOT validate array content state (contains xyz)', function() {
+      class arrayTestClass {
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+        @V.Contains('base')
+        testProp: string[];
+      }
+      testValidator = new V.Validator();
+      localTestClass = new arrayTestClass(['desoxyribonucleic', 'acid']);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+      }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    });
+
+    it('should validate array content state (contains xyz)', function() {
+      class arrayTestClass {
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+        @V.Contains('base')
+        testProp: string[];
+      }
+      testValidator = new V.Validator();
+      localTestClass = new arrayTestClass(['amino', 'acid', 'base', 'pairs']);
+      validationResult = testValidator.validate(localTestClass);
+      if (validationResult.length > 0) {
+        console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+      }
+      should.equal(validationResult.length, 0);
+      validationResult = [];
+    });
+
     it('should NOT validate array items (in array xyz)', function() {
-      class TestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1802,17 +1841,17 @@ describe('validator', function() {
         testProp: boolean[];
       }
       testValidator = new V.Validator();
-      localTestClass = new TestClass([false]);
+      localTestClass = new arrayTestClass([false]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate array items (in array xyz)', function() {
-      class TestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1820,14 +1859,14 @@ describe('validator', function() {
         testProp: boolean[];
       }
       testValidator = new V.Validator();
-      localTestClass = new TestClass([true]);
+      localTestClass = new arrayTestClass([true]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.equal(0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate array type (number[][])', function() {
       class arrayTestClass {
@@ -1845,7 +1884,7 @@ describe('validator', function() {
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate array type (number[][])', function() {
       class arrayTestClass {
@@ -1863,46 +1902,46 @@ describe('validator', function() {
       }
       (validationResult.length).should.equal(0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate array type (Array<Array<number>>)', function() {
-      class booleanTestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
         @V.ValidateType([[Number]])
         testProp: Array<Array<number>>;
-      }      
+      }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([[false]]);
+      localTestClass = new arrayTestClass([[false]]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate array type (Array<Array<number>>)', function() {
-      class booleanTestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
         @V.ValidateType([[Number]])
         testProp: Array<Array<number>>;
-      }      
+      }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([[123, 456]]);
+      localTestClass = new arrayTestClass([[123, 456]]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.equal(0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate array type (mixed)', function() {
-      class booleanTestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1910,17 +1949,17 @@ describe('validator', function() {
         testProp: (boolean | number | string)[];
       }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([new InnermostTestClass()]);
+      localTestClass = new arrayTestClass([new InnermostTestClass()]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate array type (mixed)', function() {
-      class booleanTestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1928,17 +1967,17 @@ describe('validator', function() {
         testProp: (boolean | number | string)[];
       }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([false, true]);
+      localTestClass = new arrayTestClass([false, true]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.equal(0);
       validationResult = [];
-    })
+    });
 
     it('should NOT validate array type (class[])', function() {
-      class booleanTestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1946,17 +1985,17 @@ describe('validator', function() {
         testProp: InnermostTestClass[];
       }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([false]);
+      localTestClass = new arrayTestClass([false]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
+    });
 
     it('should validate array type (class[])', function() {
-      class booleanTestClass {
+      class arrayTestClass {
         constructor(value?: any[]) {
           this.testProp = value;
         }
@@ -1964,21 +2003,21 @@ describe('validator', function() {
         testProp: InnermostTestClass[];
       }
       testValidator = new V.Validator();
-      localTestClass = new booleanTestClass([new InnermostTestClass()]);
+      localTestClass = new arrayTestClass([new InnermostTestClass()]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.equal(0);
       validationResult = [];
-    })
+    });
   }); // category end
-    
+
   describe('for class type', function() {
     // class validation tests
 
     it('should NOT validate type (class)', function() {
-      class TestClass {
+      class classesTestClass {
         constructor(value?: any) {
           this.testProp = value;
         }
@@ -1986,17 +2025,17 @@ describe('validator', function() {
         testProp: InnermostTestClass;
       }
       testValidator = new V.Validator();
-      localTestClass = new TestClass([101]);
+      localTestClass = new classesTestClass([101]);
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.be.above(0);
       validationResult = [];
-    })
-    
+    });
+
     it('should validate type (class)', function() {
-      class TestClass {
+      class classesTestClass {
         constructor(value?: any) {
           this.testProp = value;
         }
@@ -2004,14 +2043,14 @@ describe('validator', function() {
         testProp: InnermostTestClass;
       }
       testValidator = new V.Validator();
-      localTestClass = new TestClass(new InnermostTestClass());
+      localTestClass = new classesTestClass(new InnermostTestClass());
       validationResult = testValidator.validate(localTestClass);
       if (validationResult.length > 0) {
         console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
       }
       (validationResult.length).should.equal(0);
       validationResult = [];
-    })
+    });
 
     /* // WIP
     it('should validate type (union)', function() {
@@ -2036,4 +2075,4 @@ describe('validator', function() {
     })
     */
   }); // category end
-}) // test end
+}); // test end
