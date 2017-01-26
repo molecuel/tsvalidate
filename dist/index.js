@@ -13,331 +13,336 @@ class Validator {
         this.nestedMode = false;
     }
     validate(target, validatorOptions) {
-        let metadata = Reflect.getMetadata(decorators.METADATAKEY, target);
-        for (let metadataEntry of metadata) {
-            if (metadataEntry.type === decorators.DecoratorTypes.NESTED
-                && typeof target[metadataEntry.property] === 'object') {
-                this.nestedMode = true;
-                this.validate(target[metadataEntry.property], validatorOptions);
-            }
-            else {
-                this.nestedMode = false;
-                if (metadataEntry.type === decorators.DecoratorTypes.DEFINED
-                    && typeof target[metadataEntry.property] === 'undefined') {
-                    this.errors.push({
-                        target: target.constructor.name,
-                        property: metadataEntry.property,
-                        type: decorators.DecoratorTypes.DEFINED,
-                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not defined.',
-                        value: target[metadataEntry.property]
-                    });
-                }
-                else if (metadataEntry.type === decorators.DecoratorTypes.NOT_EMPTY
-                    && (target[metadataEntry.property] === ''
-                        || target[metadataEntry.property] === null
-                        || target[metadataEntry.property] === undefined)) {
-                    this.errors.push({
-                        target: target.constructor.name,
-                        property: metadataEntry.property,
-                        type: decorators.DecoratorTypes.NOT_EMPTY,
-                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is empty.',
-                        value: target[metadataEntry.property]
-                    });
-                }
-                else if (typeof target[metadataEntry.property] !== 'undefined'
-                    && target[metadataEntry.property] !== null) {
-                    let types = Reflect.getMetadata('design:type', target, metadataEntry.property);
-                    this.validateString(target, metadataEntry);
-                    this.validateNumber(target, metadataEntry);
-                    switch (metadataEntry.type) {
-                        case decorators.DecoratorTypes.IS_TYPED:
-                            if (typeof types !== 'undefined') {
-                                let switchCondition;
-                                if (metadataEntry.value) {
-                                    switchCondition = metadataEntry.value.name || metadataEntry.value.constructor.name;
-                                }
-                                else {
-                                    switchCondition = types.name;
-                                }
-                                switch (switchCondition) {
-                                    case 'Object':
-                                        if (metadataEntry.value
-                                            && target[metadataEntry.property] !== null) {
-                                            if (!(target[metadataEntry.property] instanceof metadataEntry.value
-                                                || metadataEntry.value.name.toString().toLowerCase() === typeof target[metadataEntry.property])) {
-                                                this.errors.push({
-                                                    target: target.constructor.name,
-                                                    property: metadataEntry.property,
-                                                    type: decorators.DecoratorTypes.IS_TYPED,
-                                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type ' + metadataEntry.value.name + '.',
-                                                    value: target[metadataEntry.property]
-                                                });
-                                            }
-                                        }
-                                        break;
-                                    case 'Array':
-                                        if (target[metadataEntry.property] !== null
-                                            && metadataEntry.value) {
-                                            let allowedTypes = [];
-                                            let getAllTypes = (typeRestrictions, depth) => {
-                                                for (let currType of typeRestrictions) {
-                                                    if (_.isArray(currType)) {
-                                                        getAllTypes(currType, depth + 1);
-                                                    }
-                                                    else {
-                                                        allowedTypes.push({ type: currType, depth: depth });
-                                                    }
-                                                }
-                                            };
-                                            let compareTypes = (comparedArray, depth) => {
-                                                for (let currItem of comparedArray) {
-                                                    if (_.isArray(currItem)) {
-                                                        compareTypes(currItem, depth + 1);
-                                                    }
-                                                    else {
-                                                        let conflictingTypes = { value: currItem, type: currItem.constructor, depth: depth, conflicts: [] };
-                                                        for (let currType of allowedTypes) {
-                                                            if (currType.depth !== depth
-                                                                || (!(currItem instanceof currType.type)
-                                                                    && !(currItem.constructor === currType.type))) {
-                                                                conflictingTypes.conflicts.push(currType);
-                                                            }
-                                                        }
-                                                        if (conflictingTypes.conflicts.length >= allowedTypes.length) {
-                                                            this.errors.push({
-                                                                target: target.constructor.name,
-                                                                property: metadataEntry.property,
-                                                                type: decorators.DecoratorTypes.IS_TYPED,
-                                                                message: 'Item of property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of any valid type.',
-                                                                value: target[metadataEntry.property],
-                                                                comparison: currItem
-                                                            });
-                                                        }
-                                                    }
-                                                }
-                                            };
-                                            getAllTypes(metadataEntry.value, 1);
-                                            compareTypes(target[metadataEntry.property], 1);
-                                        }
-                                        break;
-                                    case 'String':
-                                        if (target[metadataEntry.property] !== null) {
-                                            if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value)
-                                                && (typeof target[metadataEntry.property] !== 'string'))
-                                                || (!metadataEntry.value
-                                                    && (typeof target[metadataEntry.property] !== 'string'))) {
-                                                this.errors.push({
-                                                    target: target.constructor.name,
-                                                    property: metadataEntry.property,
-                                                    type: decorators.DecoratorTypes.IS_TYPED,
-                                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not a string.',
-                                                    value: target[metadataEntry.property]
-                                                });
-                                            }
-                                        }
-                                        break;
-                                    case 'Number':
-                                        if (target[metadataEntry.property] !== null) {
-                                            if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value)
-                                                && (typeof target[metadataEntry.property] !== 'number'))
-                                                || (!metadataEntry.value
-                                                    && (typeof target[metadataEntry.property] !== 'number'))) {
-                                                this.errors.push({
-                                                    target: target.constructor.name,
-                                                    property: metadataEntry.property,
-                                                    type: decorators.DecoratorTypes.IS_TYPED,
-                                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not a number.',
-                                                    value: target[metadataEntry.property]
-                                                });
-                                            }
-                                        }
-                                        break;
-                                    case 'Boolean':
-                                        if (target[metadataEntry.property] !== null) {
-                                            if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value)
-                                                && (typeof target[metadataEntry.property] !== 'boolean'))
-                                                || (!metadataEntry.value
-                                                    && (typeof target[metadataEntry.property] !== 'boolean'))) {
-                                                this.errors.push({
-                                                    target: target.constructor.name,
-                                                    property: metadataEntry.property,
-                                                    type: decorators.DecoratorTypes.IS_TYPED,
-                                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Boolean.',
-                                                    value: target[metadataEntry.property]
-                                                });
-                                            }
-                                        }
-                                        break;
-                                    default:
-                                        if (target[metadataEntry.property]) {
-                                            if ((metadataEntry.value
-                                                && !(target[metadataEntry.property] instanceof metadataEntry.value))
-                                                || (!metadataEntry.value
-                                                    && !(target[metadataEntry.property] instanceof types))) {
-                                                this.errors.push({
-                                                    target: target.constructor.name,
-                                                    property: metadataEntry.property,
-                                                    type: decorators.DecoratorTypes.IS_TYPED,
-                                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type ' + types.name + '.',
-                                                    value: target[metadataEntry.property],
-                                                    comparison: JSON.stringify(target)
-                                                });
-                                            }
-                                        }
-                                        break;
-                                }
-                            }
-                            else {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.IS_TYPED,
-                                    message: 'Can not get type information for property ' + metadataEntry.property + ' of ' + target.constructor.name + '.',
-                                    value: target[metadataEntry.property]
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.IS_INT:
-                            if (!validator.isInt(target[metadataEntry.property].toString())
-                                || typeof target[metadataEntry.property] !== 'number') {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.IS_INT,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Integer.',
-                                    value: target[metadataEntry.property]
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.IS_FLOAT:
-                            if (!validator.isFloat(target[metadataEntry.property].toString())
-                                || typeof target[metadataEntry.property] !== 'number') {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.IS_FLOAT,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Float.',
-                                    value: target[metadataEntry.property]
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.IS_DECIMAL:
-                            if (!validator.isDecimal(target[metadataEntry.property].toString())
-                                || typeof target[metadataEntry.property] !== 'number') {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.IS_DECIMAL,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Decimal.',
-                                    value: target[metadataEntry.property]
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.IS_EMPTY:
-                            if (target[metadataEntry.property] !== ''
-                                && target[metadataEntry.property] !== null
-                                && target[metadataEntry.property] !== undefined) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.IS_EMPTY,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not empty.',
-                                    value: target[metadataEntry.property]
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.IN_ARRAY:
-                            if (!validator.isIn(target[metadataEntry.property].toString(), metadataEntry.value)) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.IN_ARRAY,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' not found in relevant array.',
-                                    value: target[metadataEntry.property],
-                                    comparison: metadataEntry.value
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.NOT_IN_ARRAY:
-                            if (validator.isIn(target[metadataEntry.property].toString(), metadataEntry.value)) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.NOT_IN_ARRAY,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' found in array of disallowed values.',
-                                    value: target[metadataEntry.property],
-                                    comparison: metadataEntry.value
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.EQUALS:
-                            if (!validator.equals(target[metadataEntry.property].toString(), metadataEntry.value.toString())) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property, type: decorators.DecoratorTypes.EQUALS,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' not equal to ' + metadataEntry.value.toString() + '.',
-                                    value: target[metadataEntry.property],
-                                    comparison: metadataEntry.value
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.MAX_LEN:
-                            if (typeof target[metadataEntry.property] !== 'string'
-                                && typeof target[metadataEntry.property] !== 'number') {
-                                this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Number or String', metadataEntry.value));
-                            }
-                            else if (!validator.isLength(target[metadataEntry.property].toString(), { max: metadataEntry.value })) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.MAX_LEN,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' digit(s).',
-                                    value: target[metadataEntry.property],
-                                    comparison: metadataEntry.value
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.MIN_LEN:
-                            if (typeof target[metadataEntry.property] !== 'string'
-                                && typeof target[metadataEntry.property] !== 'number') {
-                                this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Number or String', metadataEntry.value));
-                            }
-                            else if (!validator.isLength(target[metadataEntry.property].toString(), { min: metadataEntry.value })) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.MIN_LEN,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' digit(s).',
-                                    value: target[metadataEntry.property],
-                                    comparison: metadataEntry.value
-                                });
-                            }
-                            break;
-                        case decorators.DecoratorTypes.CONTAINS:
-                            if (typeof target[metadataEntry.property] !== 'string'
-                                && typeof target[metadataEntry.property] !== 'number'
-                                && !_.isArray(target[metadataEntry.property])) {
-                                this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Array, Number or String', metadataEntry.value));
-                            }
-                            else if ((_.isArray(target[metadataEntry.property]) && !_.includes(_.flattenDeep(target[metadataEntry.property]), metadataEntry.value))
-                                || !validator.contains(_.toString(target[metadataEntry.property]), metadataEntry.value)) {
-                                this.errors.push({
-                                    target: target.constructor.name,
-                                    property: metadataEntry.property,
-                                    type: decorators.DecoratorTypes.CONTAINS,
-                                    message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' does not contain ' + metadataEntry.value + '.',
-                                    value: target[metadataEntry.property],
-                                    comparison: metadataEntry.value
-                                });
-                            }
-                            break;
-                    }
+        let metadata = Reflect.getMetadata(decorators.METADATAKEY, target.constructor.prototype);
+        if (!metadata) {
+            return [];
+        }
+        else {
+            for (let metadataEntry of metadata) {
+                if (metadataEntry.type === decorators.DecoratorTypes.NESTED
+                    && typeof target[metadataEntry.property] === 'object') {
+                    this.nestedMode = true;
+                    this.validate(target[metadataEntry.property], validatorOptions);
                 }
                 else {
-                    continue;
+                    this.nestedMode = false;
+                    if (metadataEntry.type === decorators.DecoratorTypes.DEFINED
+                        && typeof target[metadataEntry.property] === 'undefined') {
+                        this.errors.push({
+                            target: target.constructor.name,
+                            property: metadataEntry.property,
+                            type: decorators.DecoratorTypes.DEFINED,
+                            message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not defined.',
+                            value: target[metadataEntry.property]
+                        });
+                    }
+                    else if (metadataEntry.type === decorators.DecoratorTypes.NOT_EMPTY
+                        && (target[metadataEntry.property] === ''
+                            || target[metadataEntry.property] === null
+                            || target[metadataEntry.property] === undefined)) {
+                        this.errors.push({
+                            target: target.constructor.name,
+                            property: metadataEntry.property,
+                            type: decorators.DecoratorTypes.NOT_EMPTY,
+                            message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is empty.',
+                            value: target[metadataEntry.property]
+                        });
+                    }
+                    else if (typeof target[metadataEntry.property] !== 'undefined'
+                        && target[metadataEntry.property] !== null) {
+                        let types = Reflect.getMetadata('design:type', target, metadataEntry.property);
+                        this.validateString(target, metadataEntry);
+                        this.validateNumber(target, metadataEntry);
+                        switch (metadataEntry.type) {
+                            case decorators.DecoratorTypes.IS_TYPED:
+                                if (typeof types !== 'undefined') {
+                                    let switchCondition;
+                                    if (metadataEntry.value) {
+                                        switchCondition = metadataEntry.value.name || metadataEntry.value.constructor.name;
+                                    }
+                                    else {
+                                        switchCondition = types.name;
+                                    }
+                                    switch (switchCondition) {
+                                        case 'Object':
+                                            if (metadataEntry.value
+                                                && target[metadataEntry.property] !== null) {
+                                                if (!(target[metadataEntry.property] instanceof metadataEntry.value
+                                                    || metadataEntry.value.name.toString().toLowerCase() === typeof target[metadataEntry.property])) {
+                                                    this.errors.push({
+                                                        target: target.constructor.name,
+                                                        property: metadataEntry.property,
+                                                        type: decorators.DecoratorTypes.IS_TYPED,
+                                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type ' + metadataEntry.value.name + '.',
+                                                        value: target[metadataEntry.property]
+                                                    });
+                                                }
+                                            }
+                                            break;
+                                        case 'Array':
+                                            if (target[metadataEntry.property] !== null
+                                                && metadataEntry.value) {
+                                                let allowedTypes = [];
+                                                let getAllTypes = (typeRestrictions, depth) => {
+                                                    for (let currType of typeRestrictions) {
+                                                        if (_.isArray(currType)) {
+                                                            getAllTypes(currType, depth + 1);
+                                                        }
+                                                        else {
+                                                            allowedTypes.push({ type: currType, depth: depth });
+                                                        }
+                                                    }
+                                                };
+                                                let compareTypes = (comparedArray, depth) => {
+                                                    for (let currItem of comparedArray) {
+                                                        if (_.isArray(currItem)) {
+                                                            compareTypes(currItem, depth + 1);
+                                                        }
+                                                        else {
+                                                            let conflictingTypes = { value: currItem, type: currItem.constructor, depth: depth, conflicts: [] };
+                                                            for (let currType of allowedTypes) {
+                                                                if (currType.depth !== depth
+                                                                    || (!(currItem instanceof currType.type)
+                                                                        && !(currItem.constructor === currType.type))) {
+                                                                    conflictingTypes.conflicts.push(currType);
+                                                                }
+                                                            }
+                                                            if (conflictingTypes.conflicts.length >= allowedTypes.length) {
+                                                                this.errors.push({
+                                                                    target: target.constructor.name,
+                                                                    property: metadataEntry.property,
+                                                                    type: decorators.DecoratorTypes.IS_TYPED,
+                                                                    message: 'Item of property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of any valid type.',
+                                                                    value: target[metadataEntry.property],
+                                                                    comparison: currItem
+                                                                });
+                                                            }
+                                                        }
+                                                    }
+                                                };
+                                                getAllTypes(metadataEntry.value, 1);
+                                                compareTypes(target[metadataEntry.property], 1);
+                                            }
+                                            break;
+                                        case 'String':
+                                            if (target[metadataEntry.property] !== null) {
+                                                if ((metadataEntry.value
+                                                    && !(target[metadataEntry.property] instanceof metadataEntry.value)
+                                                    && (typeof target[metadataEntry.property] !== 'string'))
+                                                    || (!metadataEntry.value
+                                                        && (typeof target[metadataEntry.property] !== 'string'))) {
+                                                    this.errors.push({
+                                                        target: target.constructor.name,
+                                                        property: metadataEntry.property,
+                                                        type: decorators.DecoratorTypes.IS_TYPED,
+                                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not a string.',
+                                                        value: target[metadataEntry.property]
+                                                    });
+                                                }
+                                            }
+                                            break;
+                                        case 'Number':
+                                            if (target[metadataEntry.property] !== null) {
+                                                if ((metadataEntry.value
+                                                    && !(target[metadataEntry.property] instanceof metadataEntry.value)
+                                                    && (typeof target[metadataEntry.property] !== 'number'))
+                                                    || (!metadataEntry.value
+                                                        && (typeof target[metadataEntry.property] !== 'number'))) {
+                                                    this.errors.push({
+                                                        target: target.constructor.name,
+                                                        property: metadataEntry.property,
+                                                        type: decorators.DecoratorTypes.IS_TYPED,
+                                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not a number.',
+                                                        value: target[metadataEntry.property]
+                                                    });
+                                                }
+                                            }
+                                            break;
+                                        case 'Boolean':
+                                            if (target[metadataEntry.property] !== null) {
+                                                if ((metadataEntry.value
+                                                    && !(target[metadataEntry.property] instanceof metadataEntry.value)
+                                                    && (typeof target[metadataEntry.property] !== 'boolean'))
+                                                    || (!metadataEntry.value
+                                                        && (typeof target[metadataEntry.property] !== 'boolean'))) {
+                                                    this.errors.push({
+                                                        target: target.constructor.name,
+                                                        property: metadataEntry.property,
+                                                        type: decorators.DecoratorTypes.IS_TYPED,
+                                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Boolean.',
+                                                        value: target[metadataEntry.property]
+                                                    });
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            if (target[metadataEntry.property]) {
+                                                if ((metadataEntry.value
+                                                    && !(target[metadataEntry.property] instanceof metadataEntry.value))
+                                                    || (!metadataEntry.value
+                                                        && !(target[metadataEntry.property] instanceof types))) {
+                                                    this.errors.push({
+                                                        target: target.constructor.name,
+                                                        property: metadataEntry.property,
+                                                        type: decorators.DecoratorTypes.IS_TYPED,
+                                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type ' + types.name + '.',
+                                                        value: target[metadataEntry.property],
+                                                        comparison: JSON.stringify(target)
+                                                    });
+                                                }
+                                            }
+                                            break;
+                                    }
+                                }
+                                else {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.IS_TYPED,
+                                        message: 'Can not get type information for property ' + metadataEntry.property + ' of ' + target.constructor.name + '.',
+                                        value: target[metadataEntry.property]
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.IS_INT:
+                                if (!validator.isInt(target[metadataEntry.property].toString())
+                                    || typeof target[metadataEntry.property] !== 'number') {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.IS_INT,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Integer.',
+                                        value: target[metadataEntry.property]
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.IS_FLOAT:
+                                if (!validator.isFloat(target[metadataEntry.property].toString())
+                                    || typeof target[metadataEntry.property] !== 'number') {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.IS_FLOAT,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Float.',
+                                        value: target[metadataEntry.property]
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.IS_DECIMAL:
+                                if (!validator.isDecimal(target[metadataEntry.property].toString())
+                                    || typeof target[metadataEntry.property] !== 'number') {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.IS_DECIMAL,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not of type Decimal.',
+                                        value: target[metadataEntry.property]
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.IS_EMPTY:
+                                if (target[metadataEntry.property] !== ''
+                                    && target[metadataEntry.property] !== null
+                                    && target[metadataEntry.property] !== undefined) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.IS_EMPTY,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is not empty.',
+                                        value: target[metadataEntry.property]
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.IN_ARRAY:
+                                if (!validator.isIn(target[metadataEntry.property].toString(), metadataEntry.value)) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.IN_ARRAY,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' not found in relevant array.',
+                                        value: target[metadataEntry.property],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.NOT_IN_ARRAY:
+                                if (validator.isIn(target[metadataEntry.property].toString(), metadataEntry.value)) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.NOT_IN_ARRAY,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' found in array of disallowed values.',
+                                        value: target[metadataEntry.property],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.EQUALS:
+                                if (!validator.equals(target[metadataEntry.property].toString(), metadataEntry.value.toString())) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property, type: decorators.DecoratorTypes.EQUALS,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' not equal to ' + metadataEntry.value.toString() + '.',
+                                        value: target[metadataEntry.property],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.MAX_LEN:
+                                if (typeof target[metadataEntry.property] !== 'string'
+                                    && typeof target[metadataEntry.property] !== 'number') {
+                                    this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Number or String', metadataEntry.value));
+                                }
+                                else if (!validator.isLength(target[metadataEntry.property].toString(), { max: metadataEntry.value })) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.MAX_LEN,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is longer than ' + metadataEntry.value + ' digit(s).',
+                                        value: target[metadataEntry.property],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.MIN_LEN:
+                                if (typeof target[metadataEntry.property] !== 'string'
+                                    && typeof target[metadataEntry.property] !== 'number') {
+                                    this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Number or String', metadataEntry.value));
+                                }
+                                else if (!validator.isLength(target[metadataEntry.property].toString(), { min: metadataEntry.value })) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.MIN_LEN,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' is shorter than ' + metadataEntry.value + ' digit(s).',
+                                        value: target[metadataEntry.property],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
+                            case decorators.DecoratorTypes.CONTAINS:
+                                if (typeof target[metadataEntry.property] !== 'string'
+                                    && typeof target[metadataEntry.property] !== 'number'
+                                    && !_.isArray(target[metadataEntry.property])) {
+                                    this.errors.push(this.validationTypeConflict(target, metadataEntry.property, metadataEntry.type, 'Array, Number or String', metadataEntry.value));
+                                }
+                                else if ((_.isArray(target[metadataEntry.property]) && !_.includes(_.flattenDeep(target[metadataEntry.property]), metadataEntry.value))
+                                    || !validator.contains(_.toString(target[metadataEntry.property]), metadataEntry.value)) {
+                                    this.errors.push({
+                                        target: target.constructor.name,
+                                        property: metadataEntry.property,
+                                        type: decorators.DecoratorTypes.CONTAINS,
+                                        message: 'Property ' + metadataEntry.property + ' of ' + target.constructor.name + ' does not contain ' + metadataEntry.value + '.',
+                                        value: target[metadataEntry.property],
+                                        comparison: metadataEntry.value
+                                    });
+                                }
+                                break;
+                        }
+                    }
+                    else {
+                        continue;
+                    }
                 }
             }
         }

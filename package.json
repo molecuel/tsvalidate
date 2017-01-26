@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "lodash": "^4.13.1",
-    "reflect-metadata": "^0.1.3",
+    "reflect-metadata": "^0.1.9",
     "validator": "^5.4.0"
   },
   "devconfig": {

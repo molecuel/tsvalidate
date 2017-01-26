@@ -4,53 +4,53 @@ import validator = require('validator');
 export class DecoratorTypes {
 
   // all types
-  public static get IS_TYPED(): string { return 'ValidateType'};
-  public static get IS_ARRAY(): string { return 'ValidateArray'};
-  public static get IS_INT(): string { return 'IsInt'};
-  public static get IS_FLOAT(): string { return 'IsFloat'};
-  public static get IS_DECIMAL(): string { return 'IsDecimal'};
-  public static get IS_EMPTY(): string { return 'IsEmpty'};
-  public static get NOT_EMPTY(): string { return 'IsNotEmpty'};
-  public static get DEFINED(): string { return 'IsDefined'};
-  public static get EQUALS(): string { return 'Equals'};
-  public static get IN_ARRAY(): string { return 'InArray'};
-  public static get NOT_IN_ARRAY(): string { return 'NotInArray'};
-  // public static get IS_NUMBER(): string { return 'IsNumber'}; // disabled
-  // public static get IS_STRING(): string { return 'IsString'}; // disabled
-  // public static get IS_BOOL(): string { return 'IsBoolean'}; // disabled
+  public static get IS_TYPED(): string { return 'ValidateType'; }
+  public static get IS_ARRAY(): string { return 'ValidateArray'; }
+  public static get IS_INT(): string { return 'IsInt'; }
+  public static get IS_FLOAT(): string { return 'IsFloat'; }
+  public static get IS_DECIMAL(): string { return 'IsDecimal'; }
+  public static get IS_EMPTY(): string { return 'IsEmpty'; }
+  public static get NOT_EMPTY(): string { return 'IsNotEmpty'; }
+  public static get DEFINED(): string { return 'IsDefined'; }
+  public static get EQUALS(): string { return 'Equals'; }
+  public static get IN_ARRAY(): string { return 'InArray'; }
+  public static get NOT_IN_ARRAY(): string { return 'NotInArray'; }
+  // public static get IS_NUMBER(): string { return 'IsNumber'; } // disabled
+  // public static get IS_STRING(): string { return 'IsString'; } // disabled
+  // public static get IS_BOOL(): string { return 'IsBoolean'; } // disabled
 
   // string and number types
-  public static get MAX_LEN(): string { return 'MaxLen'};
-  public static get MIN_LEN(): string { return 'MinLen'};
-  public static get CONTAINS(): string { return 'Contains'};
+  public static get MAX_LEN(): string { return 'MaxLen'; }
+  public static get MIN_LEN(): string { return 'MinLen'; }
+  public static get CONTAINS(): string { return 'Contains'; }
 
   // string types
-  public static get MAX_BYTE_LEN(): string { return 'MaxByteLen'};
-  public static get MIN_BYTE_LEN(): string { return 'MinByteLen'};
-  public static get DATE_AFTER(): string { return 'DateAfter'};
-  public static get DATE_BEFORE(): string { return 'DateBefore'};
-  public static get UPPERCASE(): string { return 'Uppercase'};
-  public static get LOWERCASE(): string { return 'Lowercase'};
-  public static get DATE(): string { return 'IsDate'};
-  public static get EMAIL(): string { return 'IsEmail'};
-  public static get ALPHA(): string { return 'Alpha'};
-  public static get ALPHA_NUM(): string { return 'AlphaNumeric'};
-  public static get HEX_COLOR(): string { return 'HexColor'};
-  public static get HEXADECIMAL(): string { return 'Hexadecimal'};
-  public static get IP_ADDRESS(): string { return 'IsIP'};
-  public static get DATE_ISO8601(): string { return 'ISO8601Date'};
-  public static get MAC_ADDRESS(): string { return 'IsMAC'};
-  public static get MONGO_ID(): string { return 'MongoID'};
-  // public static get URL(): string { return 'IsURL'}; // disabled
-  // public static get MOBILE_PHONE_NUMBER(): string { return 'MobilePhoneNumber'}; // disabled
+  public static get MAX_BYTE_LEN(): string { return 'MaxByteLen'; }
+  public static get MIN_BYTE_LEN(): string { return 'MinByteLen'; }
+  public static get DATE_AFTER(): string { return 'DateAfter'; }
+  public static get DATE_BEFORE(): string { return 'DateBefore'; }
+  public static get UPPERCASE(): string { return 'Uppercase'; }
+  public static get LOWERCASE(): string { return 'Lowercase'; }
+  public static get DATE(): string { return 'IsDate'; }
+  public static get EMAIL(): string { return 'IsEmail'; }
+  public static get ALPHA(): string { return 'Alpha'; }
+  public static get ALPHA_NUM(): string { return 'AlphaNumeric'; }
+  public static get HEX_COLOR(): string { return 'HexColor'; }
+  public static get HEXADECIMAL(): string { return 'Hexadecimal'; }
+  public static get IP_ADDRESS(): string { return 'IsIP'; }
+  public static get DATE_ISO8601(): string { return 'ISO8601Date'; }
+  public static get MAC_ADDRESS(): string { return 'IsMAC'; }
+  public static get MONGO_ID(): string { return 'MongoID'; }
+  // public static get URL(): string { return 'IsURL'; } // disabled
+  // public static get MOBILE_PHONE_NUMBER(): string { return 'MobilePhoneNumber'; } // disabled
 
   // number types
-  public static get MAX_VALUE(): string { return 'MaxValue'};
-  public static get MIN_VALUE(): string { return 'MinValue'};
-  public static get MULTIPLE_OF(): string { return 'MultipleOf'};
+  public static get MAX_VALUE(): string { return 'MaxValue'; }
+  public static get MIN_VALUE(): string { return 'MinValue'; }
+  public static get MULTIPLE_OF(): string { return 'MultipleOf'; }
 
   // object types
-  public static get NESTED(): string { return 'ValidateNested'};
+  public static get NESTED(): string { return 'ValidateNested'; }
 }
 
 export function UseMongoCollection(collection: string) {
@@ -305,7 +305,7 @@ function BasicDecorator(target: Object, propertyName: string, type: string, valu
   if (!metadata) {
     metadata = [];
   }
-  metadata.push({
+  metadata = metadata.concat({
     type: type,
     property: propertyName,
     value: value,

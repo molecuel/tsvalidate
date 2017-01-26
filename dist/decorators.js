@@ -2,73 +2,39 @@
 const validator = require('validator');
 class DecoratorTypes {
     static get IS_TYPED() { return 'ValidateType'; }
-    ;
     static get IS_ARRAY() { return 'ValidateArray'; }
-    ;
     static get IS_INT() { return 'IsInt'; }
-    ;
     static get IS_FLOAT() { return 'IsFloat'; }
-    ;
     static get IS_DECIMAL() { return 'IsDecimal'; }
-    ;
     static get IS_EMPTY() { return 'IsEmpty'; }
-    ;
     static get NOT_EMPTY() { return 'IsNotEmpty'; }
-    ;
     static get DEFINED() { return 'IsDefined'; }
-    ;
     static get EQUALS() { return 'Equals'; }
-    ;
     static get IN_ARRAY() { return 'InArray'; }
-    ;
     static get NOT_IN_ARRAY() { return 'NotInArray'; }
-    ;
     static get MAX_LEN() { return 'MaxLen'; }
-    ;
     static get MIN_LEN() { return 'MinLen'; }
-    ;
     static get CONTAINS() { return 'Contains'; }
-    ;
     static get MAX_BYTE_LEN() { return 'MaxByteLen'; }
-    ;
     static get MIN_BYTE_LEN() { return 'MinByteLen'; }
-    ;
     static get DATE_AFTER() { return 'DateAfter'; }
-    ;
     static get DATE_BEFORE() { return 'DateBefore'; }
-    ;
     static get UPPERCASE() { return 'Uppercase'; }
-    ;
     static get LOWERCASE() { return 'Lowercase'; }
-    ;
     static get DATE() { return 'IsDate'; }
-    ;
     static get EMAIL() { return 'IsEmail'; }
-    ;
     static get ALPHA() { return 'Alpha'; }
-    ;
     static get ALPHA_NUM() { return 'AlphaNumeric'; }
-    ;
     static get HEX_COLOR() { return 'HexColor'; }
-    ;
     static get HEXADECIMAL() { return 'Hexadecimal'; }
-    ;
     static get IP_ADDRESS() { return 'IsIP'; }
-    ;
     static get DATE_ISO8601() { return 'ISO8601Date'; }
-    ;
     static get MAC_ADDRESS() { return 'IsMAC'; }
-    ;
     static get MONGO_ID() { return 'MongoID'; }
-    ;
     static get MAX_VALUE() { return 'MaxValue'; }
-    ;
     static get MIN_VALUE() { return 'MinValue'; }
-    ;
     static get MULTIPLE_OF() { return 'MultipleOf'; }
-    ;
     static get NESTED() { return 'ValidateNested'; }
-    ;
 }
 exports.DecoratorTypes = DecoratorTypes;
 function UseMongoCollection(collection) {
@@ -321,7 +287,7 @@ function BasicDecorator(target, propertyName, type, value, validatorOptions) {
     if (!metadata) {
         metadata = [];
     }
-    metadata.push({
+    metadata = metadata.concat({
         type: type,
         property: propertyName,
         value: value,
