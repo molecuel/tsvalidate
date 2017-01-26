@@ -85,35 +85,35 @@
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Engine {
 
-  @V.IsInt()
+  <span class="hljs-meta">@V</span>.IsInt()
   horsepower: <span class="hljs-built_in">number</span>;
 }
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Car {
-    <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
       <span class="hljs-keyword">this</span>.engine = <span class="hljs-keyword">new</span> Engine();      
     }
 
-    @V.IsNotEmpty()
+    <span class="hljs-meta">@V</span>.IsNotEmpty()
     model: <span class="hljs-built_in">string</span>;
 
-    @V.InArray([<span class="hljs-string">'Tesla'</span>, <span class="hljs-string">'BMW'</span>, <span class="hljs-string">'Mercedes'</span>, <span class="hljs-string">'Volkswagen'</span>, <span class="hljs-string">'Audi'</span>, <span class="hljs-string">'Ford'</span>, <span class="hljs-string">'Toyota'</span>])
+    <span class="hljs-meta">@V</span>.InArray([<span class="hljs-string">'Tesla'</span>, <span class="hljs-string">'BMW'</span>, <span class="hljs-string">'Mercedes'</span>, <span class="hljs-string">'Volkswagen'</span>, <span class="hljs-string">'Audi'</span>, <span class="hljs-string">'Ford'</span>, <span class="hljs-string">'Toyota'</span>])
     make: <span class="hljs-built_in">string</span>;
 
-    @V.IsNotEmpty()
-    @V.MinLen(<span class="hljs-number">17</span>)
-    @V.MaxLen(<span class="hljs-number">17</span>)
-    @V.AlphaNumeric()
+    <span class="hljs-meta">@V</span>.IsNotEmpty()
+    <span class="hljs-meta">@V</span>.MinLen(<span class="hljs-number">17</span>)
+    <span class="hljs-meta">@V</span>.MaxLen(<span class="hljs-number">17</span>)
+    <span class="hljs-meta">@V</span>.AlphaNumeric()
     vehicleIdentificationNumber: <span class="hljs-built_in">string</span>;
 
-    @V.IsDecimal()
+    <span class="hljs-meta">@V</span>.IsDecimal()
     fuelCapacity: <span class="hljs-built_in">number</span>;
 
-    @V.AlphaNumeric()
-    @V.HexColor()
+    <span class="hljs-meta">@V</span>.AlphaNumeric()
+    <span class="hljs-meta">@V</span>.HexColor()
     color: <span class="hljs-built_in">string</span>;
 
-    @V.ValidateNested()
+    <span class="hljs-meta">@V</span>.ValidateNested()
     engine: Engine;
 }
 
