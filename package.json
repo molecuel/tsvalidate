@@ -1,6 +1,6 @@
 {
   "name": "@molecuel/tsvalidate",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Typescript validator",
   "main": "dist/index.js",
   "scripts": {
