@@ -1,10 +1,8 @@
 'use strict';
 import 'reflect-metadata';
-import should = require('should');
-import assert = require('assert');
+import * as should  from 'should';
 import { MultiNestedTestClass, NestedTestClass, InnermostTestClass } from './classes/TestClass';
 import * as V from '../dist';
-should();
 
 describe('validator', function() {
   let testValidator: V.Validator;

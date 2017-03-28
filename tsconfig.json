@@ -1,27 +1,23 @@
 {
-  "compileOnSave": false,
+  "compileOnSave": true,
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "outDir": "dist/"
   },
-  "files": [
-    "typings/index.d.ts",
-    "test/index.ts",
-    "test/classes/TestClass.ts",
-    "src/index.ts",
-    "src/config.ts",
-    "src/decorators.ts",
-    "src/interfaces/IValidatorError.ts",
-    "src/interfaces/IValidatorOptions.ts",
-    "dist/index.d.ts"
+  "include": [
+      "src/**/*"
   ],
-  "exclude": [],
+  "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+  ],
   "atom": {
     "rewriteTsconfig": false,
     "formatOnSave": true

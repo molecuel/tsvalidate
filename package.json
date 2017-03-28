@@ -1,10 +1,27 @@
 {
   "name": "tsvalidate",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Typescript validator",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "tslint": "./node_modules/.bin/tslint --project tsconfig.json",
+    "tslint_test": "./node_modules/.bin/tslint --project tsconfig.test.json",
+    "ts": "./node_modules/.bin/tsc -p .",
+    "ts_test": "./node_modules/.bin/tsc -p tsconfig.test.json",
+    "build": "npm run tslint && npm run ts",
+    "build_test": "npm run tslint_test && npm run ts_test",
+    "build_all": "npm run build && npm run build_test",
+    "mocha": "./node_modules/.bin/mocha",
+    "test": "npm run build_test && npm run mocha",
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha && npm run remap && npm run remaphtml && npm run remaplcov",
+    "remap": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/coverage-remap.json",
+    "remaphtml": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/html -t html",
+    "remaplcov": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov-remap.info -t lcovonly",
+    "coveralls": "npm run cover && cat ./coverage/lcov-remap.info | coveralls",
+    "createdoc": "./node_modules/.bin/typedoc --gaID UA-89800241-1 --out ./docs --target es6 --mode file --ignoreCompilerErrors",
+    "publishdocs": "./node_modules/.bin/gh-pages -d docs",
+    "docs": "npm run createdoc && npm run publishdocs",
+    "2npm": "./node_modules/.bin/publish && npm run docs"
   },
   "repository": {
     "type": "git",
@@ -21,37 +38,27 @@
   },
   "typings": "dist/index.d.ts",
   "homepage": "https://github.com/molecuel/tsvalidate#readme",
-  "devDependencies": {
+ "devDependencies": {
+    "@types/mocha": "^2.2.36",
+    "@types/should": "^8.1.30",
+    "@types/when": "^2.4.28",
     "assert": ">=0.0.1",
+    "coveralls": "^2.11.15",
     "del": "^2.2.0",
-    "gulp": "^3.9.1",
-    "gulp-gh-pages": "^0.5.4",
-    "gulp-plumber": "^1.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-tsconfig-files": "^0.2.5",
-    "gulp-tslint": "^4.3.2",
-    "gulp-typedoc": "^2.0.1",
-    "gulp-typescript": "^3.1.0",
-    "gulp-util": "^3.0.7",
-    "gulpclass": "0.0.8",
-    "merge2": "^1.0.1",
+    "gh-pages": "^0.12.0",
+    "istanbul": "^0.4.5",
     "mocha": "*",
-    "should": ">=0.0.1",
-    "tslint": "^3.5.0",
-    "tslint-stylish": "^2.1.0-beta",
-    "typedoc": ">=0.0.1",
-    "typescript": "~2.0.10"
+    "mocha-lcov-reporter": "^1.2.0",
+    "publish": "^0.6.0",
+    "remap-istanbul": "^0.9.3",
+    "should": ">=11.2.0",
+    "tslint": "^4.4.2",
+    "typedoc": "^0.5.1",
+    "typescript": "^2.2.1"
   },
   "dependencies": {
     "lodash": "^4.13.1",
     "reflect-metadata": "^0.1.9",
     "validator": "^5.4.0"
-  },
-  "devconfig": {
-    "paths": {
-      "testsource": "test/**/*.ts",
-      "source": "src/**/*.ts",
-      "dist": "dist/"
-    }
   }
 }

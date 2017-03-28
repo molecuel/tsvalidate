@@ -8,15 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const D = require('../../dist/decorators');
+Object.defineProperty(exports, "__esModule", { value: true });
+const D = require("../../dist/decorators");
 class InnermostTestClass {
     constructor(propertyValue) {
         this.testProperty = propertyValue || 0;
     }
 }
 __decorate([
-    D.ValidateType(), 
-    __metadata('design:type', Number)
+    D.ValidateType(),
+    __metadata("design:type", Number)
 ], InnermostTestClass.prototype, "testProperty", void 0);
 exports.InnermostTestClass = InnermostTestClass;
 class NestedTestClass {
@@ -26,12 +27,12 @@ class NestedTestClass {
     }
 }
 __decorate([
-    D.ValidateType(), 
-    __metadata('design:type', String)
+    D.ValidateType(),
+    __metadata("design:type", String)
 ], NestedTestClass.prototype, "testProperty", void 0);
 __decorate([
-    D.ValidateNested(), 
-    __metadata('design:type', InnermostTestClass)
+    D.ValidateNested(),
+    __metadata("design:type", InnermostTestClass)
 ], NestedTestClass.prototype, "testInnermostContainer", void 0);
 exports.NestedTestClass = NestedTestClass;
 class MultiNestedTestClass {
@@ -41,11 +42,11 @@ class MultiNestedTestClass {
     }
 }
 __decorate([
-    D.ValidateType(), 
-    __metadata('design:type', Boolean)
+    D.ValidateType(),
+    __metadata("design:type", Boolean)
 ], MultiNestedTestClass.prototype, "testProperty", void 0);
 __decorate([
-    D.ValidateNested(), 
-    __metadata('design:type', NestedTestClass)
+    D.ValidateNested(),
+    __metadata("design:type", NestedTestClass)
 ], MultiNestedTestClass.prototype, "testInnerContainer", void 0);
 exports.MultiNestedTestClass = MultiNestedTestClass;
