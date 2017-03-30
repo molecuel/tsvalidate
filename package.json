@@ -38,7 +38,7 @@
   },
   "typings": "dist/index.d.ts",
   "homepage": "https://github.com/molecuel/tsvalidate#readme",
- "devDependencies": {
+  "devDependencies": {
     "@types/mocha": "^2.2.36",
     "@types/should": "^8.1.30",
     "@types/when": "^2.4.28",
@@ -59,6 +59,7 @@
   "dependencies": {
     "lodash": "^4.13.1",
     "reflect-metadata": "^0.1.9",
+    "tslint": "^5.0.0",
     "validator": "^5.4.0"
   }
 }

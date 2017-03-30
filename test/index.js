@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,271 +11,185 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const should = require("should");
-const TestClass_1 = require("./classes/TestClass");
 const V = require("../dist");
-describe('validator', function () {
+const TestClass_1 = require("./classes/TestClass");
+describe("validator", () => {
     let testValidator;
     let validationResult;
     let localTestClass;
-    let indent = '       ';
-    describe('for all types', function () {
-        it('should NOT validate content state (defined)', function () {
-            class TestClass1 {
+    const indent = "       ";
+    describe("for all types", () => {
+        class TestClassNumberProp {
+            constructor(value) {
+                this.testProp = value;
             }
-            __decorate([
-                V.IsDefined(),
-                __metadata("design:type", Object)
-            ], TestClass1.prototype, "testProp", void 0);
+        }
+        __decorate([
+            V.ValidateType(),
+            __metadata("design:type", Number)
+        ], TestClassNumberProp.prototype, "testProp", void 0);
+        class TestClass1 {
+        }
+        __decorate([
+            V.IsDefined(),
+            __metadata("design:type", Object)
+        ], TestClass1.prototype, "testProp", void 0);
+        class TestClass2 {
+            constructor(value) {
+                this.testProp = value;
+            }
+        }
+        __decorate([
+            V.IsDefined(),
+            __metadata("design:type", Object)
+        ], TestClass2.prototype, "testProp", void 0);
+        class StringTestClass {
+            constructor(value) {
+                this.testProp = value;
+            }
+        }
+        __decorate([
+            V.IsDefined(),
+            __metadata("design:type", Object)
+        ], StringTestClass.prototype, "testProp", void 0);
+        class TestClassStringProp {
+            constructor(value) {
+                this.testProp = value;
+            }
+        }
+        __decorate([
+            V.ValidateType(),
+            __metadata("design:type", String)
+        ], TestClassStringProp.prototype, "testProp", void 0);
+        class TestClassBoolProp {
+            constructor(value) {
+                this.testProp = value;
+            }
+        }
+        __decorate([
+            V.ValidateType(),
+            __metadata("design:type", Boolean)
+        ], TestClassBoolProp.prototype, "testProp", void 0);
+        it("should NOT validate content state (defined)", () => {
             testValidator = new V.Validator();
             localTestClass = new TestClass1();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
-            class TestClass2 {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsDefined(),
-                __metadata("design:type", Object)
-            ], TestClass2.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new TestClass2();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate content state (defined)', function () {
-            class stringTestClass {
+        it("should validate content state (defined)", () => {
+            testValidator = new V.Validator();
+            localTestClass = new StringTestClass(null);
+            validationResult = testValidator.validate(localTestClass);
+            should.equal(validationResult.length, 0);
+            validationResult = [];
+        });
+        it("should NOT validate any content state (equal to xyz)", () => {
+            class TemporaryTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.IsDefined(),
+                V.Equals("base"),
                 __metadata("design:type", Object)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass(null);
+            localTestClass = new TemporaryTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
             if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
-            should.equal(validationResult.length, 0);
-            validationResult = [];
-        });
-        it('should NOT validate any content state (equal to xyz)', function () {
-            class stringTestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.Equals('base'),
-                __metadata("design:type", Object)
-            ], stringTestClass.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
+                console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
             }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate content state (equal to xyz)', function () {
-            class stringTestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.Equals(new String()),
-                __metadata("design:type", Object)
-            ], stringTestClass.prototype, "testProp", void 0);
+        it("should validate content state (equal to xyz)", () => {
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass(new String());
+            localTestClass = new StringTestClass("");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate nested types', function () {
+        it("should NOT validate nested types", () => {
             testValidator = new V.Validator();
-            let localTestClass;
-            localTestClass = new TestClass_1.NestedTestClass(true, false);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                for (let i in validationResult) {
-                    console.log(indent + validationResult[i].message);
-                }
-            }
+            let localNestedTestClass;
+            localNestedTestClass = new TestClass_1.NestedTestClass(true, false);
+            validationResult = testValidator.validate(localNestedTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate nested types', function () {
+        it("should validate nested types", () => {
             testValidator = new V.Validator();
-            let localTestClass;
-            localTestClass = new TestClass_1.NestedTestClass('text', 0);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                for (let i in validationResult) {
-                    console.log(indent + validationResult[i].message);
-                }
-            }
+            let localNestedTestClass;
+            localNestedTestClass = new TestClass_1.NestedTestClass("text", 0);
+            validationResult = testValidator.validate(localNestedTestClass);
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate multi-nested types', function () {
+        it("should NOT validate multi-nested types", () => {
             testValidator = new V.Validator();
-            let localTestClass;
-            localTestClass = new TestClass_1.MultiNestedTestClass('false', 0, false);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                for (let i in validationResult) {
-                    console.log(indent + validationResult[i].message);
-                }
-            }
+            let localNestedTestClass;
+            localNestedTestClass = new TestClass_1.MultiNestedTestClass("false", 0, false);
+            validationResult = testValidator.validate(localNestedTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate multi-nested types', function () {
+        it("should validate multi-nested types", () => {
             testValidator = new V.Validator();
-            let localTestClass;
-            localTestClass = new TestClass_1.MultiNestedTestClass(true, 'text', 1);
-            validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                for (let i in validationResult) {
-                    console.log(indent + validationResult[i].message);
-                }
-            }
+            let localNestedTestClass;
+            localNestedTestClass = new TestClass_1.MultiNestedTestClass(true, "text", 1);
+            validationResult = testValidator.validate(localNestedTestClass);
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate types (Number)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(),
-                __metadata("design:type", Number)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should NOT validate types (Number)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass('text');
+            localTestClass = new TestClassNumberProp("text");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate types (Number)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(),
-                __metadata("design:type", Number)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should validate types (Number)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(123);
+            localTestClass = new TestClassNumberProp(123);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate types (String)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should NOT validate types (String)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(true);
+            localTestClass = new TestClassStringProp(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate types (String)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should validate types (String)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass('test');
+            localTestClass = new TestClassStringProp("test");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate types (Boolean)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(),
-                __metadata("design:type", Boolean)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should NOT validate types (Boolean)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(123);
+            localTestClass = new TestClassBoolProp(123);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate types (Boolean)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.ValidateType(),
-                __metadata("design:type", Boolean)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should validate types (Boolean)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(false);
+            localTestClass = new TestClassBoolProp(false);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate types (any(superimposed))', function () {
+        it("should NOT validate types (any(superimposed))", () => {
             class TestClass {
                 constructor(value) {
                     this.testProp = value;
@@ -286,16 +200,13 @@ describe('validator', function () {
                 __metadata("design:type", Object)
             ], TestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new TestClass('text');
+            localTestClass = new TestClass("text");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate types (any(superimposed))', function () {
-            class TestClass {
+        it("should validate types (any(superimposed))", () => {
+            class TemporaryTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -303,18 +214,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType(Boolean),
                 __metadata("design:type", Object)
-            ], TestClass.prototype, "testProp", void 0);
+            ], TemporaryTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new TestClass(true);
+            localTestClass = new TemporaryTestClass(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT remove all earlier applied decorators)', function () {
-            class TestClass {
+        it("should NOT remove all earlier applied decorators)", () => {
+            class TemporaryTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -324,18 +232,15 @@ describe('validator', function () {
                 V.ClearValidators(),
                 V.ValidateType(Number),
                 __metadata("design:type", Object)
-            ], TestClass.prototype, "testProp", void 0);
+            ], TemporaryTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new TestClass('text');
+            localTestClass = new TemporaryTestClass("text");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should remove all earlier applied decorators)', function () {
-            class TestClass {
+        it("should remove all earlier applied decorators)", () => {
+            class TemporaryTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -344,141 +249,92 @@ describe('validator', function () {
                 V.IsInt(),
                 V.ValidateType(Boolean),
                 __metadata("design:type", Object)
-            ], TestClass.prototype, "testProp", void 0);
-            class InheritingClass extends TestClass {
+            ], TemporaryTestClass.prototype, "testProp", void 0);
+            class InheritingClass extends TemporaryTestClass {
             }
             __decorate([
                 V.ClearValidators(),
                 __metadata("design:type", Object)
             ], InheritingClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new InheritingClass('true');
+            localTestClass = new InheritingClass("true");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
-    describe('for string type', function () {
-        it('should NOT validate format (Decimal)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
+    describe("for string type", () => {
+        class TestClassDecimalProp {
+            constructor(value) {
+                this.testProp = value;
             }
-            __decorate([
-                V.IsDecimal(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        }
+        __decorate([
+            V.IsDecimal(),
+            __metadata("design:type", String)
+        ], TestClassDecimalProp.prototype, "testProp", void 0);
+        class TestClassFloatProp {
+            constructor(value) {
+                this.testProp = value;
+            }
+        }
+        __decorate([
+            V.IsFloat(),
+            __metadata("design:type", String)
+        ], TestClassFloatProp.prototype, "testProp", void 0);
+        class TestClassIntProp {
+            constructor(value) {
+                this.testProp = value;
+            }
+        }
+        __decorate([
+            V.IsInt(),
+            __metadata("design:type", String)
+        ], TestClassIntProp.prototype, "testProp", void 0);
+        it("should NOT validate format (Decimal)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass('test');
+            localTestClass = new TestClassDecimalProp("test");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate format (Decimal)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsDecimal(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should validate format (Decimal)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(123.45);
+            localTestClass = new TestClassDecimalProp(123.45);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
-            ;
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate format (Float)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsFloat(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should NOT validate format (Float)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass('string 1234.5');
+            localTestClass = new TestClassFloatProp("string 1234.5");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate format (Float)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsFloat(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should validate format (Float)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(123.45);
+            localTestClass = new TestClassFloatProp(123.45);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate format (Integer)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsInt(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should NOT validate format (Integer)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(543.21);
+            localTestClass = new TestClassIntProp(543.21);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate format (Integer)', function () {
-            class TestClass {
-                constructor(value) {
-                    this.testProp = value;
-                }
-            }
-            __decorate([
-                V.IsInt(),
-                __metadata("design:type", String)
-            ], TestClass.prototype, "testProp", void 0);
+        it("should validate format (Integer)", () => {
             testValidator = new V.Validator();
-            localTestClass = new TestClass(100);
+            localTestClass = new TestClassIntProp(100);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string length (maximum)', function () {
-            class stringTestClass {
+        it("should NOT validate string length (maximum)", () => {
+            class StringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -486,18 +342,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxLen(5),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], StringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new StringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string length (maximum)', function () {
-            class stringTestClass {
+        it("should validate string length (maximum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -505,18 +358,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxLen(35),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string length (minimum)', function () {
-            class stringTestClass {
+        it("should NOT validate string length (minimum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -524,18 +374,15 @@ describe('validator', function () {
             __decorate([
                 V.MinLen(26),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string length (minimum)', function () {
-            class stringTestClass {
+        it("should validate string length (minimum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -543,18 +390,15 @@ describe('validator', function () {
             __decorate([
                 V.MinLen(5),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string byte length (maximum)', function () {
-            class stringTestClass {
+        it("should NOT validate string byte length (maximum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -562,18 +406,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxByteLen(7),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string byte length (maximum)', function () {
-            class stringTestClass {
+        it("should validate string byte length (maximum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -581,18 +422,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxByteLen(32),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string byte length (minimum)', function () {
-            class stringTestClass {
+        it("should NOT validate string byte length (minimum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -600,18 +438,15 @@ describe('validator', function () {
             __decorate([
                 V.MinLen(26),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string byte length (minimum)', function () {
-            class stringTestClass {
+        it("should validate string byte length (minimum)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -619,18 +454,15 @@ describe('validator', function () {
             __decorate([
                 V.MinLen(4),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string date mm-dd-yyyy', function () {
-            class stringTestClass {
+        it("should NOT validate string date mm-dd-yyyy", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -638,18 +470,15 @@ describe('validator', function () {
             __decorate([
                 V.IsDate(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string date mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
-            class stringTestClass {
+        it("should validate string date mm-dd-(yy)yy or mm.dd.(yy)yy", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -657,18 +486,15 @@ describe('validator', function () {
             __decorate([
                 V.IsDate(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('07-27-16');
+            localTestClass = new TemporaryStringTestClass("07-27-16");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string date (ISO8601)', function () {
-            class stringTestClass {
+        it("should NOT validate string date (ISO8601)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -676,18 +502,15 @@ describe('validator', function () {
             __decorate([
                 V.ISO8601Date(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('24-12-2015');
+            localTestClass = new TemporaryStringTestClass("24-12-2015");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string date (ISO8601)', function () {
-            class stringTestClass {
+        it("should validate string date (ISO8601)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -695,18 +518,15 @@ describe('validator', function () {
             __decorate([
                 V.ISO8601Date(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('2015-12-24');
+            localTestClass = new TemporaryStringTestClass("2015-12-24");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate whether string is an email address', function () {
-            class stringTestClass {
+        it("should NOT validate whether string is an email address", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -714,18 +534,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmail(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('blablub.wruff');
+            localTestClass = new TemporaryStringTestClass("blablub.wruff");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate whether string is a valid email address', function () {
-            class stringTestClass {
+        it("should validate whether string is a valid email address", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -733,18 +550,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmail(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('info@inspirationlabs.com');
+            localTestClass = new TemporaryStringTestClass("info@inspirationlabs.com");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate whether string is an IP address', function () {
-            class stringTestClass {
+        it("should NOT validate whether string is an IP address", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -752,18 +566,15 @@ describe('validator', function () {
             __decorate([
                 V.IsIP(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('256.256.256.1');
+            localTestClass = new TemporaryStringTestClass("256.256.256.1");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate whether string is an IP address', function () {
-            class stringTestClass {
+        it("should validate whether string is an IP address", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -771,18 +582,15 @@ describe('validator', function () {
             __decorate([
                 V.IsIP(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('127.0.0.1');
+            localTestClass = new TemporaryStringTestClass("127.0.0.1");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate whether string is a MAC address', function () {
-            class stringTestClass {
+        it("should NOT validate whether string is a MAC address", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -790,18 +598,15 @@ describe('validator', function () {
             __decorate([
                 V.IsMAC(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('0123.4567.89ab');
+            localTestClass = new TemporaryStringTestClass("0123.4567.89ab");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate whether string is a MAC address', function () {
-            class stringTestClass {
+        it("should validate whether string is a MAC address", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -809,18 +614,15 @@ describe('validator', function () {
             __decorate([
                 V.IsMAC(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('01:23:45:67:89:AB');
+            localTestClass = new TemporaryStringTestClass("01:23:45:67:89:AB");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate whether string is a hex color', function () {
-            class stringTestClass {
+        it("should NOT validate whether string is a hex color", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -828,18 +630,15 @@ describe('validator', function () {
             __decorate([
                 V.HexColor(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('gh:ab:11');
+            localTestClass = new TemporaryStringTestClass("gh:ab:11");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate whether string is a hex color', function () {
-            class stringTestClass {
+        it("should validate whether string is a hex color", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -847,18 +646,15 @@ describe('validator', function () {
             __decorate([
                 V.HexColor(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('FCFCFC');
+            localTestClass = new TemporaryStringTestClass("FCFCFC");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate whether string is hexadecimal', function () {
-            class stringTestClass {
+        it("should NOT validate whether string is hexadecimal", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -866,18 +662,15 @@ describe('validator', function () {
             __decorate([
                 V.Hexadecimal(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('ghab11');
+            localTestClass = new TemporaryStringTestClass("ghab11");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate whether string is hexadecimal', function () {
-            class stringTestClass {
+        it("should validate whether string is hexadecimal", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -885,18 +678,15 @@ describe('validator', function () {
             __decorate([
                 V.Hexadecimal(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('fcfcfc');
+            localTestClass = new TemporaryStringTestClass("fcfcfc");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate whether string is a MongoDB ObjectID', function () {
-            class stringTestClass {
+        it("should NOT validate whether string is a MongoDB ObjectID", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -904,18 +694,15 @@ describe('validator', function () {
             __decorate([
                 V.MongoID(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('nonononotanobjectidatall');
+            localTestClass = new TemporaryStringTestClass("nonononotanobjectidatall");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate whether string is a MongoDB ObjectID', function () {
-            class stringTestClass {
+        it("should validate whether string is a MongoDB ObjectID", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -923,94 +710,79 @@ describe('validator', function () {
             __decorate([
                 V.MongoID(),
                 __metadata("design:type", Object)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('507f191e810c19729de860ea');
+            localTestClass = new TemporaryStringTestClass("507f191e810c19729de860ea");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
-            class stringTestClass {
+        it("should NOT validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.DateBefore('07.01.2016'),
+                V.DateBefore("07.01.2016"),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('08.15.16');
+            localTestClass = new TemporaryStringTestClass("08.15.16");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy', function () {
-            class stringTestClass {
+        it("should validate string dates prior to mm-dd-(yy)yy or mm.dd.(yy)yy", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.DateBefore('07.02.2016'),
+                V.DateBefore("07.02.2016"),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('06-12-2016');
+            localTestClass = new TemporaryStringTestClass("06-12-2016");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string dates after mm-dd-yyyy', function () {
-            class stringTestClass {
+        it("should NOT validate string dates after mm-dd-yyyy", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.DateAfter('01.07.2016'),
+                V.DateAfter("01.07.2016"),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('01.07.2016');
+            localTestClass = new TemporaryStringTestClass("01.07.2016");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string dates after mm-dd-yyyy', function () {
-            class stringTestClass {
+        it("should validate string dates after mm-dd-yyyy", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.DateAfter('01.07.2016'),
+                V.DateAfter("01.07.2016"),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('01.08.2016');
+            localTestClass = new TemporaryStringTestClass("01.08.2016");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate uppercase strings', function () {
-            class stringTestClass {
+        it("should NOT validate uppercase strings", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1018,18 +790,15 @@ describe('validator', function () {
             __decorate([
                 V.Uppercase(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate uppercase strings', function () {
-            class stringTestClass {
+        it("should validate uppercase strings", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1037,18 +806,15 @@ describe('validator', function () {
             __decorate([
                 V.Uppercase(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('UPPERCASE');
+            localTestClass = new TemporaryStringTestClass("UPPERCASE");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate lowercase strings', function () {
-            class stringTestClass {
+        it("should NOT validate lowercase strings", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1056,18 +822,15 @@ describe('validator', function () {
             __decorate([
                 V.Lowercase(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('Totally NOT lowercase');
+            localTestClass = new TemporaryStringTestClass("Totally NOT lowercase");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate lowercase strings', function () {
-            class stringTestClass {
+        it("should validate lowercase strings", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1075,18 +838,15 @@ describe('validator', function () {
             __decorate([
                 V.Lowercase(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('just lowercase');
+            localTestClass = new TemporaryStringTestClass("just lowercase");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string content state (empty)', function () {
-            class stringTestClass {
+        it("should NOT validate string content state (empty)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1094,18 +854,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmpty(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string content state (empty)', function () {
-            class stringTestClass {
+        it("should validate string content state (empty)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1113,18 +870,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmpty(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('');
+            localTestClass = new TemporaryStringTestClass("");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string content state (filled)', function () {
-            class stringTestClass {
+        it("should NOT validate string content state (filled)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1132,18 +886,15 @@ describe('validator', function () {
             __decorate([
                 V.IsNotEmpty(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass();
+            localTestClass = new TemporaryStringTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string content state (filled)', function () {
-            class stringTestClass {
+        it("should validate string content state (filled)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1151,132 +902,111 @@ describe('validator', function () {
             __decorate([
                 V.IsNotEmpty(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('aircraft carrier');
+            localTestClass = new TemporaryStringTestClass("aircraft carrier");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string content state (contains xyz)', function () {
-            class stringTestClass {
+        it("should NOT validate string content state (contains xyz)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.Contains('base'),
+                V.Contains("base"),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string content state (contains xyz)', function () {
-            class stringTestClass {
+        it("should validate string content state (contains xyz)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.Contains('base'),
+                V.Contains("base"),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('amino acid base pairs');
+            localTestClass = new TemporaryStringTestClass("amino acid base pairs");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string content state (in array xyz)', function () {
-            class stringTestClass {
+        it("should NOT validate string content state (in array xyz)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.InArray(['one', 'two', 'three']),
+                V.InArray(["one", "two", "three"]),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('desoxyribonucleic acid');
+            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string content state (in array xyz)', function () {
-            class stringTestClass {
+        it("should validate string content state (in array xyz)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.InArray(['one', 'two', 'three']),
+                V.InArray(["one", "two", "three"]),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('two');
+            localTestClass = new TemporaryStringTestClass("two");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string content state (not in array xyz)', function () {
-            class stringTestClass {
+        it("should NOT validate string content state (not in array xyz)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.NotInArray(['one', 'two', 'three']),
+                V.NotInArray(["one", "two", "three"]),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('three');
+            localTestClass = new TemporaryStringTestClass("three");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string content state (not in array xyz)', function () {
-            class stringTestClass {
+        it("should validate string content state (not in array xyz)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.NotInArray(['one', 'two', 'three']),
+                V.NotInArray(["one", "two", "three"]),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('amino acid base pairs');
+            localTestClass = new TemporaryStringTestClass("amino acid base pairs");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string metadata (alphanumeric)', function () {
-            class stringTestClass {
+        it("should NOT validate string metadata (alphanumeric)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1284,18 +1014,15 @@ describe('validator', function () {
             __decorate([
                 V.AlphaNumeric(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('This is a full sentence with PUNCTUATION.');
+            localTestClass = new TemporaryStringTestClass("This is a full sentence with PUNCTUATION.");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string metadata (alphanumeric)', function () {
-            class stringTestClass {
+        it("should validate string metadata (alphanumeric)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1303,18 +1030,15 @@ describe('validator', function () {
             __decorate([
                 V.AlphaNumeric(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('No punctuation here');
+            localTestClass = new TemporaryStringTestClass("No punctuation here");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate string metadata (alpha)', function () {
-            class stringTestClass {
+        it("should NOT validate string metadata (alpha)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1322,18 +1046,15 @@ describe('validator', function () {
             __decorate([
                 V.Alpha(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('h3r3 b3 m0n573r5');
+            localTestClass = new TemporaryStringTestClass("h3r3 b3 m0n573r5");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate string metadata (alpha)', function () {
-            class stringTestClass {
+        it("should validate string metadata (alpha)", () => {
+            class TemporaryStringTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1341,20 +1062,17 @@ describe('validator', function () {
             __decorate([
                 V.Alpha(),
                 __metadata("design:type", String)
-            ], stringTestClass.prototype, "testProp", void 0);
+            ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new stringTestClass('here be monsters');
+            localTestClass = new TemporaryStringTestClass("here be monsters");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
-    describe('for number type', function () {
-        it('should NOT validate number metadata (maximum length)', function () {
-            class numberTestClass {
+    describe("for number type", () => {
+        it("should NOT validate number metadata (maximum length)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1362,18 +1080,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxLen(1),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number metadata (maximum length)', function () {
-            class numberTestClass {
+        it("should validate number metadata (maximum length)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1381,18 +1096,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxLen(1),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(9);
+            localTestClass = new NumberTestClass(9);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number metadata (minimum length)', function () {
-            class numberTestClass {
+        it("should NOT validate number metadata (minimum length)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1400,18 +1112,15 @@ describe('validator', function () {
             __decorate([
                 V.MinLen(3),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number metadata (minimum length)', function () {
-            class numberTestClass {
+        it("should validate number metadata (minimum length)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1419,18 +1128,15 @@ describe('validator', function () {
             __decorate([
                 V.MinLen(3),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(125);
+            localTestClass = new NumberTestClass(125);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number metadata (maximum value)', function () {
-            class numberTestClass {
+        it("should NOT validate number metadata (maximum value)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1438,18 +1144,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxValue(5),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number metadata (maximum value)', function () {
-            class numberTestClass {
+        it("should validate number metadata (maximum value)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1457,18 +1160,15 @@ describe('validator', function () {
             __decorate([
                 V.MaxValue(5),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(5);
+            localTestClass = new NumberTestClass(5);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number metadata (minimum value)', function () {
-            class numberTestClass {
+        it("should NOT validate number metadata (minimum value)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1476,18 +1176,15 @@ describe('validator', function () {
             __decorate([
                 V.MinValue(12),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number metadata (minimum value)', function () {
-            class numberTestClass {
+        it("should validate number metadata (minimum value)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1495,18 +1192,15 @@ describe('validator', function () {
             __decorate([
                 V.MinValue(12),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(12);
+            localTestClass = new NumberTestClass(12);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number content state (contains xyz)', function () {
-            class numberTestClass {
+        it("should NOT validate number content state (contains xyz)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1514,18 +1208,15 @@ describe('validator', function () {
             __decorate([
                 V.Contains(2),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number content state (contains xyz)', function () {
-            class numberTestClass {
+        it("should validate number content state (contains xyz)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1533,18 +1224,15 @@ describe('validator', function () {
             __decorate([
                 V.Contains(2),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(12);
+            localTestClass = new NumberTestClass(12);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number content state (empty)', function () {
-            class numberTestClass {
+        it("should NOT validate number content state (empty)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1552,18 +1240,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmpty(),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number content state (empty)', function () {
-            class numberTestClass {
+        it("should validate number content state (empty)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1571,18 +1256,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmpty(),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass();
+            localTestClass = new NumberTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number content state (filled)', function () {
-            class numberTestClass {
+        it("should NOT validate number content state (filled)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1590,18 +1272,15 @@ describe('validator', function () {
             __decorate([
                 V.IsNotEmpty(),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass();
+            localTestClass = new NumberTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number content state (filled)', function () {
-            class numberTestClass {
+        it("should validate number content state (filled)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1609,18 +1288,15 @@ describe('validator', function () {
             __decorate([
                 V.IsNotEmpty(),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number content state (defined)', function () {
-            class numberTestClass {
+        it("should NOT validate number content state (defined)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1628,18 +1304,15 @@ describe('validator', function () {
             __decorate([
                 V.IsDefined(),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(undefined);
+            localTestClass = new NumberTestClass(undefined);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number content state (defined)', function () {
-            class numberTestClass {
+        it("should validate number content state (defined)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1647,18 +1320,15 @@ describe('validator', function () {
             __decorate([
                 V.IsDefined(),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(101);
+            localTestClass = new NumberTestClass(101);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number content state (in array xyz)', function () {
-            class numberTestClass {
+        it("should NOT validate number content state (in array xyz)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1666,18 +1336,15 @@ describe('validator', function () {
             __decorate([
                 V.InArray([1, 2, 3, 4, 5]),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(9);
+            localTestClass = new NumberTestClass(9);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number content state (in array xyz)', function () {
-            class numberTestClass {
+        it("should validate number content state (in array xyz)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1685,18 +1352,15 @@ describe('validator', function () {
             __decorate([
                 V.InArray([1, 2, 3, 4, 5]),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(3);
+            localTestClass = new NumberTestClass(3);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate number metadata (multiple of xyz)', function () {
-            class numberTestClass {
+        it("should NOT validate number metadata (multiple of xyz)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1704,18 +1368,15 @@ describe('validator', function () {
             __decorate([
                 V.MultipleOf(4),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(10);
+            localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate number metadata (multiple of xyz)', function () {
-            class numberTestClass {
+        it("should validate number metadata (multiple of xyz)", () => {
+            class NumberTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1723,20 +1384,17 @@ describe('validator', function () {
             __decorate([
                 V.MultipleOf(4),
                 __metadata("design:type", Number)
-            ], numberTestClass.prototype, "testProp", void 0);
+            ], NumberTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new numberTestClass(12);
+            localTestClass = new NumberTestClass(12);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
-    describe('for boolean type', function () {
-        it('should NOT validate boolean metadata (in array xyz)', function () {
-            class booleanTestClass {
+    describe("for boolean type", () => {
+        it("should NOT validate boolean metadata (in array xyz)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1744,18 +1402,15 @@ describe('validator', function () {
             __decorate([
                 V.InArray([true]),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass(false);
+            localTestClass = new BooleanTestClass(false);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate boolean metadata (in array xyz)', function () {
-            class booleanTestClass {
+        it("should validate boolean metadata (in array xyz)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1763,18 +1418,15 @@ describe('validator', function () {
             __decorate([
                 V.InArray([true]),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass(true);
+            localTestClass = new BooleanTestClass(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate boolean content state (defined)', function () {
-            class booleanTestClass {
+        it("should NOT validate boolean content state (defined)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1782,18 +1434,15 @@ describe('validator', function () {
             __decorate([
                 V.IsDefined(),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass(undefined);
+            localTestClass = new BooleanTestClass(undefined);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate boolean content state (defined)', function () {
-            class booleanTestClass {
+        it("should validate boolean content state (defined)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1801,18 +1450,15 @@ describe('validator', function () {
             __decorate([
                 V.IsDefined(),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass(false);
+            localTestClass = new BooleanTestClass(false);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate boolean content state (empty)', function () {
-            class booleanTestClass {
+        it("should NOT validate boolean content state (empty)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1820,18 +1466,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmpty(),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass(true);
+            localTestClass = new BooleanTestClass(true);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate boolean content state (empty)', function () {
-            class booleanTestClass {
+        it("should validate boolean content state (empty)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1839,18 +1482,15 @@ describe('validator', function () {
             __decorate([
                 V.IsEmpty(),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass();
+            localTestClass = new BooleanTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate boolean content state (filled)', function () {
-            class booleanTestClass {
+        it("should NOT validate boolean content state (filled)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1858,18 +1498,15 @@ describe('validator', function () {
             __decorate([
                 V.IsNotEmpty(),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass();
+            localTestClass = new BooleanTestClass();
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate boolean content state (filled)', function () {
-            class booleanTestClass {
+        it("should validate boolean content state (filled)", () => {
+            class BooleanTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1877,96 +1514,81 @@ describe('validator', function () {
             __decorate([
                 V.IsNotEmpty(),
                 __metadata("design:type", Boolean)
-            ], booleanTestClass.prototype, "testProp", void 0);
+            ], BooleanTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new booleanTestClass(false);
+            localTestClass = new BooleanTestClass(false);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
     });
-    describe('for array type', function () {
-        it('should NOT validate array content state (contains xyz)', function () {
-            class arrayTestClass {
+    describe("for array type", () => {
+        it("should NOT validate array content state (contains xyz)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.Contains('base'),
+                V.Contains("base"),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass(['desoxyribonucleic', 'acid']);
+            localTestClass = new ArrayTestClass(["desoxyribonucleic", "acid"]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate array content state (contains xyz)', function () {
-            class arrayTestClass {
+        it("should validate array content state (contains xyz)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.Contains('base'),
+                V.Contains("base"),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass(['amino', 'acid', 'base', 'pairs']);
+            localTestClass = new ArrayTestClass(["amino", "acid", "base", "pairs"]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + ']');
-            }
             should.equal(validationResult.length, 0);
             validationResult = [];
         });
-        it('should NOT validate array items (in array xyz)', function () {
-            class arrayTestClass {
+        it("should NOT validate array items (in array xyz)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.InArray([[true], ['boolean']]),
+                V.InArray([[true], ["boolean"]]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([false]);
+            localTestClass = new ArrayTestClass([false]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate array items (in array xyz)', function () {
-            class arrayTestClass {
+        it("should validate array items (in array xyz)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
             }
             __decorate([
-                V.InArray([[true], ['boolean']]),
+                V.InArray([[true], ["boolean"]]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([true]);
+            localTestClass = new ArrayTestClass([true]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.equal(0);
             validationResult = [];
         });
-        it('should NOT validate array type (number[][])', function () {
-            class arrayTestClass {
+        it("should NOT validate array type (number[][])", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1974,18 +1596,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([Number, [Number, String]]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([[false]]);
+            localTestClass = new ArrayTestClass([[false]]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate array type (number[][])', function () {
-            class arrayTestClass {
+        it("should validate array type (number[][])", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -1993,18 +1612,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([Number, [Number, String]]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([['false']]);
+            localTestClass = new ArrayTestClass([["false"]]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.equal(0);
             validationResult = [];
         });
-        it('should NOT validate array type (Array<Array<number>>)', function () {
-            class arrayTestClass {
+        it("should NOT validate array type (Array<Array<number>>)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2012,18 +1628,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([[Number]]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([[false]]);
+            localTestClass = new ArrayTestClass([[false]]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate array type (Array<Array<number>>)', function () {
-            class arrayTestClass {
+        it("should validate array type (Array<Array<number>>)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2031,18 +1644,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([[Number]]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([[123, 456]]);
+            localTestClass = new ArrayTestClass([[123, 456]]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.equal(0);
             validationResult = [];
         });
-        it('should NOT validate array type (mixed)', function () {
-            class arrayTestClass {
+        it("should NOT validate array type (mixed)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2050,18 +1660,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([Boolean, Number, String]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([new TestClass_1.InnermostTestClass()]);
+            localTestClass = new ArrayTestClass([new TestClass_1.InnermostTestClass()]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate array type (mixed)', function () {
-            class arrayTestClass {
+        it("should validate array type (mixed)", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2069,18 +1676,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([Boolean, Number, String]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([false, true]);
+            localTestClass = new ArrayTestClass([false, true]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.equal(0);
             validationResult = [];
         });
-        it('should NOT validate array type (class[])', function () {
-            class arrayTestClass {
+        it("should NOT validate array type (class[])", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2088,18 +1692,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([TestClass_1.InnermostTestClass]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([false]);
+            localTestClass = new ArrayTestClass([false]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate array type (class[])', function () {
-            class arrayTestClass {
+        it("should validate array type (class[])", () => {
+            class ArrayTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2107,20 +1708,17 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType([TestClass_1.InnermostTestClass]),
                 __metadata("design:type", Array)
-            ], arrayTestClass.prototype, "testProp", void 0);
+            ], ArrayTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new arrayTestClass([new TestClass_1.InnermostTestClass()]);
+            localTestClass = new ArrayTestClass([new TestClass_1.InnermostTestClass()]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.equal(0);
             validationResult = [];
         });
     });
-    describe('for class type', function () {
-        it('should NOT validate type (class)', function () {
-            class classesTestClass {
+    describe("for class type", () => {
+        it("should NOT validate type (class)", () => {
+            class ClassesTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2128,18 +1726,15 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType(),
                 __metadata("design:type", TestClass_1.InnermostTestClass)
-            ], classesTestClass.prototype, "testProp", void 0);
+            ], ClassesTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new classesTestClass([101]);
+            localTestClass = new ClassesTestClass([101]);
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
-        it('should validate type (class)', function () {
-            class classesTestClass {
+        it("should validate type (class)", () => {
+            class ClassesTestClass {
                 constructor(value) {
                     this.testProp = value;
                 }
@@ -2147,13 +1742,10 @@ describe('validator', function () {
             __decorate([
                 V.ValidateType(),
                 __metadata("design:type", TestClass_1.InnermostTestClass)
-            ], classesTestClass.prototype, "testProp", void 0);
+            ], ClassesTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
-            localTestClass = new classesTestClass(new TestClass_1.InnermostTestClass());
+            localTestClass = new ClassesTestClass(new TestClass_1.InnermostTestClass());
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + ' [' + validationResult[0].value + '] in [' + validationResult[0].comparison + ']');
-            }
             (validationResult.length).should.equal(0);
             validationResult = [];
         });

@@ -54,8 +54,8 @@ export class DecoratorTypes {
 }
 
 export function UseMongoCollection(collection: string) {
-  return (target: Object) => {
-    let input: any = target;
+  return (target: any) => {
+    const input: any = target;
     let className: string;
     if ("prototype" in input) {
       className = input.prototype.constructor.name;
@@ -76,207 +76,207 @@ export function UseMongoCollection(collection: string) {
 
 export const METADATAKEY = "tsvalidate:validators";
 
-export function ValidateType(objectType?: Object|any[], validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+export function ValidateType(objectType?: any|any[], validatorOptions?: IValidatorOptions) {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType, validatorOptions);
   };
 }
 
 export function IsInt(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_INT, validatorOptions);
   };
 }
 
 export function IsFloat(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_FLOAT, validatorOptions);
   };
 }
 
 export function IsDecimal(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_DECIMAL, validatorOptions);
   };
 }
 
 export function MaxLen(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MAX_LEN, value, validatorOptions);
   };
 }
 
 export function MinLen(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MIN_LEN, value, validatorOptions);
   };
 }
 
 export function MaxByteLen(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MAX_BYTE_LEN, value, validatorOptions);
   };
 }
 
 export function MinByteLen(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MIN_BYTE_LEN, value, validatorOptions);
   };
 }
 
 export function MaxValue(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MAX_VALUE, value, validatorOptions);
   };
 }
 
 export function MinValue(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MIN_VALUE, value, validatorOptions);
   };
 }
 
 export function DateBefore(value, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.DATE_BEFORE, value, validatorOptions);
   };
 }
 
 export function DateAfter(value, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.DATE_AFTER, value, validatorOptions);
   };
 }
 
 export function Equals(value, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.EQUALS, value, validatorOptions);
   };
 }
 
 export function Uppercase(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.UPPERCASE, validatorOptions);
   };
 }
 
 export function Lowercase(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.LOWERCASE, validatorOptions);
   };
 }
 
 export function MultipleOf(value: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MULTIPLE_OF, value, validatorOptions);
   };
 }
 
 export function InArray(array: any[], validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IN_ARRAY, array, validatorOptions);
   };
 }
 
 export function NotInArray(array: any[], validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.NOT_IN_ARRAY, array, validatorOptions);
   };
 }
 
 export function Contains(value: string | number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
   };
 }
 
 export function IsEmpty(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IS_EMPTY, validatorOptions);
   };
 }
 
 export function IsNotEmpty(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.NOT_EMPTY, validatorOptions);
   };
 }
 
 export function Alpha(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.ALPHA, validatorOptions);
   };
 }
 
 export function AlphaNumeric(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.ALPHA_NUM, validatorOptions);
   };
 }
 
 export function IsDate(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
   };
 }
 
 export function IsEmail(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.EMAIL, validatorOptions);
   };
 }
 
 export function HexColor(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.HEX_COLOR, validatorOptions);
   };
 }
 
 export function IsIP(version?: number, validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, version, validatorOptions);
   };
 }
 
 export function Hexadecimal(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.HEXADECIMAL, validatorOptions);
   };
 }
 
 export function ISO8601Date(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.DATE_ISO8601, validatorOptions);
   };
 }
 
 export function IsMAC(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MAC_ADDRESS, validatorOptions);
   };
 }
 
 export function MongoID(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.MONGO_ID, validatorOptions);
   };
 }
 
 export function ValidateNested(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);
   };
 }
 
 export function IsDefined(validatorOptions?: IValidatorOptions) {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
   };
 }
 
 export function Trim() {
-  return (target: Object, propertyName: string) => {
-    for (let property in target) {
+  return (target: any, propertyName: string) => {
+    for (const property in target) {
       // Check object for property.
       if (!target.hasOwnProperty(property)) {
         continue;
@@ -287,7 +287,7 @@ export function Trim() {
 }
 
 export function ClearValidators() {
-  return (target: Object, propertyName: string) => {
+  return (target: any, propertyName: string) => {
     let metadata = Reflect.getMetadata(METADATAKEY, target);
     if (typeof metadata !== "undefined") {
       metadata = metadata.filter((entry) => {
@@ -299,7 +299,7 @@ export function ClearValidators() {
 }
 
 function BasicDecorator(
-  target: Object,
+  target: any,
   propertyName: string,
   type: string,
   value?: any,
@@ -315,4 +315,4 @@ function BasicDecorator(
     type,
     value });
   Reflect.defineMetadata(METADATAKEY, metadata, target);
-};
+}

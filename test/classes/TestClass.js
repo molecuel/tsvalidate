@@ -22,7 +22,7 @@ __decorate([
 exports.InnermostTestClass = InnermostTestClass;
 class NestedTestClass {
     constructor(propertyValue, nestedPropertyValue) {
-        this.testProperty = propertyValue || 'property';
+        this.testProperty = propertyValue || "property";
         this.testInnermostContainer = new InnermostTestClass(nestedPropertyValue);
     }
 }

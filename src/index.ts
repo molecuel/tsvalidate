@@ -23,13 +23,13 @@ export class Validator {
    * @param validatorOptions IValidatorOptions optional
    * @return IValidatorError[]
    */
-  public validate(target: Object, validatorOptions?: IValidatorOptions): IValidatorError[] {
-    let metadata = Reflect.getMetadata(decorators.METADATAKEY, target.constructor.prototype);
+  public validate(target: any, validatorOptions?: IValidatorOptions): IValidatorError[] {
+    const metadata = Reflect.getMetadata(decorators.METADATAKEY, target.constructor.prototype);
     if (!metadata) {
       return [];
     } else {
       // Loop over sets of Metadata, execute requested validation.
-      for (let metadataEntry of metadata) {
+      for (const metadataEntry of metadata) {
         if (metadataEntry.type === decorators.DecoratorTypes.NESTED
           && typeof target[metadataEntry.property] === "object") {
           this.nestedMode = true;
@@ -60,7 +60,7 @@ export class Validator {
           } else if (typeof target[metadataEntry.property] !== "undefined"
             && target[metadataEntry.property] !== null) {
 
-            let types = Reflect.getMetadata("design:type", target, metadataEntry.property);
+            const types = Reflect.getMetadata("design:type", target, metadataEntry.property);
 
             // Execute requested type dependant validation.
             this.validateString(target, metadataEntry);
@@ -105,9 +105,9 @@ export class Validator {
                       if (target[metadataEntry.property] !== null
                         && metadataEntry.value) {
 
-                        let allowedTypes: any[] = [];
-                        let getAllTypes = (typeRestrictions, depth) => {
-                          for (let currType of typeRestrictions) {
+                        const allowedTypes: any[] = [];
+                        const getAllTypes = (typeRestrictions, depth) => {
+                          for (const currType of typeRestrictions) {
                             if (_.isArray(currType)) {
                               getAllTypes(currType, depth + 1);
                             } else {
@@ -115,17 +115,17 @@ export class Validator {
                             }
                           }
                         };
-                        let compareTypes = (comparedArray, depth) => {
-                          for (let currItem of comparedArray) {
+                        const compareTypes = (comparedArray, depth) => {
+                          for (const currItem of comparedArray) {
                             if (_.isArray(currItem)) {
                               compareTypes(currItem, depth + 1);
                             } else {
-                              let conflictingTypes: any = {
+                              const conflictingTypes: any = {
                                 conflicts: [],
                                 depth,
                                 type: currItem.constructor,
                                 value: currItem };
-                              for (let currType of allowedTypes) {
+                              for (const currType of allowedTypes) {
                                 if (currType.depth !== depth
                                   || (!(currItem instanceof currType.type)
                                   && !(currItem.constructor === currType.type))) {
@@ -414,13 +414,7 @@ export class Validator {
 
               default:
                 // to do: resolve variable validator
-                // temporary: handle unknown entry as error
-                this.errors.push({
-                    message: "Detected unknown validation metadata on " + target.constructor.name + ".",
-                    property: metadataEntry.property,
-                    target: target.constructor.name,
-                    type: "Unknown validation metadata",
-                    value: metadataEntry });
+                // temporary: skip unknown entry
                 break;
             }
           } else {
@@ -442,7 +436,7 @@ export class Validator {
    * @param metadataEntry.property string
    * @param metadataEntry any
    */
-  protected validateString(target: Object, metadataEntry: any) {
+  protected validateString(target: any, metadataEntry: any) {
     switch (metadataEntry.type) {
 
       case decorators.DecoratorTypes.MAX_BYTE_LEN:
@@ -804,13 +798,7 @@ export class Validator {
 
         default:
           // to do: resolve variable validator
-          // temporary: handle unknown entry as error
-          this.errors.push({
-            message: "Detected unknown validation metadata on " + target.constructor.name + ".",
-            property: metadataEntry.property,
-            target: target.constructor.name,
-            type: "Unknown validation metadata",
-            value: metadataEntry });
+          // temporary: skip unknown entry
           break;
     }
   } // method end (validateString)
@@ -821,7 +809,7 @@ export class Validator {
    * @param metadataEntry.property string
    * @param metadataEntry any
    */
-  protected validateNumber(target: Object, metadataEntry: any) {
+  protected validateNumber(target: any, metadataEntry: any) {
     switch (metadataEntry.type) {
 
       case decorators.DecoratorTypes.MAX_VALUE:
@@ -891,13 +879,7 @@ export class Validator {
 
         default:
           // to do: resolve variable validator
-          // temporary: handle unknown entry as error
-          this.errors.push({
-            message: "Detected unknown validation metadata on " + target.constructor.name + ".",
-            property: metadataEntry.property,
-            target: target.constructor.name,
-            type: "Unknown validation metadata",
-            value: metadataEntry });
+          // temporary: skip unknown entry
           break;
     }
   } // method end (validateNumber)
