@@ -102,9 +102,6 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
-            if (validationResult.length > 0) {
-                console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
-            }
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -348,6 +345,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new StringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate string length (maximum)", () => {
             class TemporaryStringTestClass {
@@ -375,9 +375,10 @@ describe("validator", () => {
                 V.MinLen(26),
                 __metadata("design:type", String)
             ], TemporaryStringTestClass.prototype, "testProp", void 0);
-            testValidator = new V.Validator();
-            localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
-            validationResult = testValidator.validate(localTestClass);
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass("desoxyribonucleic acid"));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -412,6 +413,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate string byte length (maximum)", () => {
             class TemporaryStringTestClass {
@@ -436,12 +440,15 @@ describe("validator", () => {
                 }
             }
             __decorate([
-                V.MinLen(26),
+                V.MinByteLen(26),
                 __metadata("design:type", String)
             ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -452,7 +459,7 @@ describe("validator", () => {
                 }
             }
             __decorate([
-                V.MinLen(4),
+                V.MinByteLen(4),
                 __metadata("design:type", String)
             ], TemporaryStringTestClass.prototype, "testProp", void 0);
             testValidator = new V.Validator();
@@ -474,6 +481,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -508,6 +518,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate string date (ISO8601)", () => {
             class TemporaryStringTestClass {
@@ -538,6 +551,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("blablub.wruff");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -572,6 +588,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate whether string is an IP address", () => {
             class TemporaryStringTestClass {
@@ -602,6 +621,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("0123.4567.89ab");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -636,6 +658,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate whether string is a hex color", () => {
             class TemporaryStringTestClass {
@@ -666,6 +691,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("ghab11");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -700,6 +728,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate whether string is a MongoDB ObjectID", () => {
             class TemporaryStringTestClass {
@@ -730,6 +761,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("08.15.16");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -764,6 +798,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate string dates after mm-dd-yyyy", () => {
             class TemporaryStringTestClass {
@@ -794,6 +831,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -828,6 +868,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate lowercase strings", () => {
             class TemporaryStringTestClass {
@@ -858,6 +901,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -922,6 +968,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -1020,6 +1069,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate string metadata (alphanumeric)", () => {
             class TemporaryStringTestClass {
@@ -1050,6 +1102,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new TemporaryStringTestClass("h3r3 b3 m0n573r5");
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -1150,6 +1205,9 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.be.above(0);
             validationResult = [];
+            validationResult = new V.Validator().validate(new NumberTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
         });
         it("should validate number metadata (maximum value)", () => {
             class NumberTestClass {
@@ -1180,6 +1238,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new NumberTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -1372,6 +1433,9 @@ describe("validator", () => {
             testValidator = new V.Validator();
             localTestClass = new NumberTestClass(10);
             validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new NumberTestClass(true));
             (validationResult.length).should.be.above(0);
             validationResult = [];
         });
@@ -1747,6 +1811,86 @@ describe("validator", () => {
             localTestClass = new ClassesTestClass(new TestClass_1.InnermostTestClass());
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+    });
+    describe("code coverage", () => {
+        it("validates any- and everything without validation decorators", () => {
+            class CoverageTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            validationResult = new V.Validator().validate(new CoverageTestClass("yes"));
+            (validationResult.length).should.equal(0);
+            validationResult = [];
+        });
+        it("does not validate erroneous superimposed types", () => {
+            class CoverageTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType(Object),
+                __metadata("design:type", Object)
+            ], CoverageTestClass.prototype, "testProp", void 0);
+            validationResult = new V.Validator().validate(new CoverageTestClass("yes"));
+            (validationResult.length).should.equal(1);
+            validationResult = [];
+        });
+        it("does not validate with invalid IP protocol", () => {
+            class CoverageTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.IsIP(8),
+                __metadata("design:type", String)
+            ], CoverageTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new CoverageTestClass("256.256.256.1");
+            validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new CoverageTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it("does not validate with invalid IP", () => {
+            class CoverageTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.IsIP(6),
+                __metadata("design:type", String)
+            ], CoverageTestClass.prototype, "testProp", void 0);
+            testValidator = new V.Validator();
+            localTestClass = new CoverageTestClass("256.256.256.1");
+            validationResult = testValidator.validate(localTestClass);
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+            validationResult = new V.Validator().validate(new CoverageTestClass(true));
+            (validationResult.length).should.be.above(0);
+            validationResult = [];
+        });
+        it("does list an error if typedata was removed", () => {
+            class CoverageTestClass {
+                constructor(value) {
+                    this.testProp = value;
+                }
+            }
+            __decorate([
+                V.ValidateType(),
+                __metadata("design:type", Boolean)
+            ], CoverageTestClass.prototype, "testProp", void 0);
+            const coverageTestInstance = new CoverageTestClass(true);
+            Reflect.defineMetadata("design:type", undefined, coverageTestInstance, "testProp");
+            validationResult = new V.Validator().validate(coverageTestInstance);
+            (validationResult.length).should.be.above(0);
             validationResult = [];
         });
     });

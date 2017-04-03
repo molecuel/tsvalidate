@@ -425,9 +425,9 @@ export class Validator {
     }
     if (!this.nestedMode) {
       return this.errors;
-    } else {
-      return [];
-    }
+    } // else {
+      // return [];
+      // }
   } // method end (validate)
 
   /**
@@ -770,7 +770,7 @@ export class Validator {
                 value: target[metadataEntry.property] });
             }
           } else if (metadataEntry.value !== 4
-            || metadataEntry.value !== 6) {
+            && metadataEntry.value !== 6) {
 
             this.errors.push({
               comparison: metadataEntry.value,

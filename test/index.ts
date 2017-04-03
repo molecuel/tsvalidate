@@ -97,9 +97,9 @@ describe("validator", () => {
       testValidator = new V.Validator();
       localTestClass = new TemporaryTestClass("desoxyribonucleic acid");
       validationResult = testValidator.validate(localTestClass);
-      if (validationResult.length > 0) {
-       console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
-      }
+      // if (validationResult.length > 0) {
+      //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
+      // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -431,6 +431,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new StringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate string length (maximum)", () => {
@@ -459,12 +462,13 @@ describe("validator", () => {
           this.testProp = value;
         }
       }
-      testValidator = new V.Validator();
-      localTestClass = new TemporaryStringTestClass("desoxyribonucleic acid");
-      validationResult = testValidator.validate(localTestClass);
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass("desoxyribonucleic acid"));
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -503,6 +507,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate string byte length (maximum)", () => {
@@ -525,7 +532,7 @@ describe("validator", () => {
 
     it("should NOT validate string byte length (minimum)", () => {
       class TemporaryStringTestClass {
-        @V.MinLen(26)
+        @V.MinByteLen(26)
         private testProp: string;
         constructor(value?: any) {
           this.testProp = value;
@@ -539,11 +546,14 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate string byte length (minimum)", () => {
       class TemporaryStringTestClass {
-        @V.MinLen(4)
+        @V.MinByteLen(4)
         private testProp: string;
         constructor(value?: any) {
           this.testProp = value;
@@ -573,6 +583,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -611,6 +624,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate string date (ISO8601)", () => {
@@ -645,6 +661,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -683,6 +702,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate whether string is an IP address", () => {
@@ -717,6 +739,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -755,6 +780,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate whether string is a hex color", () => {
@@ -789,6 +817,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -827,6 +858,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate whether string is a MongoDB ObjectID", () => {
@@ -861,6 +895,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -899,6 +936,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate string dates after mm-dd-yyyy", () => {
@@ -933,6 +973,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -971,6 +1014,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate lowercase strings", () => {
@@ -1005,6 +1051,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -1077,6 +1126,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -1187,6 +1239,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate string metadata (alphanumeric)", () => {
@@ -1221,6 +1276,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new TemporaryStringTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -1334,6 +1392,9 @@ describe("validator", () => {
       // }
       (validationResult.length).should.be.above(0);
       validationResult = [];
+      validationResult = new V.Validator().validate(new NumberTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
     });
 
     it("should validate number metadata (maximum value)", () => {
@@ -1368,6 +1429,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new NumberTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -1584,6 +1648,9 @@ describe("validator", () => {
       // if (validationResult.length > 0) {
       //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
       // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new NumberTestClass(true));
       (validationResult.length).should.be.above(0);
       validationResult = [];
     });
@@ -2036,4 +2103,83 @@ describe("validator", () => {
     })
     */
   }); // category end
+  describe("code coverage", () => {
+    it("validates any- and everything without validation decorators", () => {
+      class CoverageTestClass {
+        private testProp: string;
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+      }
+      validationResult = new V.Validator().validate(new CoverageTestClass("yes"));
+      (validationResult.length).should.equal(0);
+      validationResult = [];
+    });
+    it("does not validate erroneous superimposed types", () => {
+      class CoverageTestClass {
+        @V.ValidateType(Object)
+        private testProp: any;
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+      }
+      validationResult = new V.Validator().validate(new CoverageTestClass("yes"));
+      (validationResult.length).should.equal(1);
+      validationResult = [];
+    });
+    it("does not validate with invalid IP protocol", () => {
+      class CoverageTestClass {
+        @V.IsIP(8)
+        private testProp: string;
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+      }
+      testValidator = new V.Validator();
+      localTestClass = new CoverageTestClass("256.256.256.1");
+      validationResult = testValidator.validate(localTestClass);
+      // if (validationResult.length > 0) {
+      //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
+      // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new CoverageTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    });
+    it("does not validate with invalid IP", () => {
+      class CoverageTestClass {
+        @V.IsIP(6)
+        private testProp: string;
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+      }
+      testValidator = new V.Validator();
+      localTestClass = new CoverageTestClass("256.256.256.1");
+      validationResult = testValidator.validate(localTestClass);
+      // if (validationResult.length > 0) {
+      //  console.log(indent + validationResult[0].message + " [" + validationResult[0].value + "]");
+      // }
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+      validationResult = new V.Validator().validate(new CoverageTestClass(true));
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    });
+    it("does list an error if typedata was removed", () => {
+      class CoverageTestClass {
+        @V.ValidateType()
+        private testProp: boolean;
+        constructor(value?: any) {
+          this.testProp = value;
+        }
+      }
+      const coverageTestInstance = new CoverageTestClass(true);
+      Reflect.defineMetadata("design:type", undefined, coverageTestInstance, "testProp");
+      validationResult = new V.Validator().validate(coverageTestInstance);
+      (validationResult.length).should.be.above(0);
+      validationResult = [];
+    });
+  });
 }); // test end

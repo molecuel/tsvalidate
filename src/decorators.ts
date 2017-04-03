@@ -5,7 +5,7 @@ export class DecoratorTypes {
 
   // all types
   public static get IS_TYPED(): string { return "ValidateType"; }
-  public static get IS_ARRAY(): string { return "ValidateArray"; }
+  // public static get IS_ARRAY(): string { return "ValidateArray"; }
   public static get IS_INT(): string { return "IsInt"; }
   public static get IS_FLOAT(): string { return "IsFloat"; }
   public static get IS_DECIMAL(): string { return "IsDecimal"; }
@@ -53,26 +53,26 @@ export class DecoratorTypes {
   public static get NESTED(): string { return "ValidateNested"; }
 }
 
-export function UseMongoCollection(collection: string) {
-  return (target: any) => {
-    const input: any = target;
-    let className: string;
-    if ("prototype" in input) {
-      className = input.prototype.constructor.name;
-    } else {
-      className = input.constructor.name;
-    }
-    let metadata = Reflect.getMetadata(METADATAKEY, target);
-    if (!metadata) {
-      metadata = [];
-    }
-    metadata.push({
-      property: className,
-      type: "UseMongoCollection",
-      value: collection });
-    Reflect.defineMetadata(METADATAKEY, metadata, target);
-  };
-}
+// export function UseMongoCollection(collection: string) {
+//   return (target: any) => {
+//     const input: any = target;
+//     let className: string;
+//     if ("prototype" in input) {
+//       className = input.prototype.constructor.name;
+//     } else {
+//       className = input.constructor.name;
+//     }
+//     let metadata = Reflect.getMetadata(METADATAKEY, target);
+//     if (!metadata) {
+//       metadata = [];
+//     }
+//     metadata.push({
+//       property: className,
+//       type: "UseMongoCollection",
+//       value: collection });
+//     Reflect.defineMetadata(METADATAKEY, metadata, target);
+//   };
+// }
 
 export const METADATAKEY = "tsvalidate:validators";
 
