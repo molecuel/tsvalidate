@@ -1780,7 +1780,7 @@ describe("validator", () => {
             validationResult = [];
         });
     });
-    describe("for class type", () => {
+    describe("for classes", () => {
         it("should NOT validate type (class)", () => {
             class ClassesTestClass {
                 constructor(value) {
@@ -1812,6 +1812,54 @@ describe("validator", () => {
             validationResult = testValidator.validate(localTestClass);
             (validationResult.length).should.equal(0);
             validationResult = [];
+        });
+        it("should trim all string properties of a marked class", () => {
+            let TrimTestClass = class TrimTestClass {
+                constructor(boolVal, numVal, strVal, nestInitVal, arrVal) {
+                    this.testString = strVal;
+                    this.testBool = boolVal;
+                    this.testNumber = numVal;
+                    this.testArray = Array.isArray(arrVal) ? arrVal : [boolVal, numVal, strVal];
+                    this.testObject = new TestClass_1.NestedTestClass(nestInitVal);
+                }
+            };
+            TrimTestClass = __decorate([
+                V.Trim(),
+                __metadata("design:paramtypes", [Object, Object, Object, Object, Array])
+            ], TrimTestClass);
+            const trimInstance = new TrimTestClass(true, 1, "     Pink Elephant ", "Black Mice      ");
+            validationResult = new V.Validator().validate(trimInstance);
+            should.exist(trimInstance);
+            should.exist(trimInstance.testArray);
+            should.exist(trimInstance.testString);
+            should.exist(trimInstance.testObject);
+            should.exist(trimInstance.testObject.testProperty);
+            trimInstance.testArray.should.containEql("Pink Elephant");
+            trimInstance.testString.should.equal("Pink Elephant");
+            trimInstance.testObject.testProperty.should.equal("Black Mice");
+        });
+        it("should trim a single marked string property of a class", () => {
+            class TrimTestClass {
+                constructor(boolVal, numVal, strVal, nestInitVal, arrVal) {
+                    this.testString = strVal;
+                    this.testBool = boolVal;
+                    this.testNumber = numVal;
+                    this.testArray = Array.isArray(arrVal) ? arrVal : [boolVal, numVal, strVal];
+                    this.testObject = new TestClass_1.NestedTestClass(nestInitVal);
+                }
+            }
+            __decorate([
+                V.Trim(),
+                __metadata("design:type", String)
+            ], TrimTestClass.prototype, "testString", void 0);
+            const trimInstance = new TrimTestClass(true, 1, "     Pink Elephant ", "Black Mice      ");
+            validationResult = new V.Validator().validate(trimInstance);
+            should.exist(trimInstance);
+            should.exist(trimInstance.testArray);
+            should.exist(trimInstance.testString);
+            should.exist(trimInstance.testObject);
+            should.exist(trimInstance.testObject.testProperty);
+            trimInstance.testString.should.equal("Pink Elephant");
         });
     });
     describe("code coverage", () => {

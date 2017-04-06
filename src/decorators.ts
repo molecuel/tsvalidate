@@ -1,9 +1,9 @@
-import { IValidatorOptions } from "./interfaces/IValidatorOptions";
 import validator = require("validator");
 
 export class DecoratorTypes {
 
   // all types
+  public static get TRIM(): string { return "Trim"; }
   public static get IS_TYPED(): string { return "ValidateType"; }
   // public static get IS_ARRAY(): string { return "ValidateArray"; }
   public static get IS_INT(): string { return "IsInt"; }
@@ -76,213 +76,207 @@ export class DecoratorTypes {
 
 export const METADATAKEY = "tsvalidate:validators";
 
-export function ValidateType(objectType?: any|any[], validatorOptions?: IValidatorOptions) {
+export function ValidateType(objectType?: any|any[]) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_TYPED, objectType);
   };
 }
 
-export function IsInt(validatorOptions?: IValidatorOptions) {
+export function IsInt() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_INT, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_INT);
   };
 }
 
-export function IsFloat(validatorOptions?: IValidatorOptions) {
+export function IsFloat() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_FLOAT, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_FLOAT);
   };
 }
 
-export function IsDecimal(validatorOptions?: IValidatorOptions) {
+export function IsDecimal() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_DECIMAL, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_DECIMAL);
   };
 }
 
-export function MaxLen(value: number, validatorOptions?: IValidatorOptions) {
+export function MaxLen(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MAX_LEN, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MAX_LEN, value);
   };
 }
 
-export function MinLen(value: number, validatorOptions?: IValidatorOptions) {
+export function MinLen(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MIN_LEN, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MIN_LEN, value);
   };
 }
 
-export function MaxByteLen(value: number, validatorOptions?: IValidatorOptions) {
+export function MaxByteLen(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MAX_BYTE_LEN, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MAX_BYTE_LEN, value);
   };
 }
 
-export function MinByteLen(value: number, validatorOptions?: IValidatorOptions) {
+export function MinByteLen(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MIN_BYTE_LEN, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MIN_BYTE_LEN, value);
   };
 }
 
-export function MaxValue(value: number, validatorOptions?: IValidatorOptions) {
+export function MaxValue(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MAX_VALUE, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MAX_VALUE, value);
   };
 }
 
-export function MinValue(value: number, validatorOptions?: IValidatorOptions) {
+export function MinValue(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MIN_VALUE, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MIN_VALUE, value);
   };
 }
 
-export function DateBefore(value, validatorOptions?: IValidatorOptions) {
+export function DateBefore(value) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.DATE_BEFORE, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.DATE_BEFORE, value);
   };
 }
 
-export function DateAfter(value, validatorOptions?: IValidatorOptions) {
+export function DateAfter(value) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.DATE_AFTER, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.DATE_AFTER, value);
   };
 }
 
-export function Equals(value, validatorOptions?: IValidatorOptions) {
+export function Equals(value) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.EQUALS, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.EQUALS, value);
   };
 }
 
-export function Uppercase(validatorOptions?: IValidatorOptions) {
+export function Uppercase() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.UPPERCASE, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.UPPERCASE);
   };
 }
 
-export function Lowercase(validatorOptions?: IValidatorOptions) {
+export function Lowercase() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.LOWERCASE, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.LOWERCASE);
   };
 }
 
-export function MultipleOf(value: number, validatorOptions?: IValidatorOptions) {
+export function MultipleOf(value: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MULTIPLE_OF, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MULTIPLE_OF, value);
   };
 }
 
-export function InArray(array: any[], validatorOptions?: IValidatorOptions) {
+export function InArray(array: any[]) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IN_ARRAY, array, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IN_ARRAY, array);
   };
 }
 
-export function NotInArray(array: any[], validatorOptions?: IValidatorOptions) {
+export function NotInArray(array: any[]) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.NOT_IN_ARRAY, array, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.NOT_IN_ARRAY, array);
   };
 }
 
-export function Contains(value: string | number, validatorOptions?: IValidatorOptions) {
+export function Contains(value: string | number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.CONTAINS, value);
   };
 }
 
-export function IsEmpty(validatorOptions?: IValidatorOptions) {
+export function IsEmpty() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IS_EMPTY, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IS_EMPTY);
   };
 }
 
-export function IsNotEmpty(validatorOptions?: IValidatorOptions) {
+export function IsNotEmpty() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.NOT_EMPTY, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.NOT_EMPTY);
   };
 }
 
-export function Alpha(validatorOptions?: IValidatorOptions) {
+export function Alpha() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.ALPHA, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.ALPHA);
   };
 }
 
-export function AlphaNumeric(validatorOptions?: IValidatorOptions) {
+export function AlphaNumeric() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.ALPHA_NUM, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.ALPHA_NUM);
   };
 }
 
-export function IsDate(validatorOptions?: IValidatorOptions) {
+export function IsDate() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.DATE, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.DATE);
   };
 }
 
-export function IsEmail(validatorOptions?: IValidatorOptions) {
+export function IsEmail() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.EMAIL, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.EMAIL);
   };
 }
 
-export function HexColor(validatorOptions?: IValidatorOptions) {
+export function HexColor() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.HEX_COLOR, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.HEX_COLOR);
   };
 }
 
-export function IsIP(version?: number, validatorOptions?: IValidatorOptions) {
+export function IsIP(version?: number) {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, version, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.IP_ADDRESS, version);
   };
 }
 
-export function Hexadecimal(validatorOptions?: IValidatorOptions) {
+export function Hexadecimal() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.HEXADECIMAL, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.HEXADECIMAL);
   };
 }
 
-export function ISO8601Date(validatorOptions?: IValidatorOptions) {
+export function ISO8601Date() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.DATE_ISO8601, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.DATE_ISO8601);
   };
 }
 
-export function IsMAC(validatorOptions?: IValidatorOptions) {
+export function IsMAC() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MAC_ADDRESS, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MAC_ADDRESS);
   };
 }
 
-export function MongoID(validatorOptions?: IValidatorOptions) {
+export function MongoID() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.MONGO_ID, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.MONGO_ID);
   };
 }
 
-export function ValidateNested(validatorOptions?: IValidatorOptions) {
+export function ValidateNested() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.NESTED, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.NESTED);
   };
 }
 
-export function IsDefined(validatorOptions?: IValidatorOptions) {
+export function IsDefined() {
   return (target: any, propertyName: string) => {
-    BasicDecorator(target, propertyName, DecoratorTypes.DEFINED, validatorOptions);
+    BasicDecorator(target, propertyName, DecoratorTypes.DEFINED);
   };
 }
 
 export function Trim() {
-  return (target: any, propertyName: string) => {
-    for (const property in target) {
-      // Check object for property.
-      if (!target.hasOwnProperty(property)) {
-        continue;
-      }
-      validator.trim(target[property]);
-    }
+  return (target?: any, propertyName?: string) => {
+    BasicDecorator(target, propertyName, DecoratorTypes.TRIM);
   };
 }
 
@@ -302,15 +296,13 @@ function BasicDecorator(
   target: any,
   propertyName: string,
   type: string,
-  value?: any,
-  validatorOptions?: IValidatorOptions) {
+  value?: any) {
 
   let metadata = Reflect.getMetadata(METADATAKEY, target);
   if (!metadata) {
     metadata = [];
   }
   metadata = metadata.concat({
-    options: validatorOptions,
     property: propertyName,
     type,
     value });
