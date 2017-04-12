@@ -69,7 +69,8 @@ export class Validator {
 
             case decorators.DecoratorTypes.IS_TYPED:
 
-              if (typeof types !== "undefined") {
+              if (typeof types !== "undefined"
+                || typeof metadataEntry.value !== "undefined") {
                 // determine type specification per metadata
                 let switchCondition: any;
                 if (metadataEntry.value) {
